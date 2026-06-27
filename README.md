@@ -1,8 +1,7 @@
 # Cat Breed Assistant
 
-Учебный portfolio-проект: маленький сервис, который отвечает на вопросы пользователя про породы кошек.
-
-Коротко по-русски: это минимальное приложение с разделением frontend и backend. Streamlit отвечает за пользовательский интерфейс, FastAPI принимает запросы, а backend уже выбирает provider ответа: локальный mock, OpenAI или Gemini.
+Небольшой LLM-сервис для ответов на вопросы о породах кошек.
+Проект демонстрирует разделение интерфейса и backend-логики: Streamlit отвечает за пользовательский интерфейс, FastAPI принимает HTTP-запросы, валидирует данные и вызывает mock/LLM provider.
 
 ## Architecture
 
@@ -31,14 +30,18 @@ Streamlit frontend -> FastAPI backend -> Mock/OpenAI/Gemini provider
 - OpenAI Python SDK
 - Google Gen AI SDK (`google-genai`)
 - python-dotenv
+- Docker / Docker Compose
 
 ## Project Structure
 
 ```text
 cat-breed-assistant/
+├── Dockerfile
 ├── app.py
+├── docker-compose.yml
 ├── requirements.txt
 ├── README.md
+├── .dockerignore
 ├── .env.example
 ├── .gitignore
 ├── backend/
@@ -109,6 +112,46 @@ streamlit run app.py
 
 Open the Streamlit URL printed in the terminal and ask a question.
 
+## Docker Quick Start
+
+Build and start both services:
+
+```bash
+docker compose up --build
+```
+
+The frontend will be available at:
+
+```text
+http://localhost:8501
+```
+
+FastAPI docs will be available at:
+
+```text
+http://localhost:8000/docs
+```
+
+Inside the Docker Compose network, the Streamlit frontend does not call `localhost`. It calls the backend service by its compose service name:
+
+```text
+http://backend:8000
+```
+
+That value is passed to the frontend as:
+
+```bash
+BACKEND_URL=http://backend:8000
+```
+
+`Mock mode` works without a `.env` file. API modes work only when the corresponding keys are present in `.env`. Docker Compose reads `.env` through `env_file`, but `.env` is ignored by Git and excluded from the Docker build context.
+
+Stop the services:
+
+```bash
+docker compose down
+```
+
 ## Backend Checks
 
 Healthcheck:
@@ -177,4 +220,4 @@ The answer should explain who British Shorthair cats are, what they look like, t
 
 ## Notes
 
-This is intentionally a small learning MVP. It does not include Docker, RAG, a database or authentication.
+This is intentionally a small learning MVP. It does not include RAG, a database or authentication.
