@@ -1,22 +1,33 @@
 # Cat Breed Assistant
 
-Учебный portfolio-проект на Streamlit: маленькое веб-приложение, которое принимает вопрос пользователя про породы кошек и возвращает дружелюбный ответ.
+Учебный portfolio-проект: маленький сервис, который отвечает на вопросы пользователя про породы кошек.
 
-Коротко по-русски: это минимальный LLM-сервис с пользовательским интерфейсом. Проект показывает, как вынести логику ответа в отдельные модули, подключить внешние LLM API через переменные окружения и оставить безопасный mock-режим для запуска без ключей.
+Коротко по-русски: это минимальное приложение с разделением frontend и backend. Streamlit отвечает за пользовательский интерфейс, FastAPI принимает запросы, а backend уже выбирает provider ответа: локальный mock, OpenAI или Gemini.
+
+## Architecture
+
+```text
+Streamlit frontend -> FastAPI backend -> Mock/OpenAI/Gemini provider
+```
+
+Такой формат показывает базовый сервисный подход: UI не вызывает LLM напрямую, а общается с backend через HTTP.
 
 ## What It Does
 
 - показывает простой Streamlit-интерфейс;
 - принимает вопрос пользователя про кошек;
+- отправляет вопрос в FastAPI backend;
 - распознаёт вопросы про British Shorthair / британских короткошёрстных кошек;
-- отвечает в трёх режимах: `Mock mode`, `OpenAI mode`, `Gemini mode`;
-- не падает, если API-ключ не задан, а показывает понятное сообщение;
-- хранит секреты только в локальном `.env`, который не должен попадать в GitHub.
+- поддерживает режимы `mock`, `openai`, `gemini`;
+- аккуратно сообщает, если backend не запущен или API-ключ не настроен.
 
 ## Tech Stack
 
 - Python 3.12
 - Streamlit
+- FastAPI
+- Uvicorn
+- Requests
 - OpenAI Python SDK
 - Google Gen AI SDK (`google-genai`)
 - python-dotenv
@@ -30,6 +41,11 @@ cat-breed-assistant/
 ├── README.md
 ├── .env.example
 ├── .gitignore
+├── backend/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── schemas.py
+│   └── services.py
 └── src/
     ├── __init__.py
     ├── cat_knowledge.py
@@ -37,7 +53,7 @@ cat-breed-assistant/
     └── gemini_client.py
 ```
 
-## Run Locally
+## Setup
 
 Create and activate a virtual environment:
 
@@ -52,12 +68,6 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the app:
-
-```bash
-streamlit run app.py
-```
-
 ## Environment Variables
 
 Create a local `.env` file from the example:
@@ -66,30 +76,78 @@ Create a local `.env` file from the example:
 cp .env.example .env
 ```
 
-Then add your own keys if you want to use API modes:
+Add your own keys only if you want to use API modes:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-The `.env.example` file contains only placeholders. Real API keys must stay only in `.env`.
+Optional frontend setting:
 
-## Mock Mode
+```bash
+BACKEND_URL=http://localhost:8000
+```
 
-`Mock mode` is the default mode. It works without any API keys and uses a local prepared answer from `src/cat_knowledge.py`.
+`Mock mode` works without API keys.
 
-This is useful for:
+## Run The App
 
-- testing the Streamlit UI;
-- demoing the project without paid API access;
-- developing service logic before connecting a real LLM.
+You need two terminal windows.
 
-## LLM/API Modes
+Terminal 1: start the backend:
 
-`OpenAI mode` uses `OPENAI_API_KEY` and calls OpenAI through `src/llm_client.py`.
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
 
-`Gemini mode` uses `GEMINI_API_KEY` and calls Gemini through `src/gemini_client.py`.
+Terminal 2: start the Streamlit frontend:
+
+```bash
+streamlit run app.py
+```
+
+Open the Streamlit URL printed in the terminal and ask a question.
+
+## Backend Checks
+
+Healthcheck:
+
+```bash
+curl http://localhost:8000/health
+```
+
+Expected response:
+
+```json
+{"status":"ok"}
+```
+
+Ask endpoint:
+
+```bash
+curl -X POST http://localhost:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Расскажи про британских котиков","mode":"mock"}'
+```
+
+Example response:
+
+```json
+{
+  "answer": "...",
+  "breed": "Британская короткошёрстная кошка",
+  "mode": "mock"
+}
+```
+
+## Modes
+
+`mock` uses a local prepared response from `src/cat_knowledge.py`. It is the safest mode for demos and local development because it does not require API keys.
+
+`openai` uses `OPENAI_API_KEY` and calls OpenAI through `src/llm_client.py`.
+
+`gemini` uses `GEMINI_API_KEY` and calls Gemini through `src/gemini_client.py`.
 
 Gemini API keys can be created in Google AI Studio: https://aistudio.google.com/app/apikey
 
@@ -111,12 +169,12 @@ The answer should explain who British Shorthair cats are, what they look like, t
 
 ## What I Learned
 
-- how to build a small Streamlit service around LLM-style logic;
-- how to keep mock logic and API logic separate;
+- how to split a small app into frontend and backend;
+- how to call a FastAPI backend from Streamlit;
+- how to keep mock logic and LLM provider logic behind a service layer;
 - how to load API keys from environment variables;
-- how to handle missing credentials gracefully;
-- how to prepare a small Python project for a clean GitHub portfolio repository.
+- how to handle missing credentials and backend errors gracefully.
 
 ## Notes
 
-This is intentionally a small learning MVP. It does not include FastAPI, Docker, RAG or a database.
+This is intentionally a small learning MVP. It does not include Docker, RAG, a database or authentication.
