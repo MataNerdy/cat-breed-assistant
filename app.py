@@ -78,6 +78,27 @@ if st.button("Спросить", type="primary"):
             except requests.exceptions.RequestException as error:
                 st.error(f"Не удалось обратиться к backend: {error}")
             else:
-                st.subheader(result["breed"])
-                st.caption(f"Mode: {result['mode']}")
+                breed = result["breed"]
+                st.subheader(
+                    "Порода не найдена" if breed == "Unknown breed" else breed
+                )
+                st.caption(f"Detected breed: {breed} | Mode: {result['mode']}")
                 st.markdown(result["answer"])
+
+                breed_context = result.get("breed_context") or {}
+                if breed_context:
+                    with st.expander("Использованные факты"):
+                        if breed_context.get("fallback_note"):
+                            st.info(breed_context["fallback_note"])
+
+                        st.markdown("**Внешний вид**")
+                        for item in breed_context.get("appearance", []):
+                            st.write(f"- {item}")
+
+                        st.markdown("**Характер**")
+                        for item in breed_context.get("temperament", []):
+                            st.write(f"- {item}")
+
+                        st.markdown("**Уход**")
+                        for item in breed_context.get("care", []):
+                            st.write(f"- {item}")

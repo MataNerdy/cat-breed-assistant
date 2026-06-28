@@ -1,23 +1,16 @@
 from src.cat_knowledge import generate_mock_answer
+from src.breed_retriever import build_breed_context
 from src.gemini_client import generate_gemini_answer
 from src.llm_client import generate_llm_answer
 
 from .schemas import AskResponse, AnswerMode
 
 
-def _api_breed_name(breed_context: dict) -> str:
-    breed = breed_context["breed"]
-    if "британ" in breed.casefold():
-        return "British Shorthair"
-
-    return breed
-
-
 def generate_answer(question: str, mode: AnswerMode) -> AskResponse:
-    breed_context = generate_mock_answer(question)
+    breed_context = build_breed_context(question)
 
     if mode == "mock":
-        answer = breed_context["answer"]
+        answer = generate_mock_answer(question, breed_context)
     elif mode == "openai":
         answer = generate_llm_answer(question, breed_context)
     elif mode == "gemini":
@@ -27,6 +20,7 @@ def generate_answer(question: str, mode: AnswerMode) -> AskResponse:
 
     return AskResponse(
         answer=answer,
-        breed=_api_breed_name(breed_context),
+        breed=breed_context["breed"],
         mode=mode,
+        breed_context=breed_context,
     )

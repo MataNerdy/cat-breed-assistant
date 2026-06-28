@@ -1,76 +1,64 @@
-BRITISH_SHORTHAIR_KEYWORDS = (
-    "британ",
-    "british shorthair",
-    "british short hair",
-    "британская короткошерстная",
-    "британская короткошёрстная",
-    "британскую короткошерстную",
-    "британскую короткошёрстную",
+INTRO_TEMPLATES = (
+    "{breed} — порода с характерным внешним видом и довольно узнаваемым темпераментом.",
+    "Если коротко, {breed} — не просто красивое название, а целый набор породных особенностей.",
+    "{breed} — хороший пример того, как внешность, характер и уход складываются в породный профиль.",
 )
 
 
-def _is_british_shorthair_question(question: str) -> bool:
-    normalized_question = question.strip().casefold()
-    return any(keyword in normalized_question for keyword in BRITISH_SHORTHAIR_KEYWORDS)
+def _pick_template(question: str) -> str:
+    index = len(question.strip()) % len(INTRO_TEMPLATES)
+    return INTRO_TEMPLATES[index]
 
 
-def _british_shorthair_answer() -> dict:
-    return {
-        "breed": "Британская короткошёрстная кошка",
-        "answer": (
-            "**Кто это:** британские короткошёрстные кошки — спокойная, "
-            "плотно сложенная порода с мягкой плюшевой шерстью и выразительной "
-            "круглой мордочкой.\n\n"
-            "**Внешний вид:** у них крепкое тело, широкая грудь, короткая густая "
-            "шерсть, круглые глаза и аккуратные небольшие уши. Самый известный "
-            "окрас — голубой, но у породы много вариантов окраса.\n\n"
-            "**Характер:** обычно это уравновешенные, независимые и дружелюбные "
-            "кошки. Они любят быть рядом с человеком, но не всегда хотят сидеть "
-            "на руках.\n\n"
-            "**Отличия от других пород:** британцы выглядят особенно массивными "
-            "и плюшевыми, чаще сохраняют спокойствие и не требуют постоянного "
-            "внимания, как более активные или разговорчивые породы.\n\n"
-            "**Уход:** им нужен регулярный уход за шерстью, контроль питания и "
-            "спокойная домашняя среда с играми без чрезмерной нагрузки."
-        ),
-        "facts": [
-            "Порода известна плотной плюшевой шерстью и округлыми чертами.",
-            "Британцы часто спокойнее и самостоятельнее многих других домашних кошек.",
-            "Окрасов у породы много: голубой — самый узнаваемый, но не единственный.",
-            "Эти кошки обычно хорошо подходят для жизни в квартире.",
-        ],
-        "care_notes": [
-            "Расчёсывайте шерсть 1-2 раза в неделю, чаще во время линьки.",
-            "Следите за рационом: британцы могут набирать лишний вес.",
-            "Добавьте умеренные игры, когтеточку и спокойное место для отдыха.",
-            "Планируйте регулярные профилактические осмотры у ветеринара.",
-        ],
-    }
+def _first(items: list[str], fallback: str) -> str:
+    return items[0] if items else fallback
 
 
-def _fallback_answer() -> dict:
-    return {
-        "breed": "Порода не определена",
-        "answer": (
-            "Пока я лучше всего умею отвечать на вопросы про британских "
-            "короткошёрстных кошек. Попробуйте спросить: "
-            "\"Расскажи про British Shorthair\"."
-        ),
-        "facts": [
-            "Это первая учебная версия без LLM API.",
-            "Ответы сейчас берутся из простой локальной заглушки.",
-        ],
-        "care_notes": [
-            "Для любой кошки важны свежая вода, качественный корм "
-            "и регулярный ветеринарный уход.",
-            "Уточните породу в вопросе, чтобы получить более полезный ответ.",
-        ],
-    }
+def generate_mock_answer(question: str, breed_context: dict) -> str:
+    """Build a deterministic mock answer from local breed context."""
+    breed = breed_context["breed"]
+    fallback_note = breed_context.get("fallback_note")
 
+    if breed_context.get("is_fallback"):
+        available_breeds = ", ".join(breed_context.get("available_breeds", []))
+        return (
+            f"_{fallback_note}_\n\n"
+            "Я не буду притворяться, что знаю всё на свете. В локальной базе пока "
+            "нет профиля для породы или животного из вашего вопроса.\n\n"
+            f"Сейчас можно спросить про: {available_breeds}.\n\n"
+            "Например: «Расскажи про мейн-куна» или «Как ухаживать за сфинксом?»"
+        )
 
-def generate_mock_answer(question: str) -> dict:
-    """Return a mock answer about a cat breed based on a user question."""
-    if _is_british_shorthair_question(question):
-        return _british_shorthair_answer()
+    intro = _pick_template(question).format(breed=breed)
 
-    return _fallback_answer()
+    appearance = _first(
+        breed_context.get("appearance", []),
+        "Внешний вид в локальной базе пока описан кратко.",
+    )
+    temperament = _first(
+        breed_context.get("temperament", []),
+        "О характере пока мало данных в локальной базе.",
+    )
+    difference = _first(
+        breed_context.get("differs_from_other_breeds", []),
+        "Отличия от других пород пока описаны кратко.",
+    )
+    care = _first(
+        breed_context.get("care", []),
+        "Для ухода лучше ориентироваться на рекомендации заводчика и ветеринара.",
+    )
+    fun_fact = _first(
+        breed_context.get("fun_facts", []),
+        "Интересный факт пока не добавлен в локальную базу.",
+    )
+
+    parts = [
+        intro,
+        f"**Внешний вид:** {appearance}",
+        f"**Характер:** {temperament}",
+        f"**Чем отличается:** {difference}",
+        f"**Уход:** {care}",
+        f"**Интересный факт:** {fun_fact}",
+    ]
+
+    return "\n\n".join(parts)

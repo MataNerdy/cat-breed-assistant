@@ -6,7 +6,7 @@
 ## Architecture
 
 ```text
-Streamlit frontend -> FastAPI backend -> Mock/OpenAI/Gemini provider
+Streamlit frontend -> FastAPI backend -> data layer -> Mock/OpenAI/Gemini provider
 ```
 
 Такой формат показывает базовый сервисный подход: UI не вызывает LLM напрямую, а общается с backend через HTTP.
@@ -17,6 +17,7 @@ Streamlit frontend -> FastAPI backend -> Mock/OpenAI/Gemini provider
 - принимает вопрос пользователя про кошек;
 - отправляет вопрос в FastAPI backend;
 - распознаёт вопросы про British Shorthair / британских короткошёрстных кошек;
+- использует локальный JSON с фактами о породах;
 - поддерживает режимы `mock`, `openai`, `gemini`;
 - аккуратно сообщает, если backend не запущен или API-ключ не настроен.
 
@@ -39,6 +40,8 @@ cat-breed-assistant/
 ├── Dockerfile
 ├── app.py
 ├── docker-compose.yml
+├── data/
+│   └── breed_profiles.json
 ├── requirements.txt
 ├── README.md
 ├── .dockerignore
@@ -51,6 +54,7 @@ cat-breed-assistant/
 │   └── services.py
 └── src/
     ├── __init__.py
+    ├── breed_retriever.py
     ├── cat_knowledge.py
     ├── llm_client.py
     └── gemini_client.py
@@ -111,6 +115,25 @@ streamlit run app.py
 ```
 
 Open the Streamlit URL printed in the terminal and ask a question.
+
+## Data Layer / RAG-lite
+
+The app uses a small local knowledge base:
+
+```text
+data/breed_profiles.json
+```
+
+This JSON file contains breed profiles with aliases, origin, appearance, temperament, care notes, cautious health notes, fun facts and differences from other breeds.
+
+This is not a full vector RAG system. There is no Chroma, FAISS, LangChain or LlamaIndex. It is a first simple retrieval layer:
+
+1. The backend receives the question.
+2. `src/breed_retriever.py` searches breed names and aliases in the local JSON.
+3. The backend builds a `breed_context`.
+4. Mock/OpenAI/Gemini modes use that same context to answer.
+
+If no breed is detected, the backend uses British Shorthair as a default fallback and marks that in the context.
 
 ## Docker Quick Start
 
@@ -210,10 +233,20 @@ This project keeps `.env` in `.gitignore` and provides `.env.example` only as a 
 
 The answer should explain who British Shorthair cats are, what they look like, their character, how they differ from other breeds and what basic care is important.
 
+More examples:
+
+```text
+Чем британские котики отличаются от обычных?
+Расскажи про мейн-куна
+Сравни сиамскую кошку и перса
+Как ухаживать за сфинксом?
+```
+
 ## What I Learned
 
 - how to split a small app into frontend and backend;
 - how to call a FastAPI backend from Streamlit;
+- how to add a simple local data layer before LLM providers;
 - how to keep mock logic and LLM provider logic behind a service layer;
 - how to load API keys from environment variables;
 - how to handle missing credentials and backend errors gracefully.

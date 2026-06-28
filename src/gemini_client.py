@@ -12,29 +12,41 @@ SYSTEM_INSTRUCTION = """
 Отвечай на русском языке понятно для обычного пользователя.
 Стиль: доброжелательный, спокойный, с лёгким юмором, без слишком научного тона.
 
+Используй только факты из переданного контекста о породе.
+Не выдумывай факты, которых нет в контексте.
+Если данных мало, честно скажи, что информации в локальной базе мало.
+Если breed указан как Unknown breed, не отвечай про British Shorthair по умолчанию.
+Объясни, что нужной породы или животного нет в локальной базе, и предложи
+доступные породы из контекста.
+
 Не выдумывай медицинские рекомендации. Если вопрос касается здоровья,
 советуй обратиться к ветеринару и не ставь диагнозы.
-
-Ответ должен объяснять:
-- кто такие британские короткошёрстные кошки;
-- как они выглядят;
-- какой у них характер;
-- чем они отличаются от других пород;
-- базовые советы по уходу.
 """.strip()
 
 
 def _format_breed_context(breed_context: dict) -> str:
-    facts = "\n".join(f"- {fact}" for fact in breed_context.get("facts", []))
-    care_notes = "\n".join(
-        f"- {note}" for note in breed_context.get("care_notes", [])
+    def bullets(key: str) -> str:
+        return "\n".join(f"- {item}" for item in breed_context.get(key, []))
+
+    mentioned_breeds = "\n".join(
+        f"- {profile['breed']}: "
+        f"{'; '.join(profile.get('differs_from_other_breeds', [])[:2])}"
+        for profile in breed_context.get("mentioned_breeds", [])
     )
+    available_breeds = ", ".join(breed_context.get("available_breeds", []))
 
     return (
         f"Порода: {breed_context.get('breed', 'Неизвестно')}\n\n"
-        f"Базовый ответ:\n{breed_context.get('answer', '')}\n\n"
-        f"Факты:\n{facts}\n\n"
-        f"Уход:\n{care_notes}"
+        f"Происхождение: {breed_context.get('origin', 'Неизвестно')}\n\n"
+        f"Внешний вид:\n{bullets('appearance')}\n\n"
+        f"Характер:\n{bullets('temperament')}\n\n"
+        f"Уход:\n{bullets('care')}\n\n"
+        f"Осторожные заметки о здоровье:\n{bullets('health_notes')}\n\n"
+        f"Интересные факты:\n{bullets('fun_facts')}\n\n"
+        f"Отличия от других пород:\n{bullets('differs_from_other_breeds')}\n\n"
+        f"Упомянутые породы в вопросе:\n{mentioned_breeds}\n\n"
+        f"Доступные породы в локальной базе: {available_breeds}\n\n"
+        f"Fallback note: {breed_context.get('fallback_note', '')}"
     )
 
 
