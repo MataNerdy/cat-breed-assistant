@@ -2,7 +2,7 @@
 
 An educational portfolio project that turns simple LLM-style logic into a small working service with a Streamlit UI, FastAPI backend, local breed knowledge base, mock mode, optional LLM providers and Docker Compose packaging.
 
-Небольшой учебный LLM-сервис про породы кошек. Проект показывает, как разделить пользовательский интерфейс, backend-логику, локальный data layer и внешние API-провайдеры, не превращая MVP в сложную платформу.
+Небольшой учебный LLM-сервис, рассказывающий пользователю про породы кошек. Проект как демонстрация разделения пользовательского интерфейса, backend-логики, локального data layer и внешних API-провайдеров, без превращения MVP в сложную платформу.
 
 ## Demo
 
