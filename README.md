@@ -1,25 +1,46 @@
 # Cat Breed Assistant
 
-Небольшой LLM-сервис для ответов на вопросы о породах кошек.
-Проект демонстрирует разделение интерфейса и backend-логики: Streamlit отвечает за пользовательский интерфейс, FastAPI принимает HTTP-запросы, валидирует данные и вызывает mock/LLM provider.
+An educational portfolio project that turns simple LLM-style logic into a small working service with a Streamlit UI, FastAPI backend, local breed knowledge base, mock mode, optional LLM providers and Docker Compose packaging.
+
+Небольшой учебный LLM-сервис про породы кошек. Проект показывает, как разделить пользовательский интерфейс, backend-логику, локальный data layer и внешние API-провайдеры, не превращая MVP в сложную платформу.
+
+## Demo
+
+### Streamlit frontend
+
+![Streamlit frontend](assets/streamlit_demo.png)
+
+### FastAPI backend docs
+
+![FastAPI backend docs](assets/fastapi_docs.png)
+
+## What This Project Demonstrates
+
+- A frontend/backend split for a small AI-style application.
+- HTTP communication between Streamlit and FastAPI.
+- A simple local data layer before mock/LLM answer generation.
+- Safe API-key handling with `.env` and `.env.example`.
+- Docker Compose packaging with separate frontend and backend services.
+- Graceful handling of missing API keys, unknown breeds and backend errors.
 
 ## Architecture
 
 ```text
-Streamlit frontend -> FastAPI backend -> data layer -> Mock/OpenAI/Gemini provider
+Streamlit frontend → FastAPI backend → breed retriever → LLM/mock provider
 ```
 
-Такой формат показывает базовый сервисный подход: UI не вызывает LLM напрямую, а общается с backend через HTTP.
+The Streamlit app never calls mock, OpenAI or Gemini logic directly. It sends user questions to the FastAPI backend. The backend retrieves breed facts from local JSON and then routes the request to mock, OpenAI or Gemini mode.
 
-## What It Does
+## Features
 
-- показывает простой Streamlit-интерфейс;
-- принимает вопрос пользователя про кошек;
-- отправляет вопрос в FastAPI backend;
-- распознаёт вопросы про British Shorthair / британских короткошёрстных кошек;
-- использует локальный JSON с фактами о породах;
-- поддерживает режимы `mock`, `openai`, `gemini`;
-- аккуратно сообщает, если backend не запущен или API-ключ не настроен.
+- Ask questions about cat breeds in a Streamlit UI.
+- Use `Mock mode` without any API keys.
+- Use `OpenAI mode` with `OPENAI_API_KEY`.
+- Use `Gemini mode` with `GEMINI_API_KEY`.
+- Retrieve breed facts from a local JSON knowledge base.
+- Detect known breeds by English and Russian aliases.
+- Return a neutral fallback when a breed is not found.
+- Run locally with two processes or with one Docker Compose command.
 
 ## Tech Stack
 
@@ -28,6 +49,7 @@ Streamlit frontend -> FastAPI backend -> data layer -> Mock/OpenAI/Gemini provid
 - FastAPI
 - Uvicorn
 - Requests
+- Pydantic
 - OpenAI Python SDK
 - Google Gen AI SDK (`google-genai`)
 - python-dotenv
@@ -37,30 +59,33 @@ Streamlit frontend -> FastAPI backend -> data layer -> Mock/OpenAI/Gemini provid
 
 ```text
 cat-breed-assistant/
-├── Dockerfile
-├── app.py
-├── docker-compose.yml
-├── data/
-│   └── breed_profiles.json
-├── requirements.txt
-├── README.md
-├── .dockerignore
-├── .env.example
-├── .gitignore
+├── assets/
+│   └── .gitkeep
 ├── backend/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── schemas.py
 │   └── services.py
-└── src/
-    ├── __init__.py
-    ├── breed_retriever.py
-    ├── cat_knowledge.py
-    ├── llm_client.py
-    └── gemini_client.py
+├── data/
+│   └── breed_profiles.json
+├── src/
+│   ├── __init__.py
+│   ├── breed_retriever.py
+│   ├── cat_knowledge.py
+│   ├── gemini_client.py
+│   └── llm_client.py
+├── .dockerignore
+├── .env.example
+├── .gitignore
+├── Dockerfile
+├── PROJECT_SUMMARY.md
+├── README.md
+├── app.py
+├── docker-compose.yml
+└── requirements.txt
 ```
 
-## Setup
+## Run Locally
 
 Create and activate a virtual environment:
 
@@ -75,67 +100,39 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-## Environment Variables
-
-Create a local `.env` file from the example:
-
-```bash
-cp .env.example .env
-```
-
-Add your own keys only if you want to use API modes:
-
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-Optional frontend setting:
-
-```bash
-BACKEND_URL=http://localhost:8000
-```
-
-`Mock mode` works without API keys.
-
-## Run The App
-
-You need two terminal windows.
-
-Terminal 1: start the backend:
+Start the backend in terminal 1:
 
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
-Terminal 2: start the Streamlit frontend:
+Start the frontend in terminal 2:
 
 ```bash
 streamlit run app.py
 ```
 
-Open the Streamlit URL printed in the terminal and ask a question.
-
-## Data Layer / RAG-lite
-
-The app uses a small local knowledge base:
+Open the Streamlit URL printed in the terminal, usually:
 
 ```text
-data/breed_profiles.json
+http://localhost:8501
 ```
 
-This JSON file contains breed profiles with aliases, origin, appearance, temperament, care notes, cautious health notes, fun facts and differences from other breeds.
+Backend healthcheck:
 
-This is not a full vector RAG system. There is no Chroma, FAISS, LangChain or LlamaIndex. It is a first simple retrieval layer:
+```bash
+curl http://localhost:8000/health
+```
 
-1. The backend receives the question.
-2. `src/breed_retriever.py` searches breed names and aliases in the local JSON.
-3. The backend builds a `breed_context`.
-4. Mock/OpenAI/Gemini modes use that same context to answer.
+Mock ask endpoint:
 
-If no breed is detected, the backend uses British Shorthair as a default fallback and marks that in the context.
+```bash
+curl -X POST http://localhost:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Расскажи про мейн-куна","mode":"mock"}'
+```
 
-## Docker Quick Start
+## Run With Docker
 
 Build and start both services:
 
@@ -143,7 +140,7 @@ Build and start both services:
 docker compose up --build
 ```
 
-The frontend will be available at:
+The Streamlit frontend will be available at:
 
 ```text
 http://localhost:8501
@@ -155,7 +152,7 @@ FastAPI docs will be available at:
 http://localhost:8000/docs
 ```
 
-Inside the Docker Compose network, the Streamlit frontend does not call `localhost`. It calls the backend service by its compose service name:
+Inside the Docker Compose network, the frontend calls the backend by service name:
 
 ```text
 http://backend:8000
@@ -167,90 +164,99 @@ That value is passed to the frontend as:
 BACKEND_URL=http://backend:8000
 ```
 
-`Mock mode` works without a `.env` file. API modes work only when the corresponding keys are present in `.env`. Docker Compose reads `.env` through `env_file`, but `.env` is ignored by Git and excluded from the Docker build context.
-
 Stop the services:
 
 ```bash
 docker compose down
 ```
 
-## Backend Checks
+## Environment Variables
 
-Healthcheck:
-
-```bash
-curl http://localhost:8000/health
-```
-
-Expected response:
-
-```json
-{"status":"ok"}
-```
-
-Ask endpoint:
+Create a local `.env` file from the example:
 
 ```bash
-curl -X POST http://localhost:8000/ask \
-  -H "Content-Type: application/json" \
-  -d '{"question":"Расскажи про британских котиков","mode":"mock"}'
+cp .env.example .env
 ```
 
-Example response:
+Add real keys only if you want to use LLM modes:
 
-```json
-{
-  "answer": "...",
-  "breed": "Британская короткошёрстная кошка",
-  "mode": "mock"
-}
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+BACKEND_URL=http://localhost:8000
 ```
 
-## Modes
+`Mock mode` works without `.env`.
 
-`mock` uses a local prepared response from `src/cat_knowledge.py`. It is the safest mode for demos and local development because it does not require API keys.
+Do not commit `.env`. The repository includes only `.env.example`, which contains placeholders. `.env` is ignored by Git and excluded from the Docker build context.
 
-`openai` uses `OPENAI_API_KEY` and calls OpenAI through `src/llm_client.py`.
+## Mock Mode Vs LLM Modes
 
-`gemini` uses `GEMINI_API_KEY` and calls Gemini through `src/gemini_client.py`.
+`Mock mode` builds a deterministic answer from local breed facts. It is useful for demos, tests and development without paid API access.
 
-Gemini API keys can be created in Google AI Studio: https://aistudio.google.com/app/apikey
+`OpenAI mode` sends the question and retrieved breed context to OpenAI through `src/llm_client.py`.
 
-Free API limits, quotas and model availability can change over time. If an API mode stops working, check the provider dashboard, billing/quota settings and current limits.
+`Gemini mode` sends the question and retrieved breed context to Gemini through `src/gemini_client.py`.
 
-## Do Not Commit API Keys
+LLM prompts instruct the model to answer in Russian, use only the provided context and avoid invented medical advice. If the local data is not enough, the model should say so.
 
-Never commit `.env` to GitHub. API keys are secrets: if they become public, someone else can use your quota or account.
+## Data Layer / RAG-lite
 
-This project keeps `.env` in `.gitignore` and provides `.env.example` only as a safe template.
-
-## Example Question
+The project uses a small local knowledge base:
 
 ```text
-Расскажи про британских короткошёрстных кошек
+data/breed_profiles.json
 ```
 
-The answer should explain who British Shorthair cats are, what they look like, their character, how they differ from other breeds and what basic care is important.
+Each profile contains aliases, origin, appearance, temperament, care notes, cautious health notes, fun facts and differences from other breeds.
 
-More examples:
+This is not vector RAG. There are no embeddings, Chroma, FAISS, LangChain or LlamaIndex. The retrieval layer is intentionally simple:
+
+1. FastAPI receives the user question.
+2. `src/breed_retriever.py` searches breed names and aliases in local JSON.
+3. The backend builds `breed_context`.
+4. Mock/OpenAI/Gemini modes use the same context.
+
+If no breed is detected, the backend returns `Unknown breed` and shows which breeds are currently available.
+
+## Example Questions
 
 ```text
 Чем британские котики отличаются от обычных?
 Расскажи про мейн-куна
-Сравни сиамскую кошку и перса
 Как ухаживать за сфинксом?
+Сравни сиамскую кошку и перса
+Какая порода подойдёт спокойному человеку?
+```
+
+## Sample Output
+
+```text
+Maine Coon — не просто красивое название, а целый набор породных особенностей.
+
+Внешний вид: крупное тело, длинный пушистый хвост и мощный костяк.
+Характер: обычно дружелюбные, общительные и любопытные.
+Уход: регулярное расчёсывание, пространство для движения и устойчивые когтеточки.
 ```
 
 ## What I Learned
 
-- how to split a small app into frontend and backend;
-- how to call a FastAPI backend from Streamlit;
-- how to add a simple local data layer before LLM providers;
-- how to keep mock logic and LLM provider logic behind a service layer;
-- how to load API keys from environment variables;
-- how to handle missing credentials and backend errors gracefully.
+- How to split a small app into frontend and backend.
+- How to call a FastAPI backend from Streamlit.
+- How to add a local data layer before LLM providers.
+- How to keep mock and LLM provider logic behind a service layer.
+- How to load API keys from environment variables.
+- How to handle missing credentials and unknown retrieval results gracefully.
+- How to package a two-service app with Docker Compose.
+
+## Next Steps
+
+- Add a real UI screenshot to the `Demo` section.
+- Add focused unit tests for breed retrieval and provider routing.
+- Add more breed profiles and richer aliases.
+- Add a lightweight comparison response for multi-breed questions.
+- Improve frontend styling without changing the core architecture.
 
 ## Notes
 
-This is intentionally a small learning MVP. It does not include RAG, a database or authentication.
+This is intentionally a small learning MVP. It does not include full RAG, embeddings, a vector database, authentication or a production deployment pipeline.
