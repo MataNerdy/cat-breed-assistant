@@ -3,7 +3,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 
-AnswerMode = Literal["mock", "openai", "gemini"]
+AnswerMode = Literal["mock", "openai", "gemini", "mistral"]
 
 
 class AskRequest(BaseModel):

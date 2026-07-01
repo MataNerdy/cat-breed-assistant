@@ -12,6 +12,7 @@ MODE_LABELS = {
     "Mock mode": "mock",
     "OpenAI mode": "openai",
     "Gemini mode": "gemini",
+    "Mistral mode": "mistral",
 }
 
 

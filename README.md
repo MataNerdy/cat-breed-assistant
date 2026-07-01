@@ -29,7 +29,7 @@ An educational portfolio project that turns simple LLM-style logic into a small 
 Streamlit frontend → FastAPI backend → breed retriever → LLM/mock provider
 ```
 
-The Streamlit app never calls mock, OpenAI or Gemini logic directly. It sends user questions to the FastAPI backend. The backend retrieves breed facts from local JSON and then routes the request to mock, OpenAI or Gemini mode.
+The Streamlit app never calls mock, OpenAI, Gemini or Mistral logic directly. It sends user questions to the FastAPI backend. The backend retrieves breed facts from local JSON and then routes the request to mock, OpenAI, Gemini or Mistral mode.
 
 ## Features
 
@@ -37,6 +37,7 @@ The Streamlit app never calls mock, OpenAI or Gemini logic directly. It sends us
 - Use `Mock mode` without any API keys.
 - Use `OpenAI mode` with `OPENAI_API_KEY`.
 - Use `Gemini mode` with `GEMINI_API_KEY`.
+- Use `Mistral mode` with `MISTRAL_API_KEY`.
 - Retrieve breed facts from a local JSON knowledge base.
 - Detect known breeds by English and Russian aliases.
 - Return a neutral fallback when a breed is not found.
@@ -52,6 +53,7 @@ The Streamlit app never calls mock, OpenAI or Gemini logic directly. It sends us
 - Pydantic
 - OpenAI Python SDK
 - Google Gen AI SDK (`google-genai`)
+- Mistral AI SDK (`mistralai`)
 - python-dotenv
 - Docker / Docker Compose
 
@@ -183,6 +185,7 @@ Add real keys only if you want to use LLM modes:
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
+MISTRAL_API_KEY=your_mistral_api_key_here
 BACKEND_URL=http://localhost:8000
 ```
 
@@ -197,6 +200,8 @@ Do not commit `.env`. The repository includes only `.env.example`, which contain
 `OpenAI mode` sends the question and retrieved breed context to OpenAI through `src/llm_client.py`.
 
 `Gemini mode` sends the question and retrieved breed context to Gemini through `src/gemini_client.py`.
+
+`Mistral mode` sends the question and retrieved breed context to Mistral through `src/mistral_client.py`.
 
 LLM prompts instruct the model to answer in Russian, use only the provided context and avoid invented medical advice. If the local data is not enough, the model should say so.
 
@@ -215,7 +220,7 @@ This is not vector RAG. There are no embeddings, Chroma, FAISS, LangChain or Lla
 1. FastAPI receives the user question.
 2. `src/breed_retriever.py` searches breed names and aliases in local JSON.
 3. The backend builds `breed_context`.
-4. Mock/OpenAI/Gemini modes use the same context.
+4. Mock/OpenAI/Gemini/Mistral modes use the same context.
 
 If no breed is detected, the backend returns `Unknown breed` and shows which breeds are currently available.
 
