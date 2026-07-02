@@ -12,6 +12,7 @@ SYSTEM_PROMPT = """
 Стиль: доброжелательный, спокойный, с лёгким юмором, без слишком научного тона.
 
 Используй только факты из переданного контекста о породе.
+Если передан retrieved context из RAG, считай его основным источником фактов.
 Не выдумывай факты, которых нет в контексте.
 Если данных мало, честно скажи, что информации в локальной базе мало.
 Если breed указан как Unknown breed, не отвечай про British Shorthair по умолчанию.
@@ -49,7 +50,34 @@ def _format_breed_context(breed_context: dict) -> str:
     )
 
 
-def generate_llm_answer(question: str, breed_context: dict) -> str:
+def _format_retrieved_context(retrieved_context: list[dict] | None) -> str:
+    if not retrieved_context:
+        return "RAG-контекст не передан."
+
+    parts = []
+    for index, chunk in enumerate(retrieved_context, start=1):
+        metadata = chunk.get("metadata") or {}
+        distance = chunk.get("distance", chunk.get("score", "unknown"))
+        parts.append(
+            "\n".join(
+                (
+                    f"Chunk {index}",
+                    f"Breed: {metadata.get('breed', 'unknown')}",
+                    f"Source id: {metadata.get('source_id', 'unknown')}",
+                    f"Distance: {distance}",
+                    f"Text: {chunk.get('text', '')}",
+                )
+            )
+        )
+
+    return "\n\n".join(parts)
+
+
+def generate_llm_answer(
+    question: str,
+    breed_context: dict,
+    retrieved_context: list[dict] | None = None,
+) -> str:
     """Generate a friendly cat breed answer using the OpenAI API."""
     load_dotenv()
 
@@ -74,7 +102,9 @@ def generate_llm_answer(question: str, breed_context: dict) -> str:
                     "Вопрос пользователя:\n"
                     f"{question.strip()}\n\n"
                     "Контекст о породе:\n"
-                    f"{_format_breed_context(breed_context)}"
+                    f"{_format_breed_context(breed_context)}\n\n"
+                    "Retrieved context из RAG:\n"
+                    f"{_format_retrieved_context(retrieved_context)}"
                 ),
             },
         ],

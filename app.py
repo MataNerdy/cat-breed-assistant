@@ -16,10 +16,10 @@ MODE_LABELS = {
 }
 
 
-def ask_backend(question: str, mode: str) -> dict:
+def ask_backend(question: str, mode: str, use_rag: bool) -> dict:
     response = requests.post(
         f"{BACKEND_URL}/ask",
-        json={"question": question, "mode": mode},
+        json={"question": question, "mode": mode, "use_rag": use_rag},
         timeout=30,
     )
 
@@ -57,6 +57,7 @@ mode_label = st.radio(
     tuple(MODE_LABELS.keys()),
     horizontal=True,
 )
+use_rag = st.checkbox("Use RAG retrieval")
 
 if st.button("Спросить", type="primary"):
     if not question.strip():
@@ -66,7 +67,7 @@ if st.button("Спросить", type="primary"):
 
         with st.spinner("Спрашиваю backend..."):
             try:
-                result = ask_backend(question.strip(), mode)
+                result = ask_backend(question.strip(), mode, use_rag)
             except requests.exceptions.ConnectionError:
                 st.error(
                     "Backend не запущен. Запустите его командой: "
@@ -83,8 +84,35 @@ if st.button("Спросить", type="primary"):
                 st.subheader(
                     "Порода не найдена" if breed == "Unknown breed" else breed
                 )
-                st.caption(f"Detected breed: {breed} | Mode: {result['mode']}")
+                st.caption(
+                    f"Detected breed: {breed} | Mode: {result['mode']} | "
+                    f"RAG: {'on' if result.get('rag_enabled') else 'off'}"
+                )
                 st.markdown(result["answer"])
+
+                retrieved_context = result.get("retrieved_context") or []
+                if retrieved_context:
+                    with st.expander("Retrieved context"):
+                        for index, chunk in enumerate(retrieved_context, start=1):
+                            metadata = chunk.get("metadata") or {}
+                            score = chunk.get("score", chunk.get("distance"))
+                            st.markdown(f"**Chunk {index}**")
+                            st.caption(
+                                " | ".join(
+                                    part
+                                    for part in (
+                                        f"Breed: {metadata.get('breed', 'unknown')}",
+                                        f"Source: {metadata.get('source_id', 'unknown')}",
+                                        (
+                                            f"Distance: {score:.4f}"
+                                            if isinstance(score, (int, float))
+                                            else None
+                                        ),
+                                    )
+                                    if part
+                                )
+                            )
+                            st.write(chunk.get("text", ""))
 
                 breed_context = result.get("breed_context") or {}
                 if breed_context:

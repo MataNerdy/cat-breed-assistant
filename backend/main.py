@@ -19,7 +19,7 @@ def ask(request: AskRequest) -> AskResponse:
         raise HTTPException(status_code=400, detail="Введите вопрос.")
 
     try:
-        return generate_answer(question, request.mode)
+        return generate_answer(question, request.mode, request.use_rag)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except RuntimeError as error:

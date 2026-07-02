@@ -14,10 +14,45 @@ def _first(items: list[str], fallback: str) -> str:
     return items[0] if items else fallback
 
 
-def generate_mock_answer(question: str, breed_context: dict) -> str:
+def _mock_rag_answer(breed_context: dict, retrieved_context: list[dict]) -> str:
+    breeds = []
+    facts = []
+
+    for chunk in retrieved_context:
+        metadata = chunk.get("metadata") or {}
+        breed = metadata.get("breed")
+        if breed and breed not in breeds:
+            breeds.append(breed)
+
+        text = " ".join(str(chunk.get("text", "")).split())
+        if text:
+            facts.append(text[:320])
+
+    breed_label = ", ".join(breeds[:3]) or breed_context["breed"]
+    fact_lines = "\n".join(
+        f"{index}. {fact}" for index, fact in enumerate(facts[:3], start=1)
+    )
+
+    return (
+        f"Нашёл похожие фрагменты в RAG-индексе для: **{breed_label}**.\n\n"
+        f"{fact_lines}\n\n"
+        "Это mock-ответ: он показывает, какие факты достал retrieval layer. "
+        "Для более связного текста включите один из LLM modes."
+    )
+
+
+def generate_mock_answer(
+    question: str,
+    breed_context: dict,
+    retrieved_context: list[dict] | None = None,
+) -> str:
     """Build a deterministic mock answer from local breed context."""
     breed = breed_context["breed"]
     fallback_note = breed_context.get("fallback_note")
+    retrieved_context = retrieved_context or []
+
+    if retrieved_context:
+        return _mock_rag_answer(breed_context, retrieved_context)
 
     if breed_context.get("is_fallback"):
         available_breeds = ", ".join(breed_context.get("available_breeds", []))
