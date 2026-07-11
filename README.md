@@ -82,6 +82,7 @@ cat-breed-assistant/
 ├── scripts/
 │   ├── build_catapi_chunks.py
 │   ├── build_catapi_documents.py
+│   ├── build_catapi_rag_index.py
 │   └── fetch_catapi_breeds.py
 ├── src/
 │   ├── __init__.py
@@ -269,6 +270,12 @@ Build simple one-profile-per-breed chunks:
 
 ```bash
 python scripts/build_catapi_chunks.py
+```
+
+Optionally build a local ChromaDB index for notebook inspection:
+
+```bash
+python scripts/build_catapi_rag_index.py
 ```
 
 `CAT_API_KEY` is optional. If it is present in `.env`, the fetch script sends it through the `x-api-key` header. If it is missing, the script tries an unauthenticated request.

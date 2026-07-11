@@ -56,6 +56,7 @@ def build_chunk(document: dict[str, Any]) -> dict[str, Any]:
             "origin": metadata.get("origin"),
             "reference_image_id": metadata.get("reference_image_id"),
             "wikipedia_url": metadata.get("wikipedia_url"),
+            "image_url": metadata.get("image_url"),
         },
     }
 
