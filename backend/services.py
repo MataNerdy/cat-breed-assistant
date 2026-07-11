@@ -3,7 +3,6 @@ from src.breed_retriever import build_breed_context
 from src.gemini_client import generate_gemini_answer
 from src.llm_client import generate_llm_answer
 from src.mistral_client import generate_mistral_answer
-from src.rag.retriever import retrieve_relevant_chunks
 
 from .schemas import AskResponse, AnswerMode
 
@@ -14,11 +13,9 @@ def generate_answer(
     use_rag: bool = False,
 ) -> AskResponse:
     breed_context = build_breed_context(question)
-    retrieved_context = (
-        retrieve_relevant_chunks(question, breed=breed_context["breed"])
-        if use_rag
-        else []
-    )
+    # Vector retrieval is temporarily disabled while the project moves from the
+    # old dataset prototype to a future CatAPI/Wikipedia data layer.
+    retrieved_context = []
 
     if mode == "mock":
         answer = generate_mock_answer(question, breed_context, retrieved_context)

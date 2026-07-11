@@ -1,8 +1,8 @@
 # Cat Breed Assistant
 
-An educational portfolio project that turns simple LLM-style logic into a small working service with a Streamlit UI, FastAPI backend, local breed knowledge base, optional full RAG retrieval, mock mode, LLM providers and Docker Compose packaging.
+An educational portfolio project that turns LLM-style answer logic into a small working service with a Streamlit UI, FastAPI backend, local breed knowledge base, mock mode, optional LLM providers and Docker Compose packaging.
 
-Небольшой учебный LLM-сервис, рассказывающий пользователю про породы кошек. Проект как демонстрация разделения пользовательского интерфейса, backend-логики, локального data layer и внешних API-провайдеров, без превращения MVP в сложную платформу.
+Небольшой учебный сервис про породы кошек: пользователь задаёт текстовый вопрос, приложение определяет породу по локальной базе знаний и возвращает дружелюбный ответ через mock-логику или внешний LLM API.
 
 ## Demo
 
@@ -18,7 +18,8 @@ An educational portfolio project that turns simple LLM-style logic into a small 
 
 - A frontend/backend split for a small AI-style application.
 - HTTP communication between Streamlit and FastAPI.
-- A simple local data layer and an optional vector RAG pipeline before answer generation.
+- A simple local data layer before answer generation.
+- Multiple provider modes behind one backend service layer.
 - Safe API-key handling with `.env` and `.env.example`.
 - Docker Compose packaging with separate frontend and backend services.
 - Graceful handling of missing API keys, unknown breeds and backend errors.
@@ -26,22 +27,22 @@ An educational portfolio project that turns simple LLM-style logic into a small 
 ## Architecture
 
 ```text
-Streamlit frontend → FastAPI backend → breed retriever / RAG retriever → LLM/mock provider
+Streamlit frontend → FastAPI backend → breed retriever → LLM/mock provider
 ```
 
-The Streamlit app never calls mock, OpenAI, Gemini or Mistral logic directly. It sends user questions to the FastAPI backend. The backend retrieves breed facts from local JSON, optionally retrieves semantic chunks from ChromaDB, and then routes the request to mock, OpenAI, Gemini or Mistral mode.
+The Streamlit app does not call mock, OpenAI, Gemini or Mistral logic directly. It sends user questions to the FastAPI backend. The backend builds breed context from local JSON and routes the request to the selected answer provider.
 
 ## Features
 
-- Ask questions about cat breeds in a Streamlit UI.
+- Ask text questions about cat breeds in a Streamlit UI.
 - Use `Mock mode` without any API keys.
 - Use `OpenAI mode` with `OPENAI_API_KEY`.
 - Use `Gemini mode` with `GEMINI_API_KEY`.
 - Use `Mistral mode` with `MISTRAL_API_KEY`.
 - Retrieve breed facts from a local JSON knowledge base.
-- Optionally retrieve semantic chunks from a local ChromaDB index.
 - Detect known breeds by English and Russian aliases.
 - Return a neutral fallback when a breed is not found.
+- Keep `use_rag=true` safe while the next data source is not connected yet.
 - Run locally with two processes or with one Docker Compose command.
 
 ## Tech Stack
@@ -56,9 +57,7 @@ The Streamlit app never calls mock, OpenAI, Gemini or Mistral logic directly. It
 - Google Gen AI SDK (`google-genai`)
 - Mistral AI SDK (`mistralai`)
 - python-dotenv
-- Hugging Face Datasets
-- Sentence Transformers
-- ChromaDB
+- Sentence Transformers and ChromaDB kept for the next local retrieval layer
 - Docker / Docker Compose
 
 ## Project Structure
@@ -74,26 +73,14 @@ cat-breed-assistant/
 │   ├── schemas.py
 │   └── services.py
 ├── data/
-│   ├── breed_profiles.json
-│   ├── processed/
-│   │   └── rag_chunks.jsonl
-│   ├── raw/              # ignored by Git
-│   └── chroma/           # ignored by Git
-├── scripts/
-│   ├── build_rag_index.py
-│   └── download_hf_dataset.py
+│   └── breed_profiles.json
 ├── src/
 │   ├── __init__.py
 │   ├── breed_retriever.py
 │   ├── cat_knowledge.py
 │   ├── gemini_client.py
 │   ├── llm_client.py
-│   ├── mistral_client.py
-│   └── rag/
-│       ├── __init__.py
-│       ├── preprocess.py
-│       ├── retriever.py
-│       └── vector_store.py
+│   └── mistral_client.py
 ├── .dockerignore
 ├── .env.example
 ├── .gitignore
@@ -152,13 +139,15 @@ curl -X POST http://localhost:8000/ask \
   -d '{"question":"Расскажи про мейн-куна","mode":"mock"}'
 ```
 
-Mock ask endpoint with RAG enabled:
+Mock ask endpoint with the currently disabled vector retrieval flag:
 
 ```bash
 curl -X POST http://localhost:8000/ask \
   -H "Content-Type: application/json" \
   -d '{"question":"Расскажи про сибирскую кошку","mode":"mock","use_rag":true}'
 ```
+
+`use_rag=true` is intentionally safe: until the next retrieval data source is added, the backend returns an empty `retrieved_context` instead of crashing.
 
 ## Run With Docker
 
@@ -221,13 +210,13 @@ Do not commit `.env`. The repository includes only `.env.example`, which contain
 
 ## Mock Mode Vs LLM Modes
 
-`Mock mode` builds a deterministic answer from local breed facts. If RAG retrieval is enabled and the Chroma index exists, it shows a short summary of the retrieved chunks. It is useful for demos, tests and development without paid API access.
+`Mock mode` builds a deterministic answer from local breed facts. It is useful for demos, tests and development without paid API access.
 
-`OpenAI mode` sends the question, breed context and optional retrieved RAG chunks to OpenAI through `src/llm_client.py`.
+`OpenAI mode` sends the question and breed context to OpenAI through `src/llm_client.py`.
 
-`Gemini mode` sends the question, breed context and optional retrieved RAG chunks to Gemini through `src/gemini_client.py`.
+`Gemini mode` sends the question and breed context to Gemini through `src/gemini_client.py`.
 
-`Mistral mode` sends the question, breed context and optional retrieved RAG chunks to Mistral through `src/mistral_client.py`.
+`Mistral mode` sends the question and breed context to Mistral through `src/mistral_client.py`.
 
 LLM prompts instruct the model to answer in Russian, use only the provided context and avoid invented medical advice. If the local data is not enough, the model should say so.
 
@@ -250,37 +239,16 @@ This layer is intentionally simple:
 
 If no breed is detected, the backend returns `Unknown breed` and shows which breeds are currently available.
 
-## Full RAG Pipeline
+## Vector Retrieval Status
 
-The project also includes an optional local vector retrieval pipeline. It uses the Hugging Face dataset `YZhao09/cat_breed_meowticulous`, preprocesses assistant answers into text chunks, embeds them with `sentence-transformers/all-MiniLM-L6-v2`, and stores the vectors in a local ChromaDB collection named `cat_breed_chunks`.
+The previous experimental vector retrieval branch has been removed from the active project. The backend keeps the `use_rag` request flag as a safe placeholder so the API contract does not break while the next data source is being designed.
 
-```text
-Hugging Face dataset → preprocessing → JSONL chunks → embeddings → ChromaDB → retrieval → mock/LLM answer
-```
+Current behavior:
 
-Build the RAG data locally:
+- `use_rag=false`: normal local breed profile flow.
+- `use_rag=true`: normal local breed profile flow plus `retrieved_context=[]`.
 
-```bash
-python scripts/download_hf_dataset.py
-python scripts/build_rag_index.py
-```
-
-Generated raw data and the Chroma index are not committed:
-
-```text
-data/raw/
-data/chroma/
-```
-
-The processed chunks file can be committed if it is reasonably small:
-
-```text
-data/processed/rag_chunks.jsonl
-```
-
-If the RAG index has not been built yet, the app still works. `use_rag=true` returns an empty retrieved context instead of crashing.
-
-This is a direct, educational RAG implementation. It does not use LangChain, LlamaIndex, FAISS or a hosted vector database.
+Future retrieval data can be added later without changing the Streamlit-to-FastAPI contract.
 
 ## Example Questions
 
@@ -308,8 +276,7 @@ Maine Coon — не просто красивое название, а целы�
 - How to split a small app into frontend and backend.
 - How to call a FastAPI backend from Streamlit.
 - How to add a local data layer before LLM providers.
-- How to build a small vector retrieval pipeline without a framework.
-- How to pass retrieved chunks into mock and LLM providers.
+- How to pass structured breed context into mock and LLM providers.
 - How to keep mock and LLM provider logic behind a service layer.
 - How to load API keys from environment variables.
 - How to handle missing credentials and unknown retrieval results gracefully.
@@ -317,11 +284,12 @@ Maine Coon — не просто красивое название, а целы�
 
 ## Next Steps
 
-- Add focused unit tests for breed retrieval, RAG retrieval and provider routing.
+- Add focused unit tests for breed retrieval and backend response contracts.
+- Add a cleaner local retrieval source for richer breed facts.
 - Add more breed profiles and richer aliases.
 - Add a lightweight comparison response for multi-breed questions.
 - Improve frontend styling without changing the core architecture.
 
 ## Notes
 
-This is intentionally a small learning MVP. It includes a compact local RAG pipeline, but does not include authentication, a database, background workers or a production deployment pipeline.
+This is intentionally a small learning MVP. It includes a local RAG-lite layer, but does not include authentication, a database, background workers or a production deployment pipeline.
