@@ -117,6 +117,14 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+For the Kaggle RAG inspection notebook, use the separate notebook dependency file:
+
+```bash
+pip install -r requirements-kaggle.txt
+```
+
+`requirements.txt` is for the Streamlit/FastAPI service. `requirements-kaggle.txt` is for the notebook-only vector RAG stack: pandas, datasets, sentence-transformers, ChromaDB and Mistral.
+
 Start the backend in terminal 1:
 
 ```bash

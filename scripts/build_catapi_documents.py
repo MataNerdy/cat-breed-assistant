@@ -29,6 +29,16 @@ def format_score(value: Any) -> str:
     return str(value)
 
 
+def format_bool_score(value: Any) -> str:
+    if value is None or value == "":
+        return "unknown"
+    if value == 1:
+        return "yes"
+    if value == 0:
+        return "no"
+    return str(value)
+
+
 def get_image_url(breed: dict[str, Any]) -> str | None:
     image = breed.get("image")
     if isinstance(image, dict):
@@ -63,6 +73,10 @@ def build_profile_text(breed: dict[str, Any]) -> str:
         f"Dog friendly score: {format_score(breed.get('dog_friendly'))}",
         f"Stranger friendly score: {format_score(breed.get('stranger_friendly'))}",
         f"Intelligence score: {format_score(breed.get('intelligence'))}",
+        f"Hairless: {format_bool_score(breed.get('hairless'))}",
+        f"Shedding level: {format_score(breed.get('shedding_level'))}",
+        f"Social needs score: {format_score(breed.get('social_needs'))}",
+        f"Vocalisation score: {format_score(breed.get('vocalisation'))}",
         f"Hypoallergenic: {format_score(breed.get('hypoallergenic'))}",
         f"Wikipedia URL: {wikipedia_url}",
     ]
@@ -86,6 +100,10 @@ def build_document(breed: dict[str, Any]) -> dict[str, Any]:
             "wikipedia_url": breed.get("wikipedia_url"),
             "reference_image_id": breed.get("reference_image_id"),
             "image_url": get_image_url(breed),
+            "hairless": breed.get("hairless"),
+            "shedding_level": breed.get("shedding_level"),
+            "social_needs": breed.get("social_needs"),
+            "vocalisation": breed.get("vocalisation"),
             "source_url": SOURCE_URL,
         },
     }
