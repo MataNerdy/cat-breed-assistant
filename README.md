@@ -40,6 +40,7 @@ The Streamlit app does not call mock, OpenAI, Gemini or Mistral logic directly. 
 - Use `Gemini mode` with `GEMINI_API_KEY`.
 - Use `Mistral mode` with `MISTRAL_API_KEY`.
 - Retrieve breed facts from a local JSON knowledge base.
+- Prepare CatAPI breed documents and chunks for a future retrieval layer.
 - Detect known breeds by English and Russian aliases.
 - Return a neutral fallback when a breed is not found.
 - Keep `use_rag=true` safe while the next data source is not connected yet.
@@ -73,7 +74,15 @@ cat-breed-assistant/
 │   ├── schemas.py
 │   └── services.py
 ├── data/
-│   └── breed_profiles.json
+│   ├── breed_profiles.json
+│   ├── processed/
+│   │   ├── catapi_breed_documents.jsonl
+│   │   └── catapi_chunks.jsonl
+│   └── raw/              # ignored by Git
+├── scripts/
+│   ├── build_catapi_chunks.py
+│   ├── build_catapi_documents.py
+│   └── fetch_catapi_breeds.py
 ├── src/
 │   ├── __init__.py
 │   ├── breed_retriever.py
@@ -201,6 +210,7 @@ Add real keys only if you want to use LLM modes:
 OPENAI_API_KEY=your_openai_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
 MISTRAL_API_KEY=your_mistral_api_key_here
+CAT_API_KEY=your_catapi_key_here
 BACKEND_URL=http://localhost:8000
 ```
 
@@ -238,6 +248,43 @@ This layer is intentionally simple:
 4. Mock/OpenAI/Gemini/Mistral modes use the same context.
 
 If no breed is detected, the backend returns `Unknown breed` and shows which breeds are currently available.
+
+## CatAPI Data Source
+
+The project uses TheCatAPI as the first controlled external data source for breed information. This pipeline is separate from the live app for now: it downloads source data, converts it into readable breed documents and prepares one chunk per breed for a future retrieval layer.
+
+Fetch raw breed data:
+
+```bash
+python scripts/fetch_catapi_breeds.py
+```
+
+Build readable breed documents:
+
+```bash
+python scripts/build_catapi_documents.py
+```
+
+Build simple one-profile-per-breed chunks:
+
+```bash
+python scripts/build_catapi_chunks.py
+```
+
+`CAT_API_KEY` is optional. If it is present in `.env`, the fetch script sends it through the `x-api-key` header. If it is missing, the script tries an unauthenticated request.
+
+Generated raw data is stored in:
+
+```text
+data/raw/catapi_breeds.json
+```
+
+`data/raw/` is ignored by Git because it contains downloaded source data. The processed files can be committed if they stay small enough for the repository:
+
+```text
+data/processed/catapi_breed_documents.jsonl
+data/processed/catapi_chunks.jsonl
+```
 
 ## Vector Retrieval Status
 
