@@ -13,11 +13,11 @@ SYSTEM_INSTRUCTION = """
 Стиль: доброжелательный, спокойный, с лёгким юмором, без слишком научного тона.
 
 Используй только факты из переданного контекста о породе.
-Если передан retrieved context из RAG, считай его основным источником фактов.
+Если передан CatAPI retrieved context, считай его основным источником фактов.
 Не выдумывай факты, которых нет в контексте.
-Если данных мало, честно скажи, что информации в локальной базе мало.
+Если данных мало, честно скажи, что информации в CatAPI базе мало.
 Если breed указан как Unknown breed, не отвечай про British Shorthair по умолчанию.
-Объясни, что нужной породы или животного нет в локальной базе, и предложи
+Объясни, что нужной породы или животного нет в CatAPI базе, и предложи
 доступные породы из контекста.
 
 Не выдумывай медицинские рекомендации. Если вопрос касается здоровья,
@@ -53,19 +53,24 @@ def _format_breed_context(breed_context: dict) -> str:
 
 def _format_retrieved_context(retrieved_context: list[dict] | None) -> str:
     if not retrieved_context:
-        return "RAG-контекст не передан."
+        return "CatAPI retrieved context не передан."
 
     parts = []
     for index, chunk in enumerate(retrieved_context, start=1):
         metadata = chunk.get("metadata") or {}
-        distance = chunk.get("distance", chunk.get("score", "unknown"))
+        score = chunk.get("score", "unknown")
         parts.append(
             "\n".join(
                 (
                     f"Chunk {index}",
-                    f"Breed: {metadata.get('breed', 'unknown')}",
-                    f"Source id: {metadata.get('source_id', 'unknown')}",
-                    f"Distance: {distance}",
+                    f"Rank: {chunk.get('rank', index)}",
+                    f"Score: {score}",
+                    f"Breed: {chunk.get('breed_name') or metadata.get('breed_name', 'unknown')}",
+                    f"Breed id: {chunk.get('breed_id') or metadata.get('breed_id', 'unknown')}",
+                    f"Source: {chunk.get('source') or metadata.get('source', 'thecatapi')}",
+                    f"Origin: {metadata.get('origin', 'unknown')}",
+                    f"Wikipedia URL: {metadata.get('wikipedia_url') or ''}",
+                    f"Reference image id: {metadata.get('reference_image_id') or ''}",
                     f"Text: {chunk.get('text', '')}",
                 )
             )
@@ -95,7 +100,7 @@ def generate_gemini_answer(
         f"{question.strip()}\n\n"
         "Контекст о породе:\n"
         f"{_format_breed_context(breed_context)}\n\n"
-        "Retrieved context из RAG:\n"
+        "CatAPI retrieved context:\n"
         f"{_format_retrieved_context(retrieved_context)}"
     )
 

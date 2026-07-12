@@ -5,11 +5,8 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir \
-    --index-url https://download.pytorch.org/whl/cpu \
-    torch==2.2.2+cpu
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-app.txt .
+RUN pip install --no-cache-dir -r requirements-app.txt
 
 COPY . .
 

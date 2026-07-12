@@ -1,4 +1,5 @@
 import os
+import logging
 
 import requests
 import streamlit as st
@@ -6,11 +7,12 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO)
+LOGGER = logging.getLogger(__name__)
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000").rstrip("/")
 MODE_LABELS = {
     "Mock mode": "mock",
-    "OpenAI mode": "openai",
     "Gemini mode": "gemini",
     "Mistral mode": "mistral",
 }
@@ -57,7 +59,6 @@ mode_label = st.radio(
     tuple(MODE_LABELS.keys()),
     horizontal=True,
 )
-use_rag = st.checkbox("Use RAG retrieval")
 
 if st.button("Спросить", type="primary"):
     if not question.strip():
@@ -67,7 +68,7 @@ if st.button("Спросить", type="primary"):
 
         with st.spinner("Спрашиваю backend..."):
             try:
-                result = ask_backend(question.strip(), mode, use_rag)
+                result = ask_backend(question.strip(), mode, use_rag=True)
             except requests.exceptions.ConnectionError:
                 st.error(
                     "Backend не запущен. Запустите его командой: "
@@ -80,54 +81,37 @@ if st.button("Спросить", type="primary"):
             except requests.exceptions.RequestException as error:
                 st.error(f"Не удалось обратиться к backend: {error}")
             else:
-                breed = result["breed"]
-                st.subheader(
-                    "Порода не найдена" if breed == "Unknown breed" else breed
+                LOGGER.info(
+                    "Cat assistant response: mode=%s breed=%s detected_breed=%s "
+                    "retrieval_strategy=%s context_count=%s warning=%s "
+                    "reference_image_id=%s",
+                    result.get("mode"),
+                    result.get("breed"),
+                    result.get("detected_breed"),
+                    result.get("retrieval_strategy"),
+                    len(result.get("retrieved_context") or []),
+                    result.get("warning"),
+                    result.get("reference_image_id"),
                 )
-                st.caption(
-                    f"Detected breed: {breed} | Mode: {result['mode']} | "
-                    f"RAG: {'on' if result.get('rag_enabled') else 'off'}"
-                )
+
+                for chunk in result.get("retrieved_context") or []:
+                    metadata = chunk.get("metadata") or {}
+                    LOGGER.info(
+                        "Retrieved CatAPI context: rank=%s score=%s breed_name=%s "
+                        "breed_id=%s origin=%s wikipedia_url=%s reference_image_id=%s",
+                        chunk.get("rank"),
+                        chunk.get("score"),
+                        chunk.get("breed_name"),
+                        chunk.get("breed_id"),
+                        metadata.get("origin"),
+                        metadata.get("wikipedia_url"),
+                        metadata.get("reference_image_id"),
+                    )
+
+                if result.get("warning"):
+                    st.warning(result["warning"])
+
+                if result.get("image_url"):
+                    st.image(result["image_url"])
+
                 st.markdown(result["answer"])
-
-                retrieved_context = result.get("retrieved_context") or []
-                if retrieved_context:
-                    with st.expander("Retrieved context"):
-                        for index, chunk in enumerate(retrieved_context, start=1):
-                            metadata = chunk.get("metadata") or {}
-                            score = chunk.get("score", chunk.get("distance"))
-                            st.markdown(f"**Chunk {index}**")
-                            st.caption(
-                                " | ".join(
-                                    part
-                                    for part in (
-                                        f"Breed: {metadata.get('breed', 'unknown')}",
-                                        f"Source: {metadata.get('source_id', 'unknown')}",
-                                        (
-                                            f"Distance: {score:.4f}"
-                                            if isinstance(score, (int, float))
-                                            else None
-                                        ),
-                                    )
-                                    if part
-                                )
-                            )
-                            st.write(chunk.get("text", ""))
-
-                breed_context = result.get("breed_context") or {}
-                if breed_context:
-                    with st.expander("Использованные факты"):
-                        if breed_context.get("fallback_note"):
-                            st.info(breed_context["fallback_note"])
-
-                        st.markdown("**Внешний вид**")
-                        for item in breed_context.get("appearance", []):
-                            st.write(f"- {item}")
-
-                        st.markdown("**Характер**")
-                        for item in breed_context.get("temperament", []):
-                            st.write(f"- {item}")
-
-                        st.markdown("**Уход**")
-                        for item in breed_context.get("care", []):
-                            st.write(f"- {item}")

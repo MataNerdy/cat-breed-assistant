@@ -32,18 +32,38 @@ Streamlit frontend → FastAPI backend → breed retriever → LLM/mock provider
 
 The Streamlit app does not call mock, OpenAI, Gemini or Mistral logic directly. It sends user questions to the FastAPI backend. The backend builds breed context from local JSON and routes the request to the selected answer provider.
 
+## Current RAG Architecture
+
+```text
+User text query
+→ FastAPI backend
+→ CatAPI hybrid retriever
+→ retrieved CatAPI context
+→ LLM provider: Mock / Mistral / Gemini / OpenAI
+→ Streamlit answer + retrieval logs
+```
+
+The current retriever is not pure vector search. It is a controlled hybrid retrieval baseline:
+
+1. Breed alias detection.
+2. Structured CatAPI retrieval.
+3. No-match guard.
+4. LLM grounded answer.
+
+This means explicit breed questions are matched by Russian and English aliases first. If no breed is named, the backend scores structured CatAPI fields such as weight, temperament, grooming level, vocalisation, intelligence, hairless flag and hypoallergenic flag. If nothing relevant is found, the backend returns `no_match` instead of inventing a random breed.
+
 ## Features
 
 - Ask text questions about cat breeds in a Streamlit UI.
 - Use `Mock mode` without any API keys.
-- Use `OpenAI mode` with `OPENAI_API_KEY`.
 - Use `Gemini mode` with `GEMINI_API_KEY`.
 - Use `Mistral mode` with `MISTRAL_API_KEY`.
+- Keep `OpenAI mode` available in the backend API with `OPENAI_API_KEY`.
 - Retrieve breed facts from a local JSON knowledge base.
-- Prepare CatAPI breed documents and chunks for a future retrieval layer.
+- Retrieve CatAPI breed context from processed local chunks.
 - Detect known breeds by English and Russian aliases.
-- Return a neutral fallback when a breed is not found.
-- Keep `use_rag=true` safe while the next data source is not connected yet.
+- Return `no_match` when no relevant CatAPI context is found.
+- Keep retrieval diagnostics in logs instead of cluttering the Streamlit page.
 - Run locally with two processes or with one Docker Compose command.
 
 ## Tech Stack
@@ -79,6 +99,8 @@ cat-breed-assistant/
 │   │   ├── catapi_breed_documents.jsonl
 │   │   └── catapi_chunks.jsonl
 │   └── raw/              # ignored by Git
+├── docs/
+│   └── catapi_rag_stage_report.md
 ├── scripts/
 │   ├── build_catapi_chunks.py
 │   ├── build_catapi_documents.py
@@ -90,7 +112,12 @@ cat-breed-assistant/
 │   ├── cat_knowledge.py
 │   ├── gemini_client.py
 │   ├── llm_client.py
-│   └── mistral_client.py
+│   ├── mistral_client.py
+│   └── rag/
+│       ├── __init__.py
+│       └── catapi_retriever.py
+├── tests/
+│   └── check_catapi_retriever.py
 ├── .dockerignore
 ├── .env.example
 ├── .gitignore
@@ -99,6 +126,7 @@ cat-breed-assistant/
 ├── README.md
 ├── app.py
 ├── docker-compose.yml
+├── requirements-app.txt
 └── requirements.txt
 ```
 
@@ -116,14 +144,6 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-
-For the Kaggle RAG inspection notebook, use the separate notebook dependency file:
-
-```bash
-pip install -r requirements-kaggle.txt
-```
-
-`requirements.txt` is for the Streamlit/FastAPI service. `requirements-kaggle.txt` is for the notebook-only vector RAG stack: pandas, datasets, sentence-transformers, ChromaDB and Mistral.
 
 Start the backend in terminal 1:
 
@@ -157,7 +177,7 @@ curl -X POST http://localhost:8000/ask \
   -d '{"question":"Расскажи про мейн-куна","mode":"mock"}'
 ```
 
-Mock ask endpoint with the currently disabled vector retrieval flag:
+Mock ask endpoint with CatAPI baseline retrieval enabled:
 
 ```bash
 curl -X POST http://localhost:8000/ask \
@@ -165,7 +185,14 @@ curl -X POST http://localhost:8000/ask \
   -d '{"question":"Расскажи про сибирскую кошку","mode":"mock","use_rag":true}'
 ```
 
-`use_rag=true` is intentionally safe: until the next retrieval data source is added, the backend returns an empty `retrieved_context` instead of crashing.
+`use_rag=true` uses the local processed CatAPI chunks and returns `retrieved_context`, `retrieval_strategy`, and `detected_breed`.
+
+Run local regression checks:
+
+```bash
+python -m compileall app.py src backend scripts
+python tests/check_catapi_retriever.py
+```
 
 ## Run With Docker
 
@@ -174,6 +201,10 @@ Build and start both services:
 ```bash
 docker compose up --build
 ```
+
+The Docker image uses `requirements-app.txt`, a lightweight runtime dependency
+set for the Streamlit/FastAPI service. The heavier notebook/indexing
+dependencies stay in `requirements.txt` for local experiments.
 
 The Streamlit frontend will be available at:
 
@@ -260,7 +291,22 @@ If no breed is detected, the backend returns `Unknown breed` and shows which bre
 
 ## CatAPI Data Source
 
-The project uses TheCatAPI as the first controlled external data source for breed information. This pipeline is separate from the live app for now: it downloads source data, converts it into readable breed documents and prepares one chunk per breed for a future retrieval layer.
+The project uses TheCatAPI as the first controlled external data source for breed information.
+
+Source:
+
+```text
+https://api.thecatapi.com/v1/breeds
+```
+
+Current processed data:
+
+- `data/processed/catapi_breed_documents.jsonl`
+- `data/processed/catapi_chunks.jsonl`
+- 67 breeds
+- 67 documents
+- 67 chunks
+- one chunk = one breed profile
 
 Fetch raw breed data:
 
@@ -301,16 +347,68 @@ data/processed/catapi_breed_documents.jsonl
 data/processed/catapi_chunks.jsonl
 ```
 
-## Vector Retrieval Status
+## CatAPI Data Layer
 
-The previous experimental vector retrieval branch has been removed from the active project. The backend keeps the `use_rag` request flag as a safe placeholder so the API contract does not break while the next data source is being designed.
+The CatAPI data layer is now connected to the backend. When Streamlit sends a question, the backend retrieves CatAPI context before calling the selected provider.
 
-Current behavior:
+Current flow:
 
-- `use_rag=false`: normal local breed profile flow.
-- `use_rag=true`: normal local breed profile flow plus `retrieved_context=[]`.
+```text
+question → retrieve_catapi_context() → retrieved_context → provider prompt
+```
 
-Future retrieval data can be added later without changing the Streamlit-to-FastAPI contract.
+The LLM providers receive CatAPI context and are instructed to use it as the primary source of facts. `Mock mode` also uses retrieved CatAPI context, so retrieval can be tested without API keys.
+
+If CatAPI has a real `image_url`, the UI can show it. If only `reference_image_id` exists, the id is returned in backend metadata and logged by the frontend.
+
+## Retrieval Behavior
+
+Examples from the current retriever:
+
+| Question | Strategy | Expected retrieved context |
+| -------- | -------- | -------------------------- |
+| `Чем британские котики отличаются от обычных?` | `alias_exact_breed` | British Shorthair |
+| `Как ухаживать за сфинксом?` | `alias_exact_breed` | Sphynx |
+| `Какая кошка большая, спокойная и ласковая?` | `structured_fields` | British Shorthair / Ragamuffin / Ragdoll |
+| `Какая кошка разговорчивая и умная?` | `structured_fields` | Balinese / Bengal / Bombay / Burmese-like candidates |
+| `long hair grooming` | `structured_fields` | British Longhair / Chantilly-Tiffany / Himalayan |
+| `Какая кошка умеет чинить ноутбук?` | `no_match` | No random breed returned |
+
+## Why Not Embeddings Yet?
+
+Embeddings were tested in notebooks and the embedding model technically worked. However, semantic retrieval quality on the current CatAPI corpus was unstable for the target Russian-language breed questions.
+
+Structured CatAPI fields gave more controlled and inspectable results than pure dense retrieval on short breed profiles. Because of that, the current app uses hybrid CatAPI retrieval first.
+
+Vector retrieval may be added later as an optional layer after a model bake-off. ChromaDB and Sentence Transformers are kept for experiments, but they are not the primary backend retrieval path right now.
+
+## Baseline RAG Notebook Results
+
+`notebooks/baseline_rag.ipynb` was used to inspect the prepared CatAPI data and test a lightweight baseline retrieval strategy before wiring a full vector index into the app.
+
+Observed results from the notebook run:
+
+- The repository cloned successfully in Kaggle.
+- Prepared CatAPI files were found and loaded.
+- Loaded corpus size:
+
+```text
+Documents: 67
+Chunks: 67
+Unique breeds in documents: 67
+Unique breeds in chunks: 67
+```
+
+- Breed inspection worked for British Shorthair, Maine Coon, Siamese, Persian and Sphynx.
+- Hybrid baseline retrieval produced useful matches:
+  - `Чем британские котики отличаются от обычных?` → British Shorthair
+  - `Как ухаживать за сфинксом?` → Sphynx
+  - `hairless cat care` → Donskoy, Sphynx, Bambino
+  - `long hair grooming` → British Longhair, Chantilly-Tiffany, Himalayan
+- Structured retrieval by CatAPI fields was more useful for Russian breed questions than plain semantic search in that Kaggle run.
+- The optional `sentence-transformers` semantic section did not run successfully in that environment because of a Kaggle dependency/import issue around `AutoModelForSequenceClassification`.
+
+Conclusion: the baseline notebook validates the processed CatAPI corpus and shows that alias detection plus structured CatAPI fields are useful for Russian-language questions. It is a baseline retrieval notebook, not the final ChromaDB vector RAG integration.
 
 ## Example Questions
 

@@ -15,30 +15,74 @@ def _first(items: list[str], fallback: str) -> str:
 
 
 def _mock_rag_answer(breed_context: dict, retrieved_context: list[dict]) -> str:
-    breeds = []
-    facts = []
+    if not retrieved_context:
+        return (
+            "В CatAPI базе не нашлось подходящей информации по этому вопросу. "
+            "Попробуйте явно назвать породу, например: «сфинкс», «мейн-кун» "
+            "или «британская короткошёрстная»."
+        )
 
-    for chunk in retrieved_context:
-        metadata = chunk.get("metadata") or {}
-        breed = metadata.get("breed")
-        if breed and breed not in breeds:
-            breeds.append(breed)
+    top = retrieved_context[0]
+    metadata = top.get("metadata") or {}
+    breed = top.get("breed_name") or metadata.get("breed_name") or breed_context["breed"]
+    origin = metadata.get("origin", "не указано")
+    wikipedia_url = metadata.get("wikipedia_url")
+    text = " ".join(str(top.get("text", "")).split())
 
-        text = " ".join(str(chunk.get("text", "")).split())
-        if text:
-            facts.append(text[:320])
+    description = _extract_line(text, "Description")
+    temperament = _extract_line(text, "Temperament")
 
-    breed_label = ", ".join(breeds[:3]) or breed_context["breed"]
-    fact_lines = "\n".join(
-        f"{index}. {fact}" for index, fact in enumerate(facts[:3], start=1)
+    parts = [
+        f"Нашёл в CatAPI базе породу **{breed}**.",
+        f"**Происхождение:** {origin}.",
+    ]
+
+    if description:
+        parts.append(f"**Описание:** {description}")
+    if temperament:
+        parts.append(f"**Характер:** {temperament}")
+
+    parts.append(
+        "Это mock-ответ: он показывает, какие факты достал CatAPI retrieval. "
+        "Для более связного ответа можно включить один из LLM modes."
     )
 
-    return (
-        f"Нашёл похожие фрагменты в RAG-индексе для: **{breed_label}**.\n\n"
-        f"{fact_lines}\n\n"
-        "Это mock-ответ: он показывает, какие факты достал retrieval layer. "
-        "Для более связного текста включите один из LLM modes."
+    if wikipedia_url:
+        parts.append(f"Источник: {wikipedia_url}")
+
+    return "\n\n".join(parts)
+
+
+def _extract_line(text: str, field_name: str) -> str:
+    marker = f"{field_name}:"
+    if marker not in text:
+        return ""
+    tail = text.split(marker, 1)[1]
+    known_markers = (
+        "Breed name:",
+        "Description:",
+        "Temperament:",
+        "Origin:",
+        "Life span:",
+        "Weight:",
+        "Grooming level:",
+        "Energy level:",
+        "Health issues score:",
+        "Child friendly score:",
+        "Dog friendly score:",
+        "Stranger friendly score:",
+        "Intelligence score:",
+        "Hairless:",
+        "Shedding level:",
+        "Social needs score:",
+        "Vocalisation score:",
+        "Hypoallergenic:",
+        "Wikipedia URL:",
     )
+    end_positions = [tail.find(marker) for marker in known_markers if tail.find(marker) > 0]
+    if end_positions:
+        tail = tail[: min(end_positions)]
+    return tail.strip()
 
 
 def generate_mock_answer(
