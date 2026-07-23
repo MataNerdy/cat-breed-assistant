@@ -347,6 +347,35 @@ data/processed/catapi_breed_documents.jsonl
 data/processed/catapi_chunks.jsonl
 ```
 
+## Breed Registry
+
+The first deterministic curation step builds a base breed registry from the local CatAPI snapshot only. It does not call Wikidata, make HTTP requests, build embeddings, run retrieval or call LLM providers.
+
+Build the registry:
+
+```bash
+python scripts/build_breed_registry.py \
+  --input data/raw/catapi_breeds.json \
+  --output data/curated/breed_registry.jsonl
+```
+
+Optional test subset:
+
+```bash
+python scripts/build_breed_registry.py \
+  --input data/raw/catapi_breeds.json \
+  --output data/curated/breed_registry.jsonl \
+  --breed-ids mcoo,bsho,sphy,beng,sibe
+```
+
+Run the registry tests:
+
+```bash
+pytest tests/test_build_breed_registry.py
+```
+
+`data/curated/breed_registry.jsonl` is sorted by CatAPI `breed_id`, uses one JSON object per line and preserves the full original CatAPI object under `catapi.raw`.
+
 ## CatAPI Data Layer
 
 The CatAPI data layer is now connected to the backend. When Streamlit sends a question, the backend retrieves CatAPI context before calling the selected provider.

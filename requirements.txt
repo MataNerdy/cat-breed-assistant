@@ -10,5 +10,6 @@ google-genai==1.20.0
 sentence-transformers>=3.0,<4
 chromadb>=0.5,<2
 numpy<2
+pytest>=8,<9
 # Compatibility pin for google-genai on Python 3.12/macOS.
 google-auth==2.40.3
