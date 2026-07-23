@@ -1,0 +1,1251 @@
+{
+  "entities": {
+    "Q42712": {
+      "aliases": {
+        "ar": [
+          {
+            "language": "ar",
+            "value": "القط الفرعوني"
+          }
+        ],
+        "ca": [
+          {
+            "language": "ca",
+            "value": "Gat Sphynx"
+          },
+          {
+            "language": "ca",
+            "value": "Esfinx"
+          }
+        ],
+        "de": [
+          {
+            "language": "de",
+            "value": "Kanadische Nacktkatze"
+          },
+          {
+            "language": "de",
+            "value": "Sphinx-Katze"
+          },
+          {
+            "language": "de",
+            "value": "Nacktkatze"
+          }
+        ],
+        "en": [
+          {
+            "language": "en",
+            "value": "Canadian Sphynx"
+          },
+          {
+            "language": "en",
+            "value": "Canadian Hairless"
+          }
+        ],
+        "eo": [
+          {
+            "language": "eo",
+            "value": "Kanada sfinksa kato"
+          },
+          {
+            "language": "eo",
+            "value": "Kanada senhara kato"
+          }
+        ],
+        "es": [
+          {
+            "language": "es",
+            "value": "gato esfinge"
+          },
+          {
+            "language": "es",
+            "value": "gato sin pelo de Canadá"
+          },
+          {
+            "language": "es",
+            "value": "gato egipcio"
+          },
+          {
+            "language": "es",
+            "value": "gato testículo"
+          }
+        ],
+        "et": [
+          {
+            "language": "et",
+            "value": "Sfinks kass"
+          }
+        ],
+        "fi": [
+          {
+            "language": "fi",
+            "value": "Sphynx"
+          }
+        ],
+        "fr": [
+          {
+            "language": "fr",
+            "value": "Chat sphinx"
+          },
+          {
+            "language": "fr",
+            "value": "Sphinx"
+          }
+        ],
+        "hr": [
+          {
+            "language": "hr",
+            "value": "Donska sfinga"
+          }
+        ],
+        "it": [
+          {
+            "language": "it",
+            "value": "Gatto senza pelo"
+          },
+          {
+            "language": "it",
+            "value": "Gatto Sphynx"
+          }
+        ],
+        "lt": [
+          {
+            "language": "lt",
+            "value": "Sfynksas"
+          }
+        ],
+        "nl": [
+          {
+            "language": "nl",
+            "value": "Canadian Sphynx"
+          },
+          {
+            "language": "nl",
+            "value": "Canadese Sphynx"
+          },
+          {
+            "language": "nl",
+            "value": "naaktkat"
+          },
+          {
+            "language": "nl",
+            "value": "Canadese naaktkat"
+          },
+          {
+            "language": "nl",
+            "value": "sphynx"
+          }
+        ],
+        "pl": [
+          {
+            "language": "pl",
+            "value": "Kot Sfinks"
+          }
+        ],
+        "pt": [
+          {
+            "language": "pt",
+            "value": "Gato Sphynx"
+          }
+        ],
+        "ru": [
+          {
+            "language": "ru",
+            "value": "канадский сфинкс"
+          }
+        ],
+        "sv": [
+          {
+            "language": "sv",
+            "value": "Nakenkatt"
+          }
+        ],
+        "uk": [
+          {
+            "language": "uk",
+            "value": "сфінкс"
+          }
+        ],
+        "zh": [
+          {
+            "language": "zh",
+            "value": "无毛猫"
+          },
+          {
+            "language": "zh",
+            "value": "加拿大無毛貓"
+          }
+        ]
+      },
+      "claims": {
+        "P10757": [
+          {
+            "id": "Q42712$BFBBCBA3-0FAF-443E-B719-7C89F6AB25EE",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "116267"
+              },
+              "hash": "626581889d76b683836b6ea43842dcb62914d919",
+              "property": "P10757",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11137": [
+          {
+            "id": "Q42712$F638D8F3-9F56-48D5-BC22-95034050E314",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sphynx"
+              },
+              "hash": "fddb59e7d033837898cc4054311ead433740a861",
+              "property": "P11137",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1417": [
+          {
+            "id": "Q42712$EACE5F9E-B0D0-483B-8C13-F90B55615E16",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "animal/Sphynx-cat"
+              },
+              "hash": "b03605d73c336d76d8880c8cb85cb2040e7c652e",
+              "property": "P1417",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "sphynx cat"
+                  },
+                  "hash": "30f0902127a25034c8885c8b3c4a3a3ce518025f",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P18": [
+          {
+            "id": "Q42712$454c76f2-4cf1-b48c-3635-02afd1fe265d",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Sphinx2 July 2006.jpg"
+              },
+              "hash": "cbb35caf82cb11f69a314098b3ea1e5f8e13e134",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42712$a8bfb4e4-4687-56a5-c5d8-2f07e30615f8",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Cat Sphynx. img 025.jpg"
+              },
+              "hash": "649f1334924508b0aa39067de845eece1c930ea8",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "preferred",
+            "type": "statement"
+          },
+          {
+            "id": "Q42712$927258d3-4694-d437-38bc-0c92739fb4cd",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Two Sphynx cats in bath.jpg"
+              },
+              "hash": "83cfd4a40656d12d83520c9a7076cfced303daf1",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1889": [
+          {
+            "id": "Q42712$BA831581-0896-45E1-902C-1546C8CC0BDA",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q27913709",
+                  "numeric-id": 27913709
+                }
+              },
+              "hash": "41357dfa590350bcc89d48c6e6f7361097b7f3fe",
+              "property": "P1889",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "bf1f6258daf46e3af5defb704d5350251cf63b3c",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q1551807",
+                          "numeric-id": 1551807
+                        }
+                      },
+                      "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://pl.wikipedia.org/w/index.php?title=Sfinks_(rasa_kota)&oldid=64295055"
+                      },
+                      "hash": "a80d5f6a0940aad9ea7bc17cc34b609fcec2a4c4",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P279": [
+          {
+            "id": "Q42712$8cefa090-4ad7-278a-d2eb-473260930682",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "a7f19dde23fcbbfa646386355291ed0913940147",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P31": [
+          {
+            "id": "Q42712$caf21d38-455e-8f89-f9dc-e2da4fac30fb",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q43577",
+                  "numeric-id": 43577
+                }
+              },
+              "hash": "cfb2ec76b0f3605abcbd8a26bcbb63c219fc93b8",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42712$E6695695-07A0-4977-9DFF-746B75DF6193",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q15446690",
+                  "numeric-id": 15446690
+                }
+              },
+              "hash": "21fb8b96d4b6512e28adb0a22879603f543572af",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P373": [
+          {
+            "id": "q42712$964B4DFB-DB1F-4951-8D0F-24137077D647",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Sphynx (cat)"
+              },
+              "hash": "d3ecdca4a6fbb2018081f21ef9ac78d9889e0aac",
+              "property": "P373",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P3984": [
+          {
+            "id": "Q42712$44FF1A33-1C09-4C11-AC9A-07E9FEB64E44",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "SphynxCats"
+              },
+              "hash": "a6bd890fb092011f4ec961d619dda0ec8e191c90",
+              "property": "P3984",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P4342": [
+          {
+            "id": "Q42712$EC49EB42-34CD-44F6-9063-E884D72AAD71",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sphynx"
+              },
+              "hash": "cb78e68f19616e6d13d210fe9cc8b93c54cce7aa",
+              "property": "P4342",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P495": [
+          {
+            "id": "Q42712$b1474066-48e7-4829-d796-f0a6e7491b22",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q16",
+                  "numeric-id": 16
+                }
+              },
+              "hash": "8ce7020b3a7cc8df1fb419a989a1c88db64e49e8",
+              "property": "P495",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "eeae37f44374b89aa595a8be427bfe6119adcb09",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q206855",
+                          "numeric-id": 206855
+                        }
+                      },
+                      "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://ru.wikipedia.org/?oldid=113330071"
+                      },
+                      "hash": "2f7b6025f5bc86325bff3763544a349e5e60ed3f",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P571": [
+          {
+            "id": "Q42712$93b2773b-40bc-58f1-fad8-943174cb390d",
+            "mainsnak": {
+              "datatype": "time",
+              "datavalue": {
+                "type": "time",
+                "value": {
+                  "after": 0,
+                  "before": 0,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                  "precision": 9,
+                  "time": "+1966-00-00T00:00:00Z",
+                  "timezone": 0
+                }
+              },
+              "hash": "6bbe3f4d5432dcee050bbe1566eca13f9f396c16",
+              "property": "P571",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "eeae37f44374b89aa595a8be427bfe6119adcb09",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q206855",
+                          "numeric-id": 206855
+                        }
+                      },
+                      "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://ru.wikipedia.org/?oldid=113330071"
+                      },
+                      "hash": "2f7b6025f5bc86325bff3763544a349e5e60ed3f",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P646": [
+          {
+            "id": "Q42712$86EF2B5F-4CD3-4003-BF5E-88600FC777FB",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "/m/0h5fb"
+              },
+              "hash": "5a0e85c3a396440f2a87fa56493b50fe2073f030",
+              "property": "P646",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q15241312",
+                          "numeric-id": 15241312
+                        }
+                      },
+                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P577": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2013-10-28T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                      "property": "P577",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P577"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8189": [
+          {
+            "id": "Q42712$116cd5cf-4132-a982-59a5-72e3df43fdfe",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "987007554107805171"
+              },
+              "hash": "faf363fa2a823ffd047e8081e206a57f9572b6a9",
+              "property": "P8189",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "Sphynx cat"
+                    }
+                  },
+                  "hash": "96ea28b437966a0b6f08160aa1d49ba0d62ec201",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P910": [
+          {
+            "id": "Q42712$92dab860-4d5f-e0cb-42cd-d13b6ed082c1",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q10057638",
+                  "numeric-id": 10057638
+                }
+              },
+              "hash": "f02c89fcb4921bbf85eff8c1725c17e22559d769",
+              "property": "P910",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P935": [
+          {
+            "id": "Q42712$E0DDDF62-5785-4B87-BAB3-444592861B84",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Sphynx (cat)"
+              },
+              "hash": "5bf781229af16b3bc7879e47d03773ff97c04e3e",
+              "property": "P935",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ]
+      },
+      "descriptions": {
+        "ar": {
+          "language": "ar",
+          "value": "سلالة من القطط"
+        },
+        "ary": {
+          "language": "ary",
+          "value": "سلالة من القطط"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "порода котки"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "raça de gat"
+        },
+        "de": {
+          "language": "de",
+          "value": "mutierte fast haarlose Katzenrasse"
+        },
+        "en": {
+          "language": "en",
+          "value": "hairless cat breed"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "raso de senharaj katoj"
+        },
+        "es": {
+          "language": "es",
+          "value": "raza de gato"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "نژاد گربه"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "kissarotu"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "race de chat"
+        },
+        "he": {
+          "language": "he",
+          "value": "גזע חתול"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "macskafajta"
+        },
+        "it": {
+          "language": "it",
+          "value": "razza felina"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "ネコの品種のひとつ"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "털이 없거나 짧은 캐나다산 고양이 품종"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "kattenras"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "rasa kota"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "raça felina"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "rasă de pisici"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "порода кошек"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Tüysüz bir kedi cinsidir"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "лиса порода котів, що виникла в результаті мутації"
+        }
+      },
+      "id": "Q42712",
+      "labels": {
+        "af": {
+          "language": "af",
+          "value": "Sfinkskat"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "قط فرعوني"
+        },
+        "arz": {
+          "language": "arz",
+          "value": "قط فرعونى"
+        },
+        "az": {
+          "language": "az",
+          "value": "Sfinks"
+        },
+        "be": {
+          "language": "be",
+          "value": "Сфінкс"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "канадски сфинкс"
+        },
+        "br": {
+          "language": "br",
+          "value": "Sfins"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "sphynx"
+        },
+        "ce": {
+          "language": "ce",
+          "value": "Сфинкс (циикийн тайпа)"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "Sphynx"
+        },
+        "de": {
+          "language": "de",
+          "value": "Sphynx-Katze"
+        },
+        "el": {
+          "language": "el",
+          "value": "Γάτα Σφιγξ"
+        },
+        "en": {
+          "language": "en",
+          "value": "Sphynx"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "sfinksa kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "sphynx"
+        },
+        "et": {
+          "language": "et",
+          "value": "Sfinks"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "گربه بی‌مو"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "Sfinx"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "Sphynx"
+        },
+        "he": {
+          "language": "he",
+          "value": "חתול ספינקס"
+        },
+        "hr": {
+          "language": "hr",
+          "value": "Sfinks mačka"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "szfinx"
+        },
+        "hy": {
+          "language": "hy",
+          "value": "Սֆինքս"
+        },
+        "id": {
+          "language": "id",
+          "value": "Kucing sphynx"
+        },
+        "it": {
+          "language": "it",
+          "value": "Sphynx"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "スフィンクス"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "스핑크스"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "Sfinksas"
+        },
+        "lv": {
+          "language": "lv",
+          "value": "Kanādas sfinkss"
+        },
+        "mk": {
+          "language": "mk",
+          "value": "Сфинкс"
+        },
+        "nb": {
+          "language": "nb",
+          "value": "Sphynx"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Sphynx"
+        },
+        "oc": {
+          "language": "oc",
+          "value": "Sphynx"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "sfinks"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "Sphynx"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "Sfinx"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "сфинкс"
+        },
+        "sh": {
+          "language": "sh",
+          "value": "Sfinks mačka"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Sphynx"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "Сфинкс"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "Sphynx"
+        },
+        "th": {
+          "language": "th",
+          "value": "สฟิงซ์"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Sphynx kedisi"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "канадський сфінкс"
+        },
+        "vi": {
+          "language": "vi",
+          "value": "Mèo Sphinx"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "斯芬克斯貓"
+        }
+      },
+      "lastrevid": 2517088354,
+      "modified": "2026-07-13T14:59:26Z",
+      "ns": 0,
+      "pageid": 44951,
+      "sitelinks": {
+        "afwiki": {
+          "badges": [],
+          "site": "afwiki",
+          "title": "Sfinkskat"
+        },
+        "arwiki": {
+          "badges": [],
+          "site": "arwiki",
+          "title": "قط فرعوني"
+        },
+        "arzwiki": {
+          "badges": [],
+          "site": "arzwiki",
+          "title": "قط فرعونى"
+        },
+        "azwiki": {
+          "badges": [],
+          "site": "azwiki",
+          "title": "Sfinks (pişik)"
+        },
+        "bewiki": {
+          "badges": [],
+          "site": "bewiki",
+          "title": "Сфінкс (кот)"
+        },
+        "brwiki": {
+          "badges": [],
+          "site": "brwiki",
+          "title": "Sfins"
+        },
+        "cawiki": {
+          "badges": [],
+          "site": "cawiki",
+          "title": "Sphynx"
+        },
+        "cewiki": {
+          "badges": [],
+          "site": "cewiki",
+          "title": "Сфинкс (циикийн тайпа)"
+        },
+        "commonswiki": {
+          "badges": [],
+          "site": "commonswiki",
+          "title": "Sphynx (cat)"
+        },
+        "cswiki": {
+          "badges": [],
+          "site": "cswiki",
+          "title": "Sphynx"
+        },
+        "dewiki": {
+          "badges": [],
+          "site": "dewiki",
+          "title": "Sphynx-Katze"
+        },
+        "elwiki": {
+          "badges": [],
+          "site": "elwiki",
+          "title": "Γάτα Σφιγξ"
+        },
+        "enwiki": {
+          "badges": [],
+          "site": "enwiki",
+          "title": "Sphynx cat"
+        },
+        "eswiki": {
+          "badges": [],
+          "site": "eswiki",
+          "title": "Sphynx"
+        },
+        "etwiki": {
+          "badges": [],
+          "site": "etwiki",
+          "title": "Sfinks (kassitõug)"
+        },
+        "fawiki": {
+          "badges": [],
+          "site": "fawiki",
+          "title": "گربه بی‌مو"
+        },
+        "fiwiki": {
+          "badges": [],
+          "site": "fiwiki",
+          "title": "Sfinx"
+        },
+        "frwiki": {
+          "badges": [],
+          "site": "frwiki",
+          "title": "Sphynx"
+        },
+        "hewiki": {
+          "badges": [],
+          "site": "hewiki",
+          "title": "חתול ספינקס"
+        },
+        "hrwiki": {
+          "badges": [],
+          "site": "hrwiki",
+          "title": "Sfinks mačka"
+        },
+        "huwiki": {
+          "badges": [],
+          "site": "huwiki",
+          "title": "Szfinx (macskafajta)"
+        },
+        "hywiki": {
+          "badges": [],
+          "site": "hywiki",
+          "title": "Սֆինքս (կատու)"
+        },
+        "idwiki": {
+          "badges": [],
+          "site": "idwiki",
+          "title": "Kucing sfinks"
+        },
+        "itwiki": {
+          "badges": [],
+          "site": "itwiki",
+          "title": "Sphynx"
+        },
+        "itwikiquote": {
+          "badges": [],
+          "site": "itwikiquote",
+          "title": "Sphynx"
+        },
+        "jawiki": {
+          "badges": [],
+          "site": "jawiki",
+          "title": "スフィンクス (ネコ)"
+        },
+        "kowiki": {
+          "badges": [],
+          "site": "kowiki",
+          "title": "스핑크스 (고양이)"
+        },
+        "ltwiki": {
+          "badges": [],
+          "site": "ltwiki",
+          "title": "Sfinksas (katė)"
+        },
+        "lvwiki": {
+          "badges": [],
+          "site": "lvwiki",
+          "title": "Kanādas sfinkss"
+        },
+        "mkwiki": {
+          "badges": [],
+          "site": "mkwiki",
+          "title": "Сфинкс"
+        },
+        "nlwiki": {
+          "badges": [],
+          "site": "nlwiki",
+          "title": "Sphynx (kattenras)"
+        },
+        "nowiki": {
+          "badges": [],
+          "site": "nowiki",
+          "title": "Sphynx"
+        },
+        "plwiki": {
+          "badges": [],
+          "site": "plwiki",
+          "title": "Sfinks (rasa kota)"
+        },
+        "ptwiki": {
+          "badges": [],
+          "site": "ptwiki",
+          "title": "Sphynx"
+        },
+        "rowiki": {
+          "badges": [],
+          "site": "rowiki",
+          "title": "Pisica Sfinx"
+        },
+        "ruwiki": {
+          "badges": [],
+          "site": "ruwiki",
+          "title": "Сфинкс (порода кошек)"
+        },
+        "shwiki": {
+          "badges": [],
+          "site": "shwiki",
+          "title": "Sfinks mačka"
+        },
+        "simplewiki": {
+          "badges": [],
+          "site": "simplewiki",
+          "title": "Sphynx cat"
+        },
+        "skwiki": {
+          "badges": [],
+          "site": "skwiki",
+          "title": "Sphynx"
+        },
+        "srwiki": {
+          "badges": [],
+          "site": "srwiki",
+          "title": "Сфинкс"
+        },
+        "svwiki": {
+          "badges": [],
+          "site": "svwiki",
+          "title": "Sphynx"
+        },
+        "thwiki": {
+          "badges": [],
+          "site": "thwiki",
+          "title": "สฟิงซ์ (พันธุ์แมว)"
+        },
+        "trwiki": {
+          "badges": [],
+          "site": "trwiki",
+          "title": "Sphynx kedisi"
+        },
+        "ukwiki": {
+          "badges": [],
+          "site": "ukwiki",
+          "title": "Сфінкс (порода кішок)"
+        },
+        "viwiki": {
+          "badges": [],
+          "site": "viwiki",
+          "title": "Mèo Sphinx"
+        },
+        "zhwiki": {
+          "badges": [],
+          "site": "zhwiki",
+          "title": "斯芬克斯貓"
+        }
+      },
+      "title": "Q42712",
+      "type": "item"
+    }
+  }
+}

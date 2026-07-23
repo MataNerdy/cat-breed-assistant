@@ -1,0 +1,1436 @@
+{
+  "entities": {
+    "Q42583": {
+      "aliases": {
+        "ca": [
+          {
+            "language": "ca",
+            "value": "Gat Bengala"
+          }
+        ],
+        "da": [
+          {
+            "language": "da",
+            "value": "Bengal"
+          }
+        ],
+        "de": [
+          {
+            "language": "de",
+            "value": "Leopardenkatze"
+          },
+          {
+            "language": "de",
+            "value": "Leopardette"
+          }
+        ],
+        "en": [
+          {
+            "language": "en",
+            "value": "Bengal"
+          }
+        ],
+        "en-gb": [
+          {
+            "language": "en-gb",
+            "value": "Bengal cat"
+          }
+        ],
+        "es": [
+          {
+            "language": "es",
+            "value": "Bengal"
+          }
+        ],
+        "it": [
+          {
+            "language": "it",
+            "value": "Gatto bengala"
+          }
+        ],
+        "ja": [
+          {
+            "language": "ja",
+            "value": "ベンガル猫"
+          }
+        ],
+        "mk": [
+          {
+            "language": "mk",
+            "value": "бенгалка"
+          }
+        ],
+        "nl": [
+          {
+            "language": "nl",
+            "value": "Bengaalkat"
+          },
+          {
+            "language": "nl",
+            "value": "bengaal"
+          },
+          {
+            "language": "nl",
+            "value": "Bengaalse kat"
+          }
+        ],
+        "pl": [
+          {
+            "language": "pl",
+            "value": "Kot bengalski krótkowłosy"
+          }
+        ],
+        "pt": [
+          {
+            "language": "pt",
+            "value": "Gato de bengala"
+          }
+        ],
+        "ro": [
+          {
+            "language": "ro",
+            "value": "Bengal"
+          }
+        ],
+        "uk": [
+          {
+            "language": "uk",
+            "value": "Бенгальська"
+          }
+        ]
+      },
+      "claims": {
+        "P10757": [
+          {
+            "id": "Q42583$8263676E-3AD3-4675-AFC5-5F72929ED994",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "427507"
+              },
+              "hash": "12cc593d7269e502acbf3f31edb67c23a9266976",
+              "property": "P10757",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11137": [
+          {
+            "id": "Q42583$C55F8E87-5CA3-4DA2-AA7C-EDCFBF91EB92",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "bengal_cat"
+              },
+              "hash": "695a369f90db2523cc2885310b376a956b2bf848",
+              "property": "P11137",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "3541ba5f9a0930af425763aeb13e3eefd30cfe9b",
+                "snaks": {
+                  "P1476": [
+                    {
+                      "datatype": "monolingualtext",
+                      "datavalue": {
+                        "type": "monolingualtext",
+                        "value": {
+                          "language": "en-us",
+                          "text": "Best Bengal Cat Posts - Reddit"
+                        }
+                      },
+                      "hash": "04f3180329aa839d684765301787771b2893f355",
+                      "property": "P1476",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2022-11-01T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "9b62cce6916e38fb1b2e6791e72767238a1d4a86",
+                      "property": "P813",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://www.reddit.com/t/bengal_cat/"
+                      },
+                      "hash": "b4b69e4158b20d2b368190aa3f8d3d80f06fd29a",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P1476",
+                  "P813"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P11514": [
+          {
+            "id": "Q42583$6BF7B8BB-F7E2-4BCF-84FB-2FD9BD40E9E4",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "bengal-skaia-koshka-ce6b08"
+              },
+              "hash": "d61200d9d615d72d65b0563f5d2347cb5a6b17ba",
+              "property": "P11514",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P12800": [
+          {
+            "id": "Q42583$02E80E28-9C94-4F8A-B23D-0472B7E5FA87",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "fr:Bengal"
+              },
+              "hash": "e0bdef02c3e35920a405f58f39db229ace82414a",
+              "property": "P12800",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1531": [
+          {
+            "id": "Q42583$f92d19e3-498d-47f1-08b7-0aad13035f0d",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q42627",
+                  "numeric-id": 42627
+                }
+              },
+              "hash": "2915f62f1003c814b9b297a21b58b299840e734f",
+              "property": "P1531",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$9d77c27c-4689-7680-95c8-d281c5ae9afc",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "d0b94749f4ec1d81813c3f9ae5cf83ff1bad627e",
+              "property": "P1531",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P18": [
+          {
+            "id": "Q42583$89c5ace3-417d-5b0e-8ab9-28980f34e008",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Paintedcats Red Star standing.jpg"
+              },
+              "hash": "5de0c5a45d509e3974ce4547f344272fca518dde",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1889": [
+          {
+            "id": "Q42583$DDC43E27-5C3C-4CAB-9679-B81DBCBDBB86",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q42627",
+                  "numeric-id": 42627
+                }
+              },
+              "hash": "d76076dae5667e412a107da3a2af6b48c78c307d",
+              "property": "P1889",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "12dc7570d41f4eaf110efd09b4b26dc995498d2b",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q1551807",
+                          "numeric-id": 1551807
+                        }
+                      },
+                      "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://pl.wikipedia.org/w/index.php?title=Kot_bengalski&oldid=62479245"
+                      },
+                      "hash": "977e29118b38c6b81eff4c93de91eb36e806d49b",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$72f68f6c-4d2d-d228-5ad7-d4dfda9f87e6",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q80952",
+                  "numeric-id": 80952
+                }
+              },
+              "hash": "0b45784f2969bb720ea17ed6d86cb1486e9cc7b4",
+              "property": "P1889",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2067": [
+          {
+            "id": "Q42583$67e1e802-4890-84c6-139a-7ca8d5204b41",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+8",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "d389072773d6841110a57c1fda84841043086bab",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q44148",
+                      "numeric-id": 44148
+                    }
+                  },
+                  "hash": "0576a008261e5b2544d1ff3328c94bd529379536",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$bf9d2e6c-414f-5af9-cbb2-87e7402a0771",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+9",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "5a584ede550538a9a37c0bf3b9d16280ad663ffc",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q44148",
+                      "numeric-id": 44148
+                    }
+                  },
+                  "hash": "0576a008261e5b2544d1ff3328c94bd529379536",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$7e2223c6-42ac-42e6-2633-8c6dfeb43fc8",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+3.5",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "047bdb4edfc15a30a20179d3c8183bc870e7e442",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q43445",
+                      "numeric-id": 43445
+                    }
+                  },
+                  "hash": "a274865baccd3ff04c28d5ffdcc12e0079f5a201",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P279": [
+          {
+            "id": "q42583$502ca2e6-41a1-4616-6cd7-354868e6a210",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "a7f19dde23fcbbfa646386355291ed0913940147",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$b655ebc5-4fa6-2ab2-c07b-626a7b06ba1e",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q845320",
+                  "numeric-id": 845320
+                }
+              },
+              "hash": "3eab4cfebf6e56f620b4f055e3cbb5f562b68d6c",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2924": [
+          {
+            "id": "Q42583$a5013afd-423c-d171-2473-8825e4b8501f",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "1874746"
+              },
+              "hash": "970a5b5d9c24486993219d16531fbbf999d62146",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q45403344",
+                      "numeric-id": 45403344
+                    }
+                  },
+                  "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          },
+          {
+            "id": "Q42583$F443F78A-D0A8-4C84-A3BE-37795CCC8A20",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "4419436"
+              },
+              "hash": "3cff061626ee7cd32f7c3dff70d6bf51df52c663",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "БЕНГАЛЬСКАЯ КОШКА"
+                  },
+                  "hash": "ccb954496eed0cf87453ff3692e101c87df7649e",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ],
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q123562959",
+                      "numeric-id": 123562959
+                    }
+                  },
+                  "hash": "ab73ca934336656292af069f2278599cecf5770f",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810",
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          }
+        ],
+        "P31": [
+          {
+            "id": "Q42583$97C23284-2696-4990-A466-057216451F3C",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q43577",
+                  "numeric-id": 43577
+                }
+              },
+              "hash": "cfb2ec76b0f3605abcbd8a26bcbb63c219fc93b8",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P373": [
+          {
+            "id": "q42583$9331D342-7567-4662-8D83-3FBA06279079",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Bengal cats"
+              },
+              "hash": "92bea663d6f00d9dceb25966a718cff455b4f7e6",
+              "property": "P373",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P3984": [
+          {
+            "id": "Q42583$D4632F9D-73F3-4A29-B6B2-90DC9BC81D93",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "bengalcats"
+              },
+              "hash": "b59c58f0256d8a1c6064a6c1a480810b7c518c2a",
+              "property": "P3984",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P4342": [
+          {
+            "id": "Q42583$dd1baa21-412d-4337-a35f-f05cd49d5d60",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "bengal"
+              },
+              "hash": "3dd1ae27aa2582151d20d06f8baedf210150e557",
+              "property": "P4342",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P495": [
+          {
+            "id": "Q42583$FF6CD7FA-F8C9-4C73-B4E7-A882F207361B",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q30",
+                  "numeric-id": 30
+                }
+              },
+              "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+              "property": "P495",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "015faa12b7565e67f2556e315c110c98bd46d336",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q328",
+                          "numeric-id": 328
+                        }
+                      },
+                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://en.wikipedia.org/w/index.php?title=Bengal_cat&oldid=942329422"
+                      },
+                      "hash": "2f7668b15a33fd2b3e6d2be1d0341ad63f069eb9",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P646": [
+          {
+            "id": "Q42583$D02555A1-4515-4A19-8F0D-79E943C37C2F",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "/m/0gzxy"
+              },
+              "hash": "76f37b22cd2a364f3e8b3729829b27b2508f4ab1",
+              "property": "P646",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q15241312",
+                          "numeric-id": 15241312
+                        }
+                      },
+                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P577": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2013-10-28T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                      "property": "P577",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P577"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8189": [
+          {
+            "id": "Q42583$8fa266c1-4b38-28d7-f890-9990963e1103",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "987007548916505171"
+              },
+              "hash": "de48d60c55d5b4b7ddb332c082032b64d594ea9f",
+              "property": "P8189",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "Bengal cat"
+                    }
+                  },
+                  "hash": "81d9a9b2b6540d1d5af042fd6783ad3e70d2bcb8",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P910": [
+          {
+            "id": "Q42583$8F394F0B-7134-4A99-BD24-CBE7917C821B",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q55330690",
+                  "numeric-id": 55330690
+                }
+              },
+              "hash": "471b1aedc16577d8bf3cb965e18aef94c1a55073",
+              "property": "P910",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ]
+      },
+      "descriptions": {
+        "cs": {
+          "language": "cs",
+          "value": "plemeno kočky"
+        },
+        "de": {
+          "language": "de",
+          "value": "Katzenrasse"
+        },
+        "en": {
+          "language": "en",
+          "value": "cat breed"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "cat breed"
+        },
+        "es": {
+          "language": "es",
+          "value": "raza de gato"
+        },
+        "et": {
+          "language": "et",
+          "value": "kassitõug"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "kissarotu"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "race de chat"
+        },
+        "ga": {
+          "language": "ga",
+          "value": "pór cat"
+        },
+        "he": {
+          "language": "he",
+          "value": "גזע של חתול הבית"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "hibrid macskaféle"
+        },
+        "id": {
+          "language": "id",
+          "value": "ras kucing"
+        },
+        "it": {
+          "language": "it",
+          "value": "razza di gatto"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "猫の品種"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "미국산 야생 고양이 잡종"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "luks"
+        },
+        "mk": {
+          "language": "mk",
+          "value": "мачешка раса"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "kattenras"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "rasa kota"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "raça de gato doméstico"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "rasă de pisică"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "гибрид домашней кошки и собственно бенгальской кошки"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "kattras"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Suni kedi türü"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "рідкісна порода кішок"
+        }
+      },
+      "id": "Q42583",
+      "labels": {
+        "af": {
+          "language": "af",
+          "value": "Bengaalse kat"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "قط البنغال"
+        },
+        "arz": {
+          "language": "arz",
+          "value": "قط البنجال"
+        },
+        "az": {
+          "language": "az",
+          "value": "Benqal ev pişiyi"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "Бенгалска котка"
+        },
+        "bn": {
+          "language": "bn",
+          "value": "বেঙ্গল ক্যাট"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "Bengala"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "bengálská kočka"
+        },
+        "cv": {
+          "language": "cv",
+          "value": "Бенгали кил кушакӗ"
+        },
+        "da": {
+          "language": "da",
+          "value": "Bengalkat"
+        },
+        "de": {
+          "language": "de",
+          "value": "Bengal"
+        },
+        "en": {
+          "language": "en",
+          "value": "Bengal cat"
+        },
+        "en-ca": {
+          "language": "en-ca",
+          "value": "Bengal"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "Bengal"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "Bengala kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "Bengala"
+        },
+        "et": {
+          "language": "et",
+          "value": "Bengali kass"
+        },
+        "eu": {
+          "language": "eu",
+          "value": "Bengala katu"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "گربه بنگال"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "Bengali"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "Bengal"
+        },
+        "ga": {
+          "language": "ga",
+          "value": "liopardchat Bheangál"
+        },
+        "gag": {
+          "language": "gag",
+          "value": "Bengal kedisi"
+        },
+        "he": {
+          "language": "he",
+          "value": "חתול בנגלי"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "bengáli macska"
+        },
+        "hy": {
+          "language": "hy",
+          "value": "Բենգալյան կատու"
+        },
+        "id": {
+          "language": "id",
+          "value": "Kucing bengal"
+        },
+        "is": {
+          "language": "is",
+          "value": "Bengalköttur"
+        },
+        "it": {
+          "language": "it",
+          "value": "Bengala"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "ベンガル"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "벵갈 고양이"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "Bengalijos katė"
+        },
+        "lv": {
+          "language": "lv",
+          "value": "Bengālijas kaķis"
+        },
+        "mk": {
+          "language": "mk",
+          "value": "бенгалска мачка"
+        },
+        "ms": {
+          "language": "ms",
+          "value": "Kucing Benggala"
+        },
+        "nb": {
+          "language": "nb",
+          "value": "Bengalkatt"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Bengaal"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Kot bengalski"
+        },
+        "pnb": {
+          "language": "pnb",
+          "value": "بنگالی بلی"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "Gato-de-bengala"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "pisică bengaleză"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "Бенгальская кошка"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Bengálska mačka"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "Bengalska mačka"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "bengal"
+        },
+        "th": {
+          "language": "th",
+          "value": "แมวเบงกอล"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Bengal kedisi"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "Бенгальська кішка"
+        },
+        "uz": {
+          "language": "uz",
+          "value": "Bengal mushugi."
+        },
+        "vi": {
+          "language": "vi",
+          "value": "Mèo Bengal"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "孟加拉貓"
+        },
+        "zh-cn": {
+          "language": "zh-cn",
+          "value": "孟加拉貓"
+        },
+        "zh-hans": {
+          "language": "zh-hans",
+          "value": "孟加拉貓"
+        },
+        "zh-hant": {
+          "language": "zh-hant",
+          "value": "孟加拉貓"
+        }
+      },
+      "lastrevid": 2507784295,
+      "modified": "2026-06-19T07:41:02Z",
+      "ns": 0,
+      "pageid": 44823,
+      "sitelinks": {
+        "afwiki": {
+          "badges": [],
+          "site": "afwiki",
+          "title": "Bengaalse kat"
+        },
+        "arwiki": {
+          "badges": [],
+          "site": "arwiki",
+          "title": "قط البنغال"
+        },
+        "arzwiki": {
+          "badges": [],
+          "site": "arzwiki",
+          "title": "قط البنجال"
+        },
+        "azwiki": {
+          "badges": [],
+          "site": "azwiki",
+          "title": "Benqal ev pişiyi"
+        },
+        "bgwiki": {
+          "badges": [],
+          "site": "bgwiki",
+          "title": "Бенгалска котка (домашна)"
+        },
+        "bnwiki": {
+          "badges": [],
+          "site": "bnwiki",
+          "title": "বেঙ্গল বিড়াল"
+        },
+        "cawiki": {
+          "badges": [],
+          "site": "cawiki",
+          "title": "Bengala (raça de gat)"
+        },
+        "commonswiki": {
+          "badges": [],
+          "site": "commonswiki",
+          "title": "Bengal (cat)"
+        },
+        "cswiki": {
+          "badges": [],
+          "site": "cswiki",
+          "title": "Bengálská kočka"
+        },
+        "cvwiki": {
+          "badges": [],
+          "site": "cvwiki",
+          "title": "Бенгали кушакĕ (килти)"
+        },
+        "dawiki": {
+          "badges": [],
+          "site": "dawiki",
+          "title": "Bengalkat"
+        },
+        "dewiki": {
+          "badges": [],
+          "site": "dewiki",
+          "title": "Bengal (Katzenrasse)"
+        },
+        "enwiki": {
+          "badges": [],
+          "site": "enwiki",
+          "title": "Bengal cat"
+        },
+        "eswiki": {
+          "badges": [],
+          "site": "eswiki",
+          "title": "Bengala (gato)"
+        },
+        "euwiki": {
+          "badges": [],
+          "site": "euwiki",
+          "title": "Bengala katu"
+        },
+        "fawiki": {
+          "badges": [],
+          "site": "fawiki",
+          "title": "گربه بنگال"
+        },
+        "fiwiki": {
+          "badges": [],
+          "site": "fiwiki",
+          "title": "Bengali (kissarotu)"
+        },
+        "frwiki": {
+          "badges": [],
+          "site": "frwiki",
+          "title": "Bengal"
+        },
+        "gagwiki": {
+          "badges": [],
+          "site": "gagwiki",
+          "title": "Bengal kedisi"
+        },
+        "gawiki": {
+          "badges": [],
+          "site": "gawiki",
+          "title": "Liopardchat Bheangál"
+        },
+        "hewiki": {
+          "badges": [],
+          "site": "hewiki",
+          "title": "חתול בנגלי"
+        },
+        "huwiki": {
+          "badges": [],
+          "site": "huwiki",
+          "title": "Bengáli macska"
+        },
+        "hywiki": {
+          "badges": [],
+          "site": "hywiki",
+          "title": "Բենգալյան կատու"
+        },
+        "idwiki": {
+          "badges": [],
+          "site": "idwiki",
+          "title": "Kucing bengal"
+        },
+        "iswiki": {
+          "badges": [],
+          "site": "iswiki",
+          "title": "Bengalköttur"
+        },
+        "itwiki": {
+          "badges": [],
+          "site": "itwiki",
+          "title": "Bengala (gatto)"
+        },
+        "jawiki": {
+          "badges": [],
+          "site": "jawiki",
+          "title": "ベンガル (ネコ)"
+        },
+        "kowiki": {
+          "badges": [],
+          "site": "kowiki",
+          "title": "벵갈 (고양이)"
+        },
+        "ltwiki": {
+          "badges": [],
+          "site": "ltwiki",
+          "title": "Bengalijos katė"
+        },
+        "lvwiki": {
+          "badges": [],
+          "site": "lvwiki",
+          "title": "Bengālijas kaķis"
+        },
+        "mswiki": {
+          "badges": [],
+          "site": "mswiki",
+          "title": "Kucing Benggala"
+        },
+        "nlwiki": {
+          "badges": [],
+          "site": "nlwiki",
+          "title": "Bengaal"
+        },
+        "nowiki": {
+          "badges": [],
+          "site": "nowiki",
+          "title": "Bengalkatt"
+        },
+        "plwiki": {
+          "badges": [],
+          "site": "plwiki",
+          "title": "Kot bengalski"
+        },
+        "pnbwiki": {
+          "badges": [],
+          "site": "pnbwiki",
+          "title": "بنگالی بلی"
+        },
+        "ptwiki": {
+          "badges": [],
+          "site": "ptwiki",
+          "title": "Gato-de-bengala"
+        },
+        "rowiki": {
+          "badges": [],
+          "site": "rowiki",
+          "title": "Bengaleza"
+        },
+        "ruwiki": {
+          "badges": [],
+          "site": "ruwiki",
+          "title": "Бенгальская кошка (домашняя)"
+        },
+        "simplewiki": {
+          "badges": [],
+          "site": "simplewiki",
+          "title": "Bengal cat"
+        },
+        "skwiki": {
+          "badges": [],
+          "site": "skwiki",
+          "title": "Bengálska mačka"
+        },
+        "srwiki": {
+          "badges": [],
+          "site": "srwiki",
+          "title": "Bengalska mačka"
+        },
+        "svwiki": {
+          "badges": [],
+          "site": "svwiki",
+          "title": "Bengalkatt"
+        },
+        "thwiki": {
+          "badges": [],
+          "site": "thwiki",
+          "title": "แมวเบงกอล"
+        },
+        "trwiki": {
+          "badges": [],
+          "site": "trwiki",
+          "title": "Bengal kedisi"
+        },
+        "ukwiki": {
+          "badges": [],
+          "site": "ukwiki",
+          "title": "Бенгальська кішка (домашня)"
+        },
+        "uzwiki": {
+          "badges": [],
+          "site": "uzwiki",
+          "title": "Bengal mushugi"
+        },
+        "viwiki": {
+          "badges": [],
+          "site": "viwiki",
+          "title": "Mèo Bengal"
+        },
+        "zhwiki": {
+          "badges": [],
+          "site": "zhwiki",
+          "title": "孟加拉貓"
+        }
+      },
+      "title": "Q42583",
+      "type": "item"
+    }
+  }
+}

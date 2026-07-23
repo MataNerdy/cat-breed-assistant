@@ -1,0 +1,1129 @@
+{
+  "entities": {
+    "Q42630": {
+      "aliases": {
+        "be": [
+          {
+            "language": "be",
+            "value": "Сібірская котка"
+          },
+          {
+            "language": "be",
+            "value": "Неўская маскарадная котка"
+          }
+        ],
+        "da": [
+          {
+            "language": "da",
+            "value": "Sibirsk Skovkat"
+          }
+        ],
+        "de": [
+          {
+            "language": "de",
+            "value": "Sibirische Waldkatze"
+          }
+        ],
+        "en": [
+          {
+            "language": "en",
+            "value": "Siberian cat"
+          },
+          {
+            "language": "en",
+            "value": "Siberian forest cat"
+          }
+        ],
+        "en-gb": [
+          {
+            "language": "en-gb",
+            "value": "Siberian cat"
+          },
+          {
+            "language": "en-gb",
+            "value": "Siberian forest cat"
+          },
+          {
+            "language": "en-gb",
+            "value": "Russian long-haired cat"
+          }
+        ],
+        "es": [
+          {
+            "language": "es",
+            "value": "Gato siberiano"
+          }
+        ],
+        "fa": [
+          {
+            "language": "fa",
+            "value": "نیمه مو‌بلند مسکو"
+          },
+          {
+            "language": "fa",
+            "value": "گربه سایبرین"
+          },
+          {
+            "language": "fa",
+            "value": "گربه سیبریایی"
+          },
+          {
+            "language": "fa",
+            "value": "Siberian"
+          }
+        ],
+        "fi": [
+          {
+            "language": "fi",
+            "value": "Siperialainen metsäkissa"
+          }
+        ],
+        "fr": [
+          {
+            "language": "fr",
+            "value": "Neva masquerade"
+          },
+          {
+            "language": "fr",
+            "value": "Chat sibérien"
+          },
+          {
+            "language": "fr",
+            "value": "Siberien"
+          }
+        ],
+        "he": [
+          {
+            "language": "he",
+            "value": "סיברי"
+          },
+          {
+            "language": "he",
+            "value": "סיבירי"
+          }
+        ],
+        "hr": [
+          {
+            "language": "hr",
+            "value": "Sibirska šumska mačka"
+          }
+        ],
+        "it": [
+          {
+            "language": "it",
+            "value": "Siberiano"
+          }
+        ],
+        "nl": [
+          {
+            "language": "nl",
+            "value": "Sibeer"
+          },
+          {
+            "language": "nl",
+            "value": "Siberische boskat"
+          },
+          {
+            "language": "nl",
+            "value": "Russische langhaar kat"
+          }
+        ],
+        "ro": [
+          {
+            "language": "ro",
+            "value": "Siberiană"
+          },
+          {
+            "language": "ro",
+            "value": "Pisica siberiană"
+          }
+        ],
+        "ru": [
+          {
+            "language": "ru",
+            "value": "Невская маскарадная кошка"
+          },
+          {
+            "language": "ru",
+            "value": "Сибирский кот"
+          }
+        ],
+        "uk": [
+          {
+            "language": "uk",
+            "value": "Сибірська"
+          }
+        ]
+      },
+      "claims": {
+        "P10757": [
+          {
+            "id": "Q42630$C9B6EA2B-522E-429F-AA7C-4F92AFBC44FD",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "103710"
+              },
+              "hash": "c425f665e5a77a44ef7377de3bec7f991e062910",
+              "property": "P10757",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11514": [
+          {
+            "id": "Q42630$FF66D7A3-015B-4C69-B22E-49A8F54A7B49",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sibirskaia-koshka-402b5a"
+              },
+              "hash": "9d989303baa8b4f46b61a5e36fc3e8a989d61cf9",
+              "property": "P11514",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P12800": [
+          {
+            "id": "Q42630$FC1E1B1A-C014-4E6E-BFAF-0BFAB02F6527",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "fr:Sibérien"
+              },
+              "hash": "98d4c43b2d56cba47bc13e1522670aad406f476c",
+              "property": "P12800",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P18": [
+          {
+            "id": "Q42630$794ab47e-496a-ff41-7e38-553628deb313",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "SC Alizarin Animal Beat SIB a 23.jpg"
+              },
+              "hash": "0b04495cbcb8f3b0ecb99be4d64ae7dd50dffa02",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "preferred",
+            "type": "statement"
+          },
+          {
+            "id": "Q42630$faea4e47-493f-b78c-b462-a7b21e5dd28a",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Murmur's Siberian Cat siberiano golden (cropped).JPG"
+              },
+              "hash": "0b0c27a5e0d7b2826727dfd05e4d5612dc25b215",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1889": [
+          {
+            "id": "Q42630$9b7dbbc1-4575-4731-dfca-22a0fd00eb65",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q42599",
+                  "numeric-id": 42599
+                }
+              },
+              "hash": "911d2c0aaab0be2b060ae8c128a6448ccbffb569",
+              "property": "P1889",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2347": [
+          {
+            "id": "Q42630$D8C7BEF6-1763-484E-A018-69DBFEC1783F",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "24186"
+              },
+              "hash": "7d39ebc10dd803de10ed05f47210f6d2ba999fd9",
+              "property": "P2347",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "fi",
+                      "text": "siperiankissa"
+                    }
+                  },
+                  "hash": "d7762ad5227cc68822323ef76de98811861e6a86",
+                  "property": "P14457",
+                  "snaktype": "value"
+                },
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "Siberian cat"
+                    }
+                  },
+                  "hash": "c0c7252a9a9e8e4a14cbf0a593ef9fc1c81e2a93",
+                  "property": "P14457",
+                  "snaktype": "value"
+                },
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "sv",
+                      "text": "sibirisk katt"
+                    }
+                  },
+                  "hash": "26c83ffee9999763a15e34b7f30381b063baeabd",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "f9bf1a1f034ddd51bd9928ac535e0f57d748e2cf",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q89345680",
+                          "numeric-id": 89345680
+                        }
+                      },
+                      "hash": "7133f11674741f52cadaae6029068fad9cbb52e3",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P279": [
+          {
+            "id": "Q42630$b7744bb4-4dd9-8753-2454-d3627b972da7",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "a7f19dde23fcbbfa646386355291ed0913940147",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2924": [
+          {
+            "id": "Q42630$1332B0F7-10D2-4795-92B0-5ED577E21D49",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "4346669"
+              },
+              "hash": "c22f6efa2870c9502d28931010739351538b1467",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "СИБИРСКАЯ КОШКА"
+                  },
+                  "hash": "8d92b427e859d07b1b83affe3add7900bc93c5df",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ],
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q123562959",
+                      "numeric-id": 123562959
+                    }
+                  },
+                  "hash": "ab73ca934336656292af069f2278599cecf5770f",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810",
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          },
+          {
+            "id": "Q42630$65BCFAED-7F4C-4929-BAD9-2C65229E68C0",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "3660270"
+              },
+              "hash": "45765a908b20c318584b385266c8d68e8ddca56d",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q45403344",
+                      "numeric-id": 45403344
+                    }
+                  },
+                  "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          }
+        ],
+        "P31": [
+          {
+            "id": "Q42630$6026EF46-9CD3-44B7-956A-06F92F341D40",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q43577",
+                  "numeric-id": 43577
+                }
+              },
+              "hash": "cfb2ec76b0f3605abcbd8a26bcbb63c219fc93b8",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P373": [
+          {
+            "id": "q42630$5000BE10-47B0-48BE-8436-9AA134E38DB7",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Siberian (cat)"
+              },
+              "hash": "522618b2bd6f709658cd4074522854279a04fac8",
+              "property": "P373",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P4342": [
+          {
+            "id": "Q42630$A7B0CA93-80A5-4196-936A-A23A0EB335CF",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sibirkatt"
+              },
+              "hash": "925a5e4f5adf0f21fb33440277a18268bbc1ae0e",
+              "property": "P4342",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P495": [
+          {
+            "id": "Q42630$5D90617B-ED29-4FB2-9F1D-35591F084A15",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q186096",
+                  "numeric-id": 186096
+                }
+              },
+              "hash": "4c940c05d91e93b32e5ea962dcadee8c39d44846",
+              "property": "P495",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "25227fff6377d1293b0b41ffd7758649126974f7",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q328",
+                          "numeric-id": 328
+                        }
+                      },
+                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://en.wikipedia.org/w/index.php?title=Siberian_cat&oldid=942176767"
+                      },
+                      "hash": "5f56cd15516143961eb1ce52540beb5c5417a171",
+                      "property": "P4656",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P646": [
+          {
+            "id": "Q42630$4C354179-6F4D-48E7-87D3-79FFDB7A35C8",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "/m/02zkbf"
+              },
+              "hash": "441c75eeafb8437fb1eaf2f3b22d809a6f9526a1",
+              "property": "P646",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q15241312",
+                          "numeric-id": 15241312
+                        }
+                      },
+                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P577": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2013-10-28T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                      "property": "P577",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P577"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8189": [
+          {
+            "id": "Q42630$3e8ed47a-4c77-0fa7-09e7-94d44625046d",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "987007403818805171"
+              },
+              "hash": "bf14323123cdbc808a39f84c2cd4e070523131f7",
+              "property": "P8189",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "Siberian cat"
+                    }
+                  },
+                  "hash": "c0c7252a9a9e8e4a14cbf0a593ef9fc1c81e2a93",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ]
+      },
+      "descriptions": {
+        "de": {
+          "language": "de",
+          "value": "Katzenrasse"
+        },
+        "en": {
+          "language": "en",
+          "value": "cat breed"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "cat breed"
+        },
+        "es": {
+          "language": "es",
+          "value": "raza de gato"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "نژادی از گربه‌های اهلی"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "kissarotu"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "race de félin"
+        },
+        "he": {
+          "language": "he",
+          "value": "גזע של חתול בית"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "macskafajta"
+        },
+        "it": {
+          "language": "it",
+          "value": "Razza felina"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "猫の品種"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "러시아의 토종 고양이 품종"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "kattenras"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Rasa kota"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "порода кошек"
+        }
+      },
+      "id": "Q42630",
+      "labels": {
+        "af": {
+          "language": "af",
+          "value": "Siberiese kat"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "قط سيبيري"
+        },
+        "arz": {
+          "language": "arz",
+          "value": "قط السيبيرى"
+        },
+        "az": {
+          "language": "az",
+          "value": "Sibir pişiyi"
+        },
+        "be": {
+          "language": "be",
+          "value": "Маскарадная неўская котка"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "Сибирска котка"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "gat siberià"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "Sibiřská kočka"
+        },
+        "da": {
+          "language": "da",
+          "value": "Sibirisk Skovkat"
+        },
+        "de": {
+          "language": "de",
+          "value": "Sibirische Katze"
+        },
+        "en": {
+          "language": "en",
+          "value": "Siberian"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "Siberian"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "Siberia kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "Siberiano"
+        },
+        "et": {
+          "language": "et",
+          "value": "Siberi kass"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "گربه سیبرین"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "Siperiankissa"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "Sibérien"
+        },
+        "he": {
+          "language": "he",
+          "value": "חתול סיבירי"
+        },
+        "hr": {
+          "language": "hr",
+          "value": "Sibirska mačka"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "szibériai macska"
+        },
+        "hy": {
+          "language": "hy",
+          "value": "Սիբիրական կատու"
+        },
+        "id": {
+          "language": "id",
+          "value": "Kucing Siberian"
+        },
+        "it": {
+          "language": "it",
+          "value": "Gatto siberiano"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "サイベリアン"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "시베리아숲 고양이"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "Sibiro katė"
+        },
+        "mk": {
+          "language": "mk",
+          "value": "сибирска мачка"
+        },
+        "nb": {
+          "language": "nb",
+          "value": "Sibirkatt"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Siberische kat"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Kot syberyjski"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "Siberiano (gato)"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "Pisică siberiană"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "Сибирская кошка"
+        },
+        "sh": {
+          "language": "sh",
+          "value": "Sibirska mačka"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Sibírska mačka"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "Сибирска мачка"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "Sibirisk katt"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Sibirya kedisi"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "Сибірська кішка"
+        },
+        "vi": {
+          "language": "vi",
+          "value": "Mèo Siberia"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "西伯利亞貓"
+        }
+      },
+      "lastrevid": 2496489137,
+      "modified": "2026-05-23T18:28:21Z",
+      "ns": 0,
+      "pageid": 44869,
+      "sitelinks": {
+        "afwiki": {
+          "badges": [],
+          "site": "afwiki",
+          "title": "Siberiese kat"
+        },
+        "arwiki": {
+          "badges": [],
+          "site": "arwiki",
+          "title": "قط سيبيري"
+        },
+        "arzwiki": {
+          "badges": [],
+          "site": "arzwiki",
+          "title": "قط السيبيرى"
+        },
+        "azwiki": {
+          "badges": [],
+          "site": "azwiki",
+          "title": "Sibir pişiyi"
+        },
+        "bewiki": {
+          "badges": [],
+          "site": "bewiki",
+          "title": "Сібірскі кот"
+        },
+        "bgwiki": {
+          "badges": [],
+          "site": "bgwiki",
+          "title": "Сибирска котка"
+        },
+        "cawiki": {
+          "badges": [],
+          "site": "cawiki",
+          "title": "Gat siberià"
+        },
+        "commonswiki": {
+          "badges": [],
+          "site": "commonswiki",
+          "title": "Category:Siberian (cat)"
+        },
+        "cswiki": {
+          "badges": [],
+          "site": "cswiki",
+          "title": "Sibiřská kočka"
+        },
+        "dawiki": {
+          "badges": [],
+          "site": "dawiki",
+          "title": "Sibirisk skovkat"
+        },
+        "dewiki": {
+          "badges": [],
+          "site": "dewiki",
+          "title": "Sibirische Katze"
+        },
+        "enwiki": {
+          "badges": [],
+          "site": "enwiki",
+          "title": "Siberian cat"
+        },
+        "eowiki": {
+          "badges": [],
+          "site": "eowiki",
+          "title": "Siberia kato"
+        },
+        "eswiki": {
+          "badges": [],
+          "site": "eswiki",
+          "title": "Siberiano (gato)"
+        },
+        "etwiki": {
+          "badges": [],
+          "site": "etwiki",
+          "title": "Siberi kass"
+        },
+        "fawiki": {
+          "badges": [],
+          "site": "fawiki",
+          "title": "گربه سیبری"
+        },
+        "fiwiki": {
+          "badges": [],
+          "site": "fiwiki",
+          "title": "Siperiankissa"
+        },
+        "frwiki": {
+          "badges": [],
+          "site": "frwiki",
+          "title": "Sibérien (chat)"
+        },
+        "hewiki": {
+          "badges": [],
+          "site": "hewiki",
+          "title": "חתול סיבירי"
+        },
+        "hrwiki": {
+          "badges": [],
+          "site": "hrwiki",
+          "title": "Sibirska mačka"
+        },
+        "huwiki": {
+          "badges": [],
+          "site": "huwiki",
+          "title": "Szibériai macska"
+        },
+        "hywiki": {
+          "badges": [],
+          "site": "hywiki",
+          "title": "Սիբիրյան կատու"
+        },
+        "idwiki": {
+          "badges": [],
+          "site": "idwiki",
+          "title": "Kucing siberia"
+        },
+        "itwiki": {
+          "badges": [],
+          "site": "itwiki",
+          "title": "Gatto siberiano"
+        },
+        "jawiki": {
+          "badges": [],
+          "site": "jawiki",
+          "title": "サイベリアン"
+        },
+        "kowiki": {
+          "badges": [],
+          "site": "kowiki",
+          "title": "시베리안 (고양이)"
+        },
+        "ltwiki": {
+          "badges": [],
+          "site": "ltwiki",
+          "title": "Sibiro katė"
+        },
+        "mkwiki": {
+          "badges": [],
+          "site": "mkwiki",
+          "title": "Сибирска мачка"
+        },
+        "nlwiki": {
+          "badges": [],
+          "site": "nlwiki",
+          "title": "Siberische kat"
+        },
+        "nowiki": {
+          "badges": [],
+          "site": "nowiki",
+          "title": "Sibirkatt"
+        },
+        "plwiki": {
+          "badges": [],
+          "site": "plwiki",
+          "title": "Kot syberyjski"
+        },
+        "ptwiki": {
+          "badges": [],
+          "site": "ptwiki",
+          "title": "Siberiano (gato)"
+        },
+        "rowiki": {
+          "badges": [],
+          "site": "rowiki",
+          "title": "Pisică siberiană"
+        },
+        "ruwiki": {
+          "badges": [],
+          "site": "ruwiki",
+          "title": "Сибирская кошка"
+        },
+        "shwiki": {
+          "badges": [],
+          "site": "shwiki",
+          "title": "Sibirska mačka"
+        },
+        "skwiki": {
+          "badges": [],
+          "site": "skwiki",
+          "title": "Sibírska mačka"
+        },
+        "srwiki": {
+          "badges": [],
+          "site": "srwiki",
+          "title": "Сибирска мачка"
+        },
+        "svwiki": {
+          "badges": [],
+          "site": "svwiki",
+          "title": "Sibirisk katt"
+        },
+        "trwiki": {
+          "badges": [],
+          "site": "trwiki",
+          "title": "Sibirya kedisi"
+        },
+        "ukwiki": {
+          "badges": [],
+          "site": "ukwiki",
+          "title": "Сибірська кішка"
+        },
+        "viwiki": {
+          "badges": [],
+          "site": "viwiki",
+          "title": "Mèo Siberia"
+        },
+        "zhwiki": {
+          "badges": [],
+          "site": "zhwiki",
+          "title": "西伯利亞貓"
+        }
+      },
+      "title": "Q42630",
+      "type": "item"
+    }
+  }
+}

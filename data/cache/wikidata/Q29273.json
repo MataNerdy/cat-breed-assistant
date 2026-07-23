@@ -1,0 +1,1688 @@
+{
+  "entities": {
+    "Q29273": {
+      "aliases": {
+        "fa": [
+          {
+            "language": "fa",
+            "value": "بریتیش شورتهیر"
+          },
+          {
+            "language": "fa",
+            "value": "شورت هیر بریتیش"
+          },
+          {
+            "language": "fa",
+            "value": "شورت هیر بریتانیایی"
+          },
+          {
+            "language": "fa",
+            "value": "بریتیش موکوتاه"
+          },
+          {
+            "language": "fa",
+            "value": "گربه بریتیش مو کوتاه"
+          }
+        ],
+        "fi": [
+          {
+            "language": "fi",
+            "value": "brittiläinen lyhytkarva"
+          },
+          {
+            "language": "fi",
+            "value": "britti"
+          }
+        ]
+      },
+      "claims": {
+        "P10": [
+          {
+            "id": "Q29273$3a1c2039-47ae-0c5f-1e34-c0b42f79ad76",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "British Shorthair Silver Tabby Grooming.mpg"
+              },
+              "hash": "7d1a710878fff3a79e0a13be7b536e780a81ded6",
+              "property": "P10",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "b4a963800979849a674f853c51841cc7843ae236",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://commons.wikimedia.org/wiki/File:British_Shorthair_Silver_Tabby_Grooming.mpg"
+                      },
+                      "hash": "23dadd57c50b51d3b7a2c96404531385c3807944",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$cd72f55e-4ac1-ecae-d3b9-f7afd71f29ff",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "British Shorthair Blue.mpg"
+              },
+              "hash": "2bf905ced28493b32bedbabd1930a57ae7d1ab4b",
+              "property": "P10",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "d3daea70a9dbd2ee2da8a6ae53735cdb869036c9",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://commons.wikimedia.org/wiki/File:British_Shorthair_Blue.mpg"
+                      },
+                      "hash": "955e6928986c87b94011b17a126e5a635d657775",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P10757": [
+          {
+            "id": "Q29273$BF3A3979-3427-42F3-95F7-45363C1681D9",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "53801"
+              },
+              "hash": "04b5694b3950638fddb1fd9cc37aa5e53e9c5982",
+              "property": "P10757",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11196": [
+          {
+            "id": "Q29273$A751E115-F54A-4A74-A495-7207ED716E75",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "英国短毛猫"
+              },
+              "hash": "575193667a0ee83df0c0483f9586759fd3d15b58",
+              "property": "P11196",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P3740": [
+                {
+                  "datatype": "quantity",
+                  "datavalue": {
+                    "type": "quantity",
+                    "value": {
+                      "amount": "+1169741",
+                      "unit": "1"
+                    }
+                  },
+                  "hash": "aed5d499141dc22ae150f33d82159ddc9219e748",
+                  "property": "P3740",
+                  "snaktype": "value"
+                }
+              ],
+              "P585": [
+                {
+                  "datatype": "time",
+                  "datavalue": {
+                    "type": "time",
+                    "value": {
+                      "after": 0,
+                      "before": 0,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                      "precision": 11,
+                      "time": "+2023-03-30T00:00:00Z",
+                      "timezone": 0
+                    }
+                  },
+                  "hash": "f891c0e960f79a870276795f91b90c1dff279286",
+                  "property": "P585",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P3740",
+              "P585"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P12086": [
+          {
+            "id": "Q29273$C3562F76-4DFC-4745-9913-0A919ACA3479",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "Brits_korthaar"
+              },
+              "hash": "501fd560041bb0d205b590f0a1aa7b3a3d134b78",
+              "property": "P12086",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P9675": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "62569"
+                  },
+                  "hash": "561762593674b7da8abed8cdaff877f7cf520b15",
+                  "property": "P9675",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P9675"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P12800": [
+          {
+            "id": "Q29273$25160544-A81F-4700-9790-8052BAD8998A",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "en:British_shorthair"
+              },
+              "hash": "07a172846890e9bb8a85c69852a38075ec0ed100",
+              "property": "P12800",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$656043D5-EFCA-4532-B8B4-2F7B4B64D2BB",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "fr:British_shorthair"
+              },
+              "hash": "27606b21a82d0757ec40d4ea39cc032b6390ba66",
+              "property": "P12800",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P13797": [
+          {
+            "id": "Q29273$00210237-5DF0-43CB-98DF-184F7D1C5B6D",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "british-shorthair-cat"
+              },
+              "hash": "898d06e17c347103568be289f14ea89c11e2f74f",
+              "property": "P13797",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1417": [
+          {
+            "id": "Q29273$ba3f7495-44d6-01eb-96c4-5429fcd520dc",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "animal/domestic-shorthair"
+              },
+              "hash": "9dcbffdf9efeab2830fdda4cbbac49f2889f7387",
+              "property": "P1417",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "domestic shorthair"
+                  },
+                  "hash": "e0ba473b6825ac95b0a0faf9b86b393c7d5962f0",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P18": [
+          {
+            "id": "Q29273$adf8510e-4ad0-2afc-490c-31ae62f7d1c0",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Mystica from British Empire Cattery.jpg"
+              },
+              "hash": "f256997d00cb1cf2a410d89e9b8e5e63c683f50f",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2067": [
+          {
+            "id": "Q29273$ed54fa5c-416b-166b-1384-8443fb82e81e",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+4",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "66057f3ea06ca15170f4d13e6c6c2131b9d36659",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q6581072",
+                      "numeric-id": 6581072
+                    }
+                  },
+                  "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "44988fb041f22251885e706ecb05cd87c503a522",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://de.wikipedia.org/wiki/Britisch_Kurzhaar"
+                      },
+                      "hash": "d98f0a2d73d27046e286ff2d68378c9e5d7bc3b0",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$4b0264f0-49dd-9446-fc3b-e7d942f0c146",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+7",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "198885d5a3a90458e3fbb08959c41148bff92bf5",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q6581097",
+                      "numeric-id": 6581097
+                    }
+                  },
+                  "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "44988fb041f22251885e706ecb05cd87c503a522",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://de.wikipedia.org/wiki/Britisch_Kurzhaar"
+                      },
+                      "hash": "d98f0a2d73d27046e286ff2d68378c9e5d7bc3b0",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P2250": [
+          {
+            "id": "Q29273$b4fb8eaa-49ac-595b-66f5-4ef22d5584b6",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+14",
+                  "unit": "http://www.wikidata.org/entity/Q577"
+                }
+              },
+              "hash": "e280b0a9a39a09bf95d019cf46e915c415535d83",
+              "property": "P2250",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P244": [
+          {
+            "id": "Q29273$4C2BF1AC-D23A-47B3-B3B6-2A9B5F39D84E",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sh97000163"
+              },
+              "hash": "becb50e22df11b6946842bdf77bc63009708c0fd",
+              "property": "P244",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "ac5d47e9fbcc281bc0d27a205ae02e22ad24ce31",
+                "snaks": {
+                  "P813": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2019-04-03T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "0dcf4f64e93fdcc654e2c7534285881fe48b9f3d",
+                      "property": "P813",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://github.com/JohnMarkOckerbloom/ftl/blob/master/data/wikimap"
+                      },
+                      "hash": "b560dc6b281a39d061e189d2eb299a426a06f1a2",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P2572": [
+          {
+            "id": "Q29273$54f04b0d-4e36-d331-930d-4998f808e33e",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "bsh"
+              },
+              "hash": "e210fc7b9d07755f59194a83946d2422882bf3d5",
+              "property": "P2572",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "65f9c73940fc9d870f44bfa1755f9ddc2ff6ea75",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://www.instagram.com/explore/tags/bsh/?hl=en"
+                      },
+                      "hash": "44e894f648f68bc85a8b8a88b1bfff5d6c4c82a3",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$3c617178-4528-ecf5-fce4-b85ab0b060c1",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "bkh"
+              },
+              "hash": "8de93d07885b78aeacf1226d66a4dcf8360d110d",
+              "property": "P2572",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "b3fc1e5b573a740af03951dbd185452839326128",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://www.instagram.com/explore/tags/bkh/?hl=en"
+                      },
+                      "hash": "8614aa5a376418dedc6e2ed7a505c7d4b8956749",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P2581": [
+          {
+            "id": "Q29273$9D351C70-A4F9-4E10-AA0B-FDE76EFC1955",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "03213312n"
+              },
+              "hash": "bfa8f7635672095e9e7b94577f49f2501c8fc8b1",
+              "property": "P2581",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q4837690",
+                          "numeric-id": 4837690
+                        }
+                      },
+                      "hash": "25b816aab41db18565946259c950aed6de05dd1e",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P279": [
+          {
+            "id": "q29273$1f5b82cf-4f2d-c3c2-7b43-4f5ddb6e406e",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q12648",
+                  "numeric-id": 12648
+                }
+              },
+              "hash": "62ed89ed2087ccde440e31c2c3eeecd72f9a7fe3",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$1199ff92-48a7-9fff-37a9-174149ff65ae",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "a7f19dde23fcbbfa646386355291ed0913940147",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2924": [
+          {
+            "id": "Q29273$0EDAC20F-F548-4546-B94A-220EF513CD55",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "4419515"
+              },
+              "hash": "d16668cdbda466760a4a8688ee0944ad08939197",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "БРИТАНСКАЯ КОРОТКОШЁРСТНАЯ КОШКА"
+                  },
+                  "hash": "70a2a1a6b98c440c88f2e06ec0d3ed9e200b5522",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q29273$1C48B907-DC55-419F-8D68-E94A8F9D870B",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "1883983"
+              },
+              "hash": "d353c23a063db49ade36f4ad5e6312f708f1e838",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q45403344",
+                      "numeric-id": 45403344
+                    }
+                  },
+                  "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          }
+        ],
+        "P31": [
+          {
+            "id": "Q29273$455E1466-B945-41D1-8ED7-116ADF8D6F9B",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q43577",
+                  "numeric-id": 43577
+                }
+              },
+              "hash": "cfb2ec76b0f3605abcbd8a26bcbb63c219fc93b8",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P373": [
+          {
+            "id": "q29273$0376EC73-EDB2-4EA1-9618-8856036E95B1",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "British Shorthair cats"
+              },
+              "hash": "84015ca501b99938d2cf6d4d6a3f398aee8db16b",
+              "property": "P373",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P3984": [
+          {
+            "id": "Q29273$5bc70a33-448e-da31-b8b2-75c691840abf",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "britishshorthair"
+              },
+              "hash": "f3bfb04aeb4bed3c6f546f91a62a7ab5c5401020",
+              "property": "P3984",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "Cutest Subreddit Around"
+                  },
+                  "hash": "4e400ce1de952fb7d99b475df46bddcbd791dbea",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ],
+              "P407": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q1860",
+                      "numeric-id": 1860
+                    }
+                  },
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "property": "P407",
+                  "snaktype": "value"
+                }
+              ],
+              "P580": [
+                {
+                  "datatype": "time",
+                  "datavalue": {
+                    "type": "time",
+                    "value": {
+                      "after": 0,
+                      "before": 0,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                      "precision": 11,
+                      "time": "+2014-06-26T00:00:00Z",
+                      "timezone": 0
+                    }
+                  },
+                  "hash": "2254af875f3a6968aa302815a7ac89436fda0d6f",
+                  "property": "P580",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407",
+              "P1810",
+              "P580"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P495": [
+          {
+            "id": "Q29273$ac40426a-494a-8e78-a1aa-9da09cb53336",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q145",
+                  "numeric-id": 145
+                }
+              },
+              "hash": "7fff5adac725cc34fb5c6dcfe502e2a7bbd045b2",
+              "property": "P495",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "d36ed36967914dce4757455faade4bc59307ea3b",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://en.wikipedia.org/wiki/British_Shorthair#:~:text=British%20Blue%20(legacy)-,Origin,-United%20Kingdom"
+                      },
+                      "hash": "c6ed47ce87a0f28e48649a3785fd989ddaa53f48",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P508": [
+          {
+            "id": "Q29273$6A5F6312-9C88-49F8-B379-33FBB2BD178F",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "56756"
+              },
+              "hash": "e3df75e7d74245ddd6360883c4ccd4b18bd34a40",
+              "property": "P508",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "ff65511d37e885bcf005b99c2241192548c3f03a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q16583225",
+                          "numeric-id": 16583225
+                        }
+                      },
+                      "hash": "3b090a7bae73c288393b2c8b9846cc7ed9a58f91",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P646": [
+          {
+            "id": "Q29273$A1D8CE9B-9507-4C58-95F2-F17AAD1592CD",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "/m/0cb37"
+              },
+              "hash": "4d0d7957c28d98358060037e71732bfc11f5ed8c",
+              "property": "P646",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q15241312",
+                          "numeric-id": 15241312
+                        }
+                      },
+                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P577": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2013-10-28T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                      "property": "P577",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P577"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8189": [
+          {
+            "id": "Q29273$FC632045-85C3-453B-A44F-E180E952D8F2",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "987007546818905171"
+              },
+              "hash": "8da5c1009dab42e707a8136ed1fb541b316c66b8",
+              "property": "P8189",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "British shorthair cat"
+                    }
+                  },
+                  "hash": "a7f0bf3722fc892d1cbbb8d0f25cfcbc1ab71efc",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "c8a47202c92936005b390eb36ddd267921b51f43",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q188915",
+                          "numeric-id": 188915
+                        }
+                      },
+                      "hash": "0ea73b3596b49258a7b7ec6495950779b99e875d",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8687": [
+          {
+            "id": "Q29273$185c5362-41d1-90c1-e154-26d827e05b93",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+34500",
+                  "unit": "1"
+                }
+              },
+              "hash": "c55093829012cf7b80095078b8e4c29238eff2bc",
+              "property": "P8687",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P3984": [
+                {
+                  "datatype": "external-id",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "britishshorthair"
+                  },
+                  "hash": "f3bfb04aeb4bed3c6f546f91a62a7ab5c5401020",
+                  "property": "P3984",
+                  "snaktype": "value"
+                }
+              ],
+              "P585": [
+                {
+                  "datatype": "time",
+                  "datavalue": {
+                    "type": "time",
+                    "value": {
+                      "after": 0,
+                      "before": 0,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                      "precision": 11,
+                      "time": "+2023-06-05T00:00:00Z",
+                      "timezone": 0
+                    }
+                  },
+                  "hash": "4c37ce958ab411e3f23aa06d8d3f083e62fe72eb",
+                  "property": "P585",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P585",
+              "P3984"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ]
+      },
+      "descriptions": {
+        "ca": {
+          "language": "ca",
+          "value": "raça de gat que descendeix del creuament entre els gats que van portar a Britània els romans i els nadius de l'illa"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "plemeno kočky domácí, vyšlechtěné kolem roku 1900 ve Velké Británii"
+        },
+        "de": {
+          "language": "de",
+          "value": "Katzenrasse"
+        },
+        "en": {
+          "language": "en",
+          "value": "British breed of shorthaired cat"
+        },
+        "es": {
+          "language": "es",
+          "value": "raza de gato"
+        },
+        "et": {
+          "language": "et",
+          "value": "kassitõug"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "نژادی از گربهٔ اهلی"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "kissarotu"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "race de chat"
+        },
+        "he": {
+          "language": "he",
+          "value": "גזע של חתול הבית"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "macskafajta"
+        },
+        "it": {
+          "language": "it",
+          "value": "razza felina"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "猫の品種"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "영국산 단모종 고양이"
+        },
+        "lb": {
+          "language": "lb",
+          "value": "Kazerass"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "kattenras"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "rasa kota"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "raça de gato doméstico"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "rasă de pisică"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "порода короткошёрстных кошек"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "стара раса домаће мачке"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "kattras"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Büyük Britanya kökenli kedi ırkı"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "貓品種"
+        }
+      },
+      "id": "Q29273",
+      "labels": {
+        "af": {
+          "language": "af",
+          "value": "Britse korthaarkat"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "قط بريطاني قصير الشعر"
+        },
+        "arz": {
+          "language": "arz",
+          "value": "قط بريطانى قصير الشعر"
+        },
+        "az": {
+          "language": "az",
+          "value": "Qısatüklü ingilis pişiyi"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "Британска късокосместа"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "gat britànic de pèl curt"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "Britská krátkosrstá kočka"
+        },
+        "da": {
+          "language": "da",
+          "value": "British shorthair"
+        },
+        "de": {
+          "language": "de",
+          "value": "Britisch Kurzhaar"
+        },
+        "en": {
+          "language": "en",
+          "value": "British Shorthair"
+        },
+        "en-ca": {
+          "language": "en-ca",
+          "value": "British Shorthair"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "British Shorthair"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "Brita Mallonghara kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "British Shorthair"
+        },
+        "et": {
+          "language": "et",
+          "value": "Briti lühikarvaline"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "گربه موکوتاه بریتانیایی"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "brittiläinen"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "british shorthair"
+        },
+        "he": {
+          "language": "he",
+          "value": "חתול בריטי קצר-שיער"
+        },
+        "hr": {
+          "language": "hr",
+          "value": "Britanska kratkodlaka mačka"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "brit rövidszőrű"
+        },
+        "id": {
+          "language": "id",
+          "value": "Kucing bulu pendek Britania"
+        },
+        "it": {
+          "language": "it",
+          "value": "British Shorthair"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "ブリティッシュ・ショートヘア"
+        },
+        "ka": {
+          "language": "ka",
+          "value": "ბრიტანული მოკლებეწვიანი კატა"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "브리티시 쇼트헤어"
+        },
+        "lb": {
+          "language": "lb",
+          "value": "Brittesch Kuerzhoer"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "Britų trumpaplaukės katės"
+        },
+        "lv": {
+          "language": "lv",
+          "value": "Britu īsspalvainais kaķis"
+        },
+        "mk": {
+          "language": "mk",
+          "value": "Британска кратковлакнеста мачка"
+        },
+        "ms": {
+          "language": "ms",
+          "value": "Kucing bulu pendek British"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Brits korthaar"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Kot brytyjski krótkowłosy"
+        },
+        "pnb": {
+          "language": "pnb",
+          "value": "برطانوی نکے وال"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "gato de pelo curto inglês"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "British Shorthair"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "британская короткошёрстная кошка"
+        },
+        "sh": {
+          "language": "sh",
+          "value": "Britanska kratkodlaka mačka"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Britská mačka"
+        },
+        "sl": {
+          "language": "sl",
+          "value": "britanska kratkodlaka mačka"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "Британска краткодлака мачка"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "brittiskt korthår"
+        },
+        "th": {
+          "language": "th",
+          "value": "บริติชขนสั้น"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "British Shorthair"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "британська короткошерста кішка"
+        },
+        "uz": {
+          "language": "uz",
+          "value": "British Shorthair"
+        },
+        "vec": {
+          "language": "vec",
+          "value": "British Shorthair"
+        },
+        "vi": {
+          "language": "vi",
+          "value": "Mèo lông ngắn Anh"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "英國短毛貓"
+        },
+        "zh-cn": {
+          "language": "zh-cn",
+          "value": "英国短毛猫"
+        },
+        "zh-hans": {
+          "language": "zh-hans",
+          "value": "英国短毛猫"
+        },
+        "zh-hant": {
+          "language": "zh-hant",
+          "value": "英國短毛貓"
+        }
+      },
+      "lastrevid": 2496396695,
+      "modified": "2026-05-23T13:20:36Z",
+      "ns": 0,
+      "pageid": 32607,
+      "sitelinks": {
+        "afwiki": {
+          "badges": [],
+          "site": "afwiki",
+          "title": "Britse korthaarkat"
+        },
+        "arwiki": {
+          "badges": [],
+          "site": "arwiki",
+          "title": "قط بريطاني قصير الشعر"
+        },
+        "arzwiki": {
+          "badges": [],
+          "site": "arzwiki",
+          "title": "قط بريطانى قصير الشعر"
+        },
+        "azwiki": {
+          "badges": [],
+          "site": "azwiki",
+          "title": "Qısatüklü ingilis pişiyi"
+        },
+        "bgwiki": {
+          "badges": [],
+          "site": "bgwiki",
+          "title": "Британска късокосместа"
+        },
+        "cawiki": {
+          "badges": [],
+          "site": "cawiki",
+          "title": "Gat britànic de pèl curt"
+        },
+        "commonswiki": {
+          "badges": [],
+          "site": "commonswiki",
+          "title": "Category:British Shorthair cats"
+        },
+        "cswiki": {
+          "badges": [],
+          "site": "cswiki",
+          "title": "Britská krátkosrstá kočka"
+        },
+        "dawiki": {
+          "badges": [],
+          "site": "dawiki",
+          "title": "British shorthair"
+        },
+        "dewiki": {
+          "badges": [],
+          "site": "dewiki",
+          "title": "Britisch Kurzhaar"
+        },
+        "enwiki": {
+          "badges": [],
+          "site": "enwiki",
+          "title": "British Shorthair"
+        },
+        "eswiki": {
+          "badges": [],
+          "site": "eswiki",
+          "title": "British Shorthair"
+        },
+        "etwiki": {
+          "badges": [],
+          "site": "etwiki",
+          "title": "Briti lühikarvaline kass"
+        },
+        "fawiki": {
+          "badges": [],
+          "site": "fawiki",
+          "title": "گربه موکوتاه بریتانیایی"
+        },
+        "fiwiki": {
+          "badges": [],
+          "site": "fiwiki",
+          "title": "Brittiläinen (kissa)"
+        },
+        "frwiki": {
+          "badges": [],
+          "site": "frwiki",
+          "title": "British shorthair"
+        },
+        "hewiki": {
+          "badges": [],
+          "site": "hewiki",
+          "title": "חתול בריטי קצר-שיער"
+        },
+        "hrwiki": {
+          "badges": [],
+          "site": "hrwiki",
+          "title": "Britanska kratkodlaka mačka"
+        },
+        "huwiki": {
+          "badges": [],
+          "site": "huwiki",
+          "title": "Brit rövidszőrű"
+        },
+        "idwiki": {
+          "badges": [],
+          "site": "idwiki",
+          "title": "Kucing bulu pendek britania"
+        },
+        "itwiki": {
+          "badges": [],
+          "site": "itwiki",
+          "title": "British Shorthair"
+        },
+        "jawiki": {
+          "badges": [],
+          "site": "jawiki",
+          "title": "ブリティッシュショートヘア"
+        },
+        "kawiki": {
+          "badges": [],
+          "site": "kawiki",
+          "title": "ბრიტანული მოკლებეწვიანი კატა"
+        },
+        "kowiki": {
+          "badges": [],
+          "site": "kowiki",
+          "title": "브리티시 쇼트헤어"
+        },
+        "lbwiki": {
+          "badges": [],
+          "site": "lbwiki",
+          "title": "Brittesch Kuerzhoer"
+        },
+        "ltwiki": {
+          "badges": [],
+          "site": "ltwiki",
+          "title": "Britų trumpaplaukė katė"
+        },
+        "lvwiki": {
+          "badges": [],
+          "site": "lvwiki",
+          "title": "Britu īsspalvainais kaķis"
+        },
+        "mkwiki": {
+          "badges": [],
+          "site": "mkwiki",
+          "title": "Британска кратковлакнеста мачка"
+        },
+        "mswiki": {
+          "badges": [],
+          "site": "mswiki",
+          "title": "Kucing bulu pendek British"
+        },
+        "nlwiki": {
+          "badges": [],
+          "site": "nlwiki",
+          "title": "Brits korthaar"
+        },
+        "plwiki": {
+          "badges": [],
+          "site": "plwiki",
+          "title": "Kot brytyjski krótkowłosy"
+        },
+        "pnbwiki": {
+          "badges": [],
+          "site": "pnbwiki",
+          "title": "برطانوی نکے وال"
+        },
+        "ptwiki": {
+          "badges": [],
+          "site": "ptwiki",
+          "title": "Gato de pelo curto inglês"
+        },
+        "rowiki": {
+          "badges": [],
+          "site": "rowiki",
+          "title": "British Shorthair"
+        },
+        "ruwiki": {
+          "badges": [],
+          "site": "ruwiki",
+          "title": "Британская короткошёрстная кошка"
+        },
+        "shwiki": {
+          "badges": [],
+          "site": "shwiki",
+          "title": "Britanska kratkodlaka mačka"
+        },
+        "simplewiki": {
+          "badges": [],
+          "site": "simplewiki",
+          "title": "British Shorthair"
+        },
+        "skwiki": {
+          "badges": [],
+          "site": "skwiki",
+          "title": "Britská mačka"
+        },
+        "srwiki": {
+          "badges": [],
+          "site": "srwiki",
+          "title": "Британска краткодлака мачка"
+        },
+        "svwiki": {
+          "badges": [],
+          "site": "svwiki",
+          "title": "Brittiskt korthår"
+        },
+        "thwiki": {
+          "badges": [],
+          "site": "thwiki",
+          "title": "บริติชขนสั้น"
+        },
+        "trwiki": {
+          "badges": [],
+          "site": "trwiki",
+          "title": "British Shorthair"
+        },
+        "ukwiki": {
+          "badges": [],
+          "site": "ukwiki",
+          "title": "Британська короткошерста кішка"
+        },
+        "uzwiki": {
+          "badges": [],
+          "site": "uzwiki",
+          "title": "British Shorthair"
+        },
+        "vecwiki": {
+          "badges": [],
+          "site": "vecwiki",
+          "title": "British Shorthair"
+        },
+        "viwiki": {
+          "badges": [],
+          "site": "viwiki",
+          "title": "Mèo lông ngắn Anh"
+        },
+        "zhwiki": {
+          "badges": [],
+          "site": "zhwiki",
+          "title": "英国短毛猫"
+        }
+      },
+      "title": "Q29273",
+      "type": "item"
+    }
+  }
+}

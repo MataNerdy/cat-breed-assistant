@@ -1,0 +1,1954 @@
+{
+  "entities": {
+    "Q42659": {
+      "aliases": {
+        "ar": [
+          {
+            "language": "ar",
+            "value": "القط ماين كون"
+          }
+        ],
+        "cs": [
+          {
+            "language": "cs",
+            "value": "Maina"
+          },
+          {
+            "language": "cs",
+            "value": "Majna"
+          }
+        ],
+        "de": [
+          {
+            "language": "de",
+            "value": "Maine Coon"
+          },
+          {
+            "language": "de",
+            "value": "Maine Coon-Katze"
+          }
+        ],
+        "en": [
+          {
+            "language": "en",
+            "value": "American longhair"
+          },
+          {
+            "language": "en",
+            "value": "Maine coon cat"
+          }
+        ],
+        "es": [
+          {
+            "language": "es",
+            "value": "main coon"
+          }
+        ],
+        "fr": [
+          {
+            "language": "fr",
+            "value": "Mainecoon"
+          }
+        ],
+        "hr": [
+          {
+            "language": "hr",
+            "value": "Rakunska mačka"
+          }
+        ],
+        "ko": [
+          {
+            "language": "ko",
+            "value": "메인 쿤"
+          }
+        ],
+        "lv": [
+          {
+            "language": "lv",
+            "value": "Meinas pavalsts jenotveidīgais kaķis"
+          }
+        ],
+        "nb": [
+          {
+            "language": "nb",
+            "value": "amerikansk langhår"
+          }
+        ],
+        "ru": [
+          {
+            "language": "ru",
+            "value": "Мейн Кун"
+          },
+          {
+            "language": "ru",
+            "value": "Мэйн-кун"
+          },
+          {
+            "language": "ru",
+            "value": "Мейнская енотовая кошка"
+          }
+        ],
+        "sk": [
+          {
+            "language": "sk",
+            "value": "Maine Coon"
+          }
+        ],
+        "sv": [
+          {
+            "language": "sv",
+            "value": "Mainecoon"
+          }
+        ],
+        "uk": [
+          {
+            "language": "uk",
+            "value": "Мен-кун"
+          }
+        ],
+        "vi": [
+          {
+            "language": "vi",
+            "value": "Maine Coon"
+          }
+        ]
+      },
+      "claims": {
+        "P10376": [
+          {
+            "id": "Q42659$f300351f-4658-de64-e386-38c24775eccf",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "immunology-and-microbiology/maine-coon-cat"
+              },
+              "hash": "70eb8531c810b507a84908baaebc683fcfd15ad8",
+              "property": "P10376",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$4fc641db-4568-7f51-846b-12024b7fb6e2",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "pharmacology-toxicology-and-pharmaceutical-science/maine-coon-cat"
+              },
+              "hash": "ae2eac3bd6d4a9c2edaef70dc723880ed81503d3",
+              "property": "P10376",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P10757": [
+          {
+            "id": "Q42659$5025CB5C-FA3A-448E-93A5-5F9DE53A92AC",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "55738"
+              },
+              "hash": "f42282759650f75a2aee4cad367418a736b0c6c6",
+              "property": "P10757",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11408": [
+          {
+            "id": "Q42659$65c9866a-fad9-4275-a9a3-a36d697231ed",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "メインクーン"
+              },
+              "hash": "75e504d953d999e7ee24cfc7d9c4f1bc6dcfb96a",
+              "property": "P11408",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P11514": [
+          {
+            "id": "Q42659$510046E3-6D2C-46B8-9375-CCD88D71B028",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "mein-kun-8c5344"
+              },
+              "hash": "12f52105ab46a498dde3633ad5283030edad8ac6",
+              "property": "P11514",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P12800": [
+          {
+            "id": "Q42659$F4071D3A-6BAF-4F28-94A8-E5A8EA60EAC8",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "fr:Maine_coon"
+              },
+              "hash": "6e5c22bd71f69af2ca4d74c754fd41d47756b34b",
+              "property": "P12800",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P13591": [
+          {
+            "id": "Q42659$50FA18A1-A71A-4798-9261-6586E9879F9C",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "concept/83232bc7-7670-4ba5-96d1-ebe99957cd50"
+              },
+              "hash": "7a82be1408872ed65e90dd9ea19ae416c75ed8be",
+              "property": "P13591",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P1417": [
+          {
+            "id": "Q42659$AE842F70-9B81-4A0E-BDCF-44BEBFA627AC",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "animal/Maine-Coon-cat"
+              },
+              "hash": "9552129da0e34afa6e13d42b83cc427e17273c3f",
+              "property": "P1417",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "Maine coon cat"
+                  },
+                  "hash": "9c57fed7cef0496695907cdc6f64acc0ede8e61d",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P18": [
+          {
+            "id": "Q42659$2b22df02-451d-ff92-a82c-02640c60f0f3",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Фото кунов.jpg"
+              },
+              "hash": "16123ab66318efc99d4e22af60f216413a3d9940",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$25ee4f86-45fc-297c-cd30-84c27451e560",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Karin Maine Coon.jpg"
+              },
+              "hash": "61c275a57882b299803435cfa557a207e705416c",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$ec79ffd1-4d8b-88a3-aecd-fa8aecdaa49b",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine Coon male NO Sigdalskauen Balder.jpg"
+              },
+              "hash": "e7519bb5f96ea714a17aa6646e41ad2bc948580e",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "d9a59d5194ce3d9deb2a58917969aeea9b68f2b5",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q191769",
+                          "numeric-id": 191769
+                        }
+                      },
+                      "hash": "a5c308c5ba418a72fdd1bccb747f1cc50ab4431e",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$6e7e85d1-4a61-95b6-5780-21a3ecce4765",
+            "mainsnak": {
+              "datatype": "commonsMedia",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine Coon kittens NO Sigdalskauen.jpg"
+              },
+              "hash": "0e8ea7fa78f5ce3bc65e18f59229a8712057fb1e",
+              "property": "P18",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P180": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q147",
+                      "numeric-id": 147
+                    }
+                  },
+                  "hash": "e10e9d4fc6cc74eaaf0782830dd7466a869ac179",
+                  "property": "P180",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P180"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P2067": [
+          {
+            "id": "Q42659$b583b607-41ed-1089-14e9-95db0741130b",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+6.8",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "fda631566b1d9ed37373d4a05ab0a2c275003d6e",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q44148",
+                      "numeric-id": 44148
+                    }
+                  },
+                  "hash": "0576a008261e5b2544d1ff3328c94bd529379536",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$f41bb5d0-4a8b-5482-9230-392cc1fdb885",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+11",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "722a5b6c932f000ea6a870f2bf98408e9f6f767c",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q44148",
+                      "numeric-id": 44148
+                    }
+                  },
+                  "hash": "0576a008261e5b2544d1ff3328c94bd529379536",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$e268d13d-4198-eb3a-3b30-85ecd7d18187",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+6.8",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "fda631566b1d9ed37373d4a05ab0a2c275003d6e",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q43445",
+                      "numeric-id": 43445
+                    }
+                  },
+                  "hash": "a274865baccd3ff04c28d5ffdcc12e0079f5a201",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$547ca967-4513-3be3-072f-1e09237e599a",
+            "mainsnak": {
+              "datatype": "quantity",
+              "datavalue": {
+                "type": "quantity",
+                "value": {
+                  "amount": "+4.5",
+                  "unit": "http://www.wikidata.org/entity/Q11570"
+                }
+              },
+              "hash": "9fdcc23e7740c5accad828496117e6839c127cbb",
+              "property": "P2067",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P21": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q43445",
+                      "numeric-id": 43445
+                    }
+                  },
+                  "hash": "a274865baccd3ff04c28d5ffdcc12e0079f5a201",
+                  "property": "P21",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P21"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P244": [
+          {
+            "id": "Q42659$1CD9ADF0-17B3-4669-AC2E-79C1DAE97BA6",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "sh85079925"
+              },
+              "hash": "329c077e5bf05b31423406498944775ec07166e4",
+              "property": "P244",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "ac5d47e9fbcc281bc0d27a205ae02e22ad24ce31",
+                "snaks": {
+                  "P813": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2019-04-03T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "0dcf4f64e93fdcc654e2c7534285881fe48b9f3d",
+                      "property": "P813",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://github.com/JohnMarkOckerbloom/ftl/blob/master/data/wikimap"
+                      },
+                      "hash": "b560dc6b281a39d061e189d2eb299a426a06f1a2",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P813"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P279": [
+          {
+            "id": "Q42659$5c0c1088-463c-3456-1c66-263a50bc234c",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q146",
+                  "numeric-id": 146
+                }
+              },
+              "hash": "a7f19dde23fcbbfa646386355291ed0913940147",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$435303f2-4890-58e3-57b0-3ea9ae40aa19",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q28136322",
+                  "numeric-id": 28136322
+                }
+              },
+              "hash": "8e8c7a2dad0e575967242c9835b0627bec544269",
+              "property": "P279",
+              "snaktype": "value"
+            },
+            "rank": "deprecated",
+            "references": [
+              {
+                "hash": "eb449aaa03bb8ce530d1937d0662a8a590ad9551",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://cfa.org/maine-coon-cat/"
+                      },
+                      "hash": "72f9535d26c2136744906f83736e6a7892374fe6",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P2924": [
+          {
+            "id": "Q42659$D96DB629-4B2C-4EDF-9BF8-9D22CA9F561C",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "4426742"
+              },
+              "hash": "8bd99a75e1710c50fde21e3112e7b64c393657de",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "МЭЙН-КУН"
+                  },
+                  "hash": "1259018d8088d0a440c71a14049d431e0ea5e3b5",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ],
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q123562959",
+                      "numeric-id": 123562959
+                    }
+                  },
+                  "hash": "ab73ca934336656292af069f2278599cecf5770f",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810",
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          },
+          {
+            "id": "Q42659$D6748BAF-5602-4DC7-ACCE-3E6D2B1E70D4",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "2241679"
+              },
+              "hash": "fa148132273f30fd78cc19a9095edd2b896abad0",
+              "property": "P2924",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P2241": [
+                {
+                  "datatype": "wikibase-item",
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "entity-type": "item",
+                      "id": "Q45403344",
+                      "numeric-id": 45403344
+                    }
+                  },
+                  "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                  "property": "P2241",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P2241"
+            ],
+            "rank": "deprecated",
+            "type": "statement"
+          }
+        ],
+        "P31": [
+          {
+            "id": "Q42659$387F5936-3D60-44C0-AF35-F403033C6E56",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q43577",
+                  "numeric-id": 43577
+                }
+              },
+              "hash": "cfb2ec76b0f3605abcbd8a26bcbb63c219fc93b8",
+              "property": "P31",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "eb449aaa03bb8ce530d1937d0662a8a590ad9551",
+                "snaks": {
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://cfa.org/maine-coon-cat/"
+                      },
+                      "hash": "72f9535d26c2136744906f83736e6a7892374fe6",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P3222": [
+          {
+            "id": "Q42659$4895C6FE-0075-4FEB-98A9-09A476330A74",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "maine-coon"
+              },
+              "hash": "96c651163b8518617fc98b5e764bbabb41c0a007",
+              "property": "P3222",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P373": [
+          {
+            "id": "q42659$A96B5777-DE25-4478-A068-58AAE6798993",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine Coon cats"
+              },
+              "hash": "3b96cf88b718d3d4ca8892760525f00a0931e440",
+              "property": "P373",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "e71a7903858496c67eea189a7084d5559f788edb",
+                "snaks": {
+                  "P143": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q565",
+                          "numeric-id": 565
+                        }
+                      },
+                      "hash": "5d3b16d350189b0a81818758208505444c86c127",
+                      "property": "P143",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P4342": [
+          {
+            "id": "Q42659$8637f0e4-4aa8-466a-0a94-9c24259d0ff7",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "maine_coon"
+              },
+              "hash": "258071fda2a22974ecc86b20d7a7de5513f727a1",
+              "property": "P4342",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P495": [
+          {
+            "id": "Q42659$371ED5B6-C184-41F6-A15F-73DABCA2F0D9",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q30",
+                  "numeric-id": 30
+                }
+              },
+              "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+              "property": "P495",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "f2ac4ac7350b52ba86eaeb51b207fbd7faa62b98",
+                "snaks": {
+                  "P1065": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://web.archive.org/web/20151220123955/http://fifeweb.org/wp/breeds/breeds_prf_stn.php"
+                      },
+                      "hash": "015b5435c8cba41d7e79cc4e0dc5d3a1d38ac2b1",
+                      "property": "P1065",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P2960": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2015-12-20T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "3b6a168622b69df1ffb38da742d5e60ca6cc07e6",
+                      "property": "P2960",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "http://fifeweb.org/wp/breeds/breeds_prf_stn.php"
+                      },
+                      "hash": "6f79b27556b7150c5e91ffd94dc743db038e06ba",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P854",
+                  "P1065",
+                  "P2960"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P646": [
+          {
+            "id": "Q42659$8397F012-C550-4D6B-80E8-4E7AE415ED10",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "/m/0j60j"
+              },
+              "hash": "6e6f81503855a2b347022ecf03031107101477fb",
+              "property": "P646",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q15241312",
+                          "numeric-id": 15241312
+                        }
+                      },
+                      "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P577": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2013-10-28T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                      "property": "P577",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P577"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P6900": [
+          {
+            "id": "Q42659$dc711b47-411b-8f35-1d21-c248bdcd3495",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "メインクーン"
+              },
+              "hash": "d616fa4d9876193610b8d09d2a8a9c9425b60580",
+              "property": "P6900",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P691": [
+          {
+            "id": "Q42659$E3B60208-A905-435C-AE28-46C4743A7E5F",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "ph195851"
+              },
+              "hash": "c09598c03ae258ac10b45aef3d0abe8df450d697",
+              "property": "P691",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P1810": [
+                {
+                  "datatype": "string",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "mainská mývalí kočka"
+                  },
+                  "hash": "4c31ffa6b74e8058500ab5f99299b657c419b9e5",
+                  "property": "P1810",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P1810"
+            ],
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P7305": [
+          {
+            "id": "Q42659$AA27CD65-F631-4C26-A08F-DFFA6B32415F",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "3936273"
+              },
+              "hash": "79a21665ccaed4eaf991ba47a01dd3d5008bd31a",
+              "property": "P7305",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P7502": [
+          {
+            "id": "Q42659$499F9D72-D7D9-4D18-B56F-D135C0B7F5FE",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine_Coon-5MJM3"
+              },
+              "hash": "34c88c1390d8b05a852ec4159c48b92323dd22b7",
+              "property": "P7502",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "b4362cd476c861211265e259289353d2e5be8744",
+                "snaks": {
+                  "P813": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2022-09-10T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "849bf31a75ee81eef52deceed6ee34b2f429e12c",
+                      "property": "P813",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "datatype": "url",
+                      "datavalue": {
+                        "type": "string",
+                        "value": "https://golden.com/wiki/Maine_Coon-5MJM3"
+                      },
+                      "hash": "9432a393778ce0d7aae2449af3f65e0cbc73f4b7",
+                      "property": "P854",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P813",
+                  "P854"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8189": [
+          {
+            "id": "Q42659$C4DF4FD2-BDE9-410F-8303-B6F2CD2B6749",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "987007543547705171"
+              },
+              "hash": "3031f964feb801f3ca0338beb3f7205250d11d8a",
+              "property": "P8189",
+              "snaktype": "value"
+            },
+            "qualifiers": {
+              "P14457": [
+                {
+                  "datatype": "monolingualtext",
+                  "datavalue": {
+                    "type": "monolingualtext",
+                    "value": {
+                      "language": "en",
+                      "text": "Maine coon cat"
+                    }
+                  },
+                  "hash": "3bb2e3a239798f38840c61d2680f6eaf3feff7e8",
+                  "property": "P14457",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P14457"
+            ],
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "c8a47202c92936005b390eb36ddd267921b51f43",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q188915",
+                          "numeric-id": 188915
+                        }
+                      },
+                      "hash": "0ea73b3596b49258a7b7ec6495950779b99e875d",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8313": [
+          {
+            "id": "Q42659$F9DCC681-8E6C-4465-9203-8FB72BEE891D",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine_coon"
+              },
+              "hash": "34116aaa7696a89d32e62b36aa0d1406220ea832",
+              "property": "P8313",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P8408": [
+          {
+            "id": "Q42659$75AFAE57-C0EA-4667-9DE3-33656EFE0437",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "MaineCoonCat"
+              },
+              "hash": "a17ef43011b0f8c6d0897283359993f9afd47a80",
+              "property": "P8408",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "9a681f9dd95c90224547c404e11295f4f7dcf54e",
+                "snaks": {
+                  "P248": [
+                    {
+                      "datatype": "wikibase-item",
+                      "datavalue": {
+                        "type": "wikibase-entityid",
+                        "value": {
+                          "entity-type": "item",
+                          "id": "Q64139102",
+                          "numeric-id": 64139102
+                        }
+                      },
+                      "hash": "9d5780dddffa8746637a9929a936ab6b0f601e24",
+                      "property": "P248",
+                      "snaktype": "value"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "datatype": "time",
+                      "datavalue": {
+                        "type": "time",
+                        "value": {
+                          "after": 0,
+                          "before": 0,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                          "precision": 11,
+                          "time": "+2020-07-09T00:00:00Z",
+                          "timezone": 0
+                        }
+                      },
+                      "hash": "622a5a27fa5b25e7e7984974e9db494cf8460990",
+                      "property": "P813",
+                      "snaktype": "value"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P248",
+                  "P813"
+                ]
+              }
+            ],
+            "type": "statement"
+          }
+        ],
+        "P8885": [
+          {
+            "id": "Q42659$4e93fcfb-4a04-c1d3-b48f-007e719fc674",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "메인쿤"
+              },
+              "hash": "ad7046649f6332ec0ab50b92b6a6d86616c08248",
+              "property": "P8885",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P910": [
+          {
+            "id": "Q42659$38E8BB7D-F151-4C12-966E-D45551B5F273",
+            "mainsnak": {
+              "datatype": "wikibase-item",
+              "datavalue": {
+                "type": "wikibase-entityid",
+                "value": {
+                  "entity-type": "item",
+                  "id": "Q55330694",
+                  "numeric-id": 55330694
+                }
+              },
+              "hash": "2d68169bac4dd2ca55321da00bf354b034443c37",
+              "property": "P910",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P9322": [
+          {
+            "id": "Q42659$1292C097-2C7C-4655-A74C-430CD31B2953",
+            "mainsnak": {
+              "datatype": "external-id",
+              "datavalue": {
+                "type": "string",
+                "value": "0224282-mainska-myvali-kocka"
+              },
+              "hash": "07ad4d524e5f33c09460820feed13743e8498d26",
+              "property": "P9322",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ],
+        "P935": [
+          {
+            "id": "Q42659$2F70150C-C5C9-44D6-A0DC-AA261CC2C50E",
+            "mainsnak": {
+              "datatype": "string",
+              "datavalue": {
+                "type": "string",
+                "value": "Maine Coon"
+              },
+              "hash": "a0514c870554eb8823235630412fec055f72c22f",
+              "property": "P935",
+              "snaktype": "value"
+            },
+            "rank": "normal",
+            "type": "statement"
+          }
+        ]
+      },
+      "descriptions": {
+        "ar": {
+          "language": "ar",
+          "value": "نوع من القطط"
+        },
+        "ary": {
+          "language": "ary",
+          "value": "نوع من القطط"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "порода домашна котка"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "kočkovitá šelma"
+        },
+        "de": {
+          "language": "de",
+          "value": "Katzenrasse amerik. Waldkatze"
+        },
+        "el": {
+          "language": "el",
+          "value": "ράτσα γάτας"
+        },
+        "en": {
+          "language": "en",
+          "value": "breed of domestic cat"
+        },
+        "en-ca": {
+          "language": "en-ca",
+          "value": "breed of domestic cat"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "breed of domestic cat"
+        },
+        "en-us": {
+          "language": "en-us",
+          "value": "breed of domestic cat"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "raso de kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "raza de gato"
+        },
+        "et": {
+          "language": "et",
+          "value": "kassitõug"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "kissarotu"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "race de chats"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "macskafajta"
+        },
+        "id": {
+          "language": "id",
+          "value": "ras kucing"
+        },
+        "it": {
+          "language": "it",
+          "value": "razza felina"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "猫の品種"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "미국산 대형 고양이 품종"
+        },
+        "ml": {
+          "language": "ml",
+          "value": "ഒരിനം പൂച്ച"
+        },
+        "nb": {
+          "language": "nb",
+          "value": "storvokst semi-langhåret tamkattrase"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "kattenras"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Rasa kota"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "raça de gato"
+        },
+        "pt-br": {
+          "language": "pt-br",
+          "value": "raça de gato"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "rasă de pisică"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "Порода кошек"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Plemeno mačky"
+        },
+        "sl": {
+          "language": "sl",
+          "value": "pasma domačih mačk"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "raskatt med ursprung i delstaten Maine, USA"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Kedi Cinsi"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "原产自北美洲的长毛猫种"
+        }
+      },
+      "id": "Q42659",
+      "labels": {
+        "af": {
+          "language": "af",
+          "value": "Maine Coon"
+        },
+        "ar": {
+          "language": "ar",
+          "value": "قط ماين كون"
+        },
+        "arz": {
+          "language": "arz",
+          "value": "قط ماين كون"
+        },
+        "az": {
+          "language": "az",
+          "value": "Meyn-kun"
+        },
+        "be": {
+          "language": "be",
+          "value": "Мэйн-кун"
+        },
+        "bg": {
+          "language": "bg",
+          "value": "Мейн кун"
+        },
+        "ca": {
+          "language": "ca",
+          "value": "Maine Coon"
+        },
+        "cs": {
+          "language": "cs",
+          "value": "Mainská mývalí kočka"
+        },
+        "cv": {
+          "language": "cv",
+          "value": "Мейн-кун"
+        },
+        "da": {
+          "language": "da",
+          "value": "Maine Coon"
+        },
+        "de": {
+          "language": "de",
+          "value": "Maine-Coon-Katze"
+        },
+        "el": {
+          "language": "el",
+          "value": "Μέιν Κουν"
+        },
+        "en": {
+          "language": "en",
+          "value": "Maine coon"
+        },
+        "en-ca": {
+          "language": "en-ca",
+          "value": "Maine Coon"
+        },
+        "en-gb": {
+          "language": "en-gb",
+          "value": "Maine Coon"
+        },
+        "en-us": {
+          "language": "en-us",
+          "value": "Maine coon"
+        },
+        "eo": {
+          "language": "eo",
+          "value": "Majna kato"
+        },
+        "es": {
+          "language": "es",
+          "value": "Maine Coon"
+        },
+        "et": {
+          "language": "et",
+          "value": "Meini kass"
+        },
+        "fa": {
+          "language": "fa",
+          "value": "مین کوون"
+        },
+        "fi": {
+          "language": "fi",
+          "value": "Maine coon"
+        },
+        "fr": {
+          "language": "fr",
+          "value": "maine coon"
+        },
+        "he": {
+          "language": "he",
+          "value": "מיין קון"
+        },
+        "hr": {
+          "language": "hr",
+          "value": "Maine coon mačka"
+        },
+        "hu": {
+          "language": "hu",
+          "value": "maine coon"
+        },
+        "hy": {
+          "language": "hy",
+          "value": "Մեյն-Կուն"
+        },
+        "id": {
+          "language": "id",
+          "value": "Kucing Maine Coon"
+        },
+        "it": {
+          "language": "it",
+          "value": "Maine Coon"
+        },
+        "ja": {
+          "language": "ja",
+          "value": "メインクーン"
+        },
+        "ko": {
+          "language": "ko",
+          "value": "메인쿤"
+        },
+        "la": {
+          "language": "la",
+          "value": "Maine Coon"
+        },
+        "lt": {
+          "language": "lt",
+          "value": "Meinkūnas"
+        },
+        "lv": {
+          "language": "lv",
+          "value": "Meinkūns"
+        },
+        "ml": {
+          "language": "ml",
+          "value": "മെയ്ൻ കൂൺ"
+        },
+        "nan": {
+          "language": "nan",
+          "value": "Maine Coon"
+        },
+        "nb": {
+          "language": "nb",
+          "value": "Maine coon"
+        },
+        "nl": {
+          "language": "nl",
+          "value": "Maine Coon"
+        },
+        "pl": {
+          "language": "pl",
+          "value": "Maine Coon"
+        },
+        "pt": {
+          "language": "pt",
+          "value": "Maine Coon"
+        },
+        "pt-br": {
+          "language": "pt-br",
+          "value": "Maine Coon"
+        },
+        "ro": {
+          "language": "ro",
+          "value": "Maine Coon"
+        },
+        "ru": {
+          "language": "ru",
+          "value": "Мейн-кун"
+        },
+        "sh": {
+          "language": "sh",
+          "value": "Maine coon mačka"
+        },
+        "sk": {
+          "language": "sk",
+          "value": "Mainská mývalia mačka"
+        },
+        "sl": {
+          "language": "sl",
+          "value": "Maine Coon"
+        },
+        "sr": {
+          "language": "sr",
+          "value": "Мејн Кун"
+        },
+        "sv": {
+          "language": "sv",
+          "value": "Maine coon"
+        },
+        "ta": {
+          "language": "ta",
+          "value": "மெயின் கூன்"
+        },
+        "tr": {
+          "language": "tr",
+          "value": "Maine Coon"
+        },
+        "uk": {
+          "language": "uk",
+          "value": "Мейн кун"
+        },
+        "uz": {
+          "language": "uz",
+          "value": "Maine-coon"
+        },
+        "vi": {
+          "language": "vi",
+          "value": "Mèo Maine Coon"
+        },
+        "zh": {
+          "language": "zh",
+          "value": "緬因貓"
+        }
+      },
+      "lastrevid": 2520017015,
+      "modified": "2026-07-20T04:34:31Z",
+      "ns": 0,
+      "pageid": 44898,
+      "sitelinks": {
+        "afwiki": {
+          "badges": [],
+          "site": "afwiki",
+          "title": "Maine Coon"
+        },
+        "arwiki": {
+          "badges": [],
+          "site": "arwiki",
+          "title": "قط ماين كون"
+        },
+        "arzwiki": {
+          "badges": [],
+          "site": "arzwiki",
+          "title": "قط ماين كون"
+        },
+        "azwiki": {
+          "badges": [],
+          "site": "azwiki",
+          "title": "Meyn-kun"
+        },
+        "bewiki": {
+          "badges": [],
+          "site": "bewiki",
+          "title": "Мэйн-кун"
+        },
+        "bgwiki": {
+          "badges": [],
+          "site": "bgwiki",
+          "title": "Мейн Кун"
+        },
+        "cawiki": {
+          "badges": [],
+          "site": "cawiki",
+          "title": "Maine Coon"
+        },
+        "commonswiki": {
+          "badges": [],
+          "site": "commonswiki",
+          "title": "Maine Coon"
+        },
+        "cswiki": {
+          "badges": [],
+          "site": "cswiki",
+          "title": "Mainská mývalí kočka"
+        },
+        "cvwiki": {
+          "badges": [],
+          "site": "cvwiki",
+          "title": "Мейн-кун"
+        },
+        "dawiki": {
+          "badges": [],
+          "site": "dawiki",
+          "title": "Maine Coon"
+        },
+        "dewiki": {
+          "badges": [],
+          "site": "dewiki",
+          "title": "Maine-Coon-Katze"
+        },
+        "elwiki": {
+          "badges": [],
+          "site": "elwiki",
+          "title": "Μέιν Κουν (γάτα)"
+        },
+        "enwiki": {
+          "badges": [],
+          "site": "enwiki",
+          "title": "Maine Coon"
+        },
+        "eswiki": {
+          "badges": [],
+          "site": "eswiki",
+          "title": "Maine Coon"
+        },
+        "etwiki": {
+          "badges": [],
+          "site": "etwiki",
+          "title": "Meini kass"
+        },
+        "fawiki": {
+          "badges": [],
+          "site": "fawiki",
+          "title": "مین کوون"
+        },
+        "fiwiki": {
+          "badges": [],
+          "site": "fiwiki",
+          "title": "Maine coon"
+        },
+        "frwiki": {
+          "badges": [],
+          "site": "frwiki",
+          "title": "Maine coon"
+        },
+        "hewiki": {
+          "badges": [],
+          "site": "hewiki",
+          "title": "מיין קון"
+        },
+        "hrwiki": {
+          "badges": [],
+          "site": "hrwiki",
+          "title": "Maine coon mačka"
+        },
+        "huwiki": {
+          "badges": [],
+          "site": "huwiki",
+          "title": "Maine Coon"
+        },
+        "hywiki": {
+          "badges": [],
+          "site": "hywiki",
+          "title": "Մեյն-Կուն"
+        },
+        "idwiki": {
+          "badges": [],
+          "site": "idwiki",
+          "title": "Maine coon"
+        },
+        "itwiki": {
+          "badges": [],
+          "site": "itwiki",
+          "title": "Maine Coon"
+        },
+        "jawiki": {
+          "badges": [],
+          "site": "jawiki",
+          "title": "メインクーン"
+        },
+        "kowiki": {
+          "badges": [],
+          "site": "kowiki",
+          "title": "메인쿤"
+        },
+        "lawiki": {
+          "badges": [],
+          "site": "lawiki",
+          "title": "Maine Coon"
+        },
+        "ltwiki": {
+          "badges": [],
+          "site": "ltwiki",
+          "title": "Meinkūnas"
+        },
+        "lvwiki": {
+          "badges": [],
+          "site": "lvwiki",
+          "title": "Meinkūns"
+        },
+        "mlwiki": {
+          "badges": [],
+          "site": "mlwiki",
+          "title": "മെയ്ൻ കൂൺ"
+        },
+        "nlwiki": {
+          "badges": [],
+          "site": "nlwiki",
+          "title": "Maine Coon"
+        },
+        "nowiki": {
+          "badges": [],
+          "site": "nowiki",
+          "title": "Maine coon"
+        },
+        "plwiki": {
+          "badges": [],
+          "site": "plwiki",
+          "title": "Maine Coon"
+        },
+        "ptwiki": {
+          "badges": [],
+          "site": "ptwiki",
+          "title": "Maine Coon"
+        },
+        "rowiki": {
+          "badges": [],
+          "site": "rowiki",
+          "title": "Maine Coon"
+        },
+        "ruwiki": {
+          "badges": [],
+          "site": "ruwiki",
+          "title": "Мейн-кун"
+        },
+        "shwiki": {
+          "badges": [],
+          "site": "shwiki",
+          "title": "Maine coon mačka"
+        },
+        "simplewiki": {
+          "badges": [],
+          "site": "simplewiki",
+          "title": "Maine Coon"
+        },
+        "skwiki": {
+          "badges": [],
+          "site": "skwiki",
+          "title": "Mainská mývalia mačka"
+        },
+        "slwiki": {
+          "badges": [],
+          "site": "slwiki",
+          "title": "Maine Coon"
+        },
+        "srwiki": {
+          "badges": [],
+          "site": "srwiki",
+          "title": "Мејн Кун"
+        },
+        "svwiki": {
+          "badges": [],
+          "site": "svwiki",
+          "title": "Maine coon"
+        },
+        "tawiki": {
+          "badges": [],
+          "site": "tawiki",
+          "title": "மெயின் கூன்"
+        },
+        "trwiki": {
+          "badges": [],
+          "site": "trwiki",
+          "title": "Maine Coon"
+        },
+        "ukwiki": {
+          "badges": [],
+          "site": "ukwiki",
+          "title": "Мейн-кун"
+        },
+        "uzwiki": {
+          "badges": [],
+          "site": "uzwiki",
+          "title": "Maine-coon"
+        },
+        "viwiki": {
+          "badges": [],
+          "site": "viwiki",
+          "title": "Mèo Maine Coon"
+        },
+        "zh_min_nanwiki": {
+          "badges": [],
+          "site": "zh_min_nanwiki",
+          "title": "Maine Coon"
+        },
+        "zhwiki": {
+          "badges": [],
+          "site": "zhwiki",
+          "title": "緬因貓"
+        }
+      },
+      "title": "Q42659",
+      "type": "item"
+    }
+  }
+}
