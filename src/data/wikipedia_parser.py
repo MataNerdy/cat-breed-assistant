@@ -15,6 +15,9 @@ EXCLUDED_SECTION_TITLES = {
         "литература",
         "источники",
         "см. также",
+        "фотографии",
+        "галерея",
+        "изображения",
     },
     "en": {
         "references",
@@ -23,6 +26,10 @@ EXCLUDED_SECTION_TITLES = {
         "bibliography",
         "see also",
         "notes",
+        "gallery",
+        "galleries",
+        "photo gallery",
+        "images",
     },
 }
 
@@ -31,18 +38,24 @@ class ArticleHTMLExtractor(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.blocks: list[dict[str, str]] = []
+        self.warnings: list[str] = []
         self._skip_depth = 0
         self._current_tag: str | None = None
+        self._current_level: int | None = None
         self._buffer: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_dict = dict(attrs)
         classes = set((attrs_dict.get("class") or "").split())
+        if "gallery" in classes or "mw-gallery" in classes:
+            self.warnings.append("Gallery/media markup was skipped during parsing.")
         if (
             tag in {"style", "script", "table", "figure", "sup"}
             or "mw-editsection" in classes
             or "reference" in classes
             or "navbox" in classes
+            or "gallery" in classes
+            or "mw-gallery" in classes
         ):
             self._skip_depth += 1
             return
@@ -50,9 +63,10 @@ class ArticleHTMLExtractor(HTMLParser):
         if self._skip_depth:
             return
 
-        if tag in {"p", "li", "h2", "h3"}:
+        if tag in {"p", "li", "h2", "h3", "h4", "h5", "h6"}:
             self._flush()
             self._current_tag = tag
+            self._current_level = int(tag[1]) if tag.startswith("h") else None
             self._buffer = []
 
     def handle_endtag(self, tag: str) -> None:
@@ -73,9 +87,17 @@ class ArticleHTMLExtractor(HTMLParser):
             return
         text = clean_text(" ".join(self._buffer))
         if text:
-            block_type = "heading" if self._current_tag in {"h2", "h3"} else "text"
-            self.blocks.append({"type": block_type, "text": text})
+            block_type = (
+                "heading"
+                if self._current_tag in {"h2", "h3", "h4", "h5", "h6"}
+                else "text"
+            )
+            block: dict[str, Any] = {"type": block_type, "text": text}
+            if block_type == "heading":
+                block["level"] = self._current_level
+            self.blocks.append(block)
         self._current_tag = None
+        self._current_level = None
         self._buffer = []
 
 
@@ -116,7 +138,7 @@ def extract_page_metadata(cached_response: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def extract_blocks(cached_response: dict[str, Any]) -> list[dict[str, str]]:
+def extract_blocks(cached_response: dict[str, Any]) -> tuple[list[dict[str, Any]], list[str]]:
     parse = cached_response.get("api_response", {}).get("parse")
     if not isinstance(parse, dict):
         raise ValueError("Wikipedia API response does not contain parse data.")
@@ -131,10 +153,10 @@ def extract_blocks(cached_response: dict[str, Any]) -> list[dict[str, str]]:
     extractor = ArticleHTMLExtractor()
     extractor.feed(html_text)
     extractor.close()
-    return extractor.blocks
+    return extractor.blocks, sorted(set(extractor.warnings))
 
 
-def extract_lead(blocks: list[dict[str, str]]) -> str:
+def extract_lead(blocks: list[dict[str, Any]]) -> str:
     lead_parts = []
     for block in blocks:
         if block["type"] == "heading":
@@ -144,29 +166,61 @@ def extract_lead(blocks: list[dict[str, str]]) -> str:
     return "\n\n".join(lead_parts).strip()
 
 
-def extract_sections(blocks: list[dict[str, str]], language: str) -> list[dict[str, Any]]:
+def _section_index_for(level: int, counters: dict[int, int]) -> str:
+    counters[level] = counters.get(level, 0) + 1
+    for stale_level in list(counters):
+        if stale_level > level:
+            del counters[stale_level]
+    ordered_levels = sorted(item for item in counters if item >= 2 and item <= level)
+    return ".".join(str(counters[item]) for item in ordered_levels)
+
+
+def extract_sections(blocks: list[dict[str, Any]], language: str) -> list[dict[str, Any]]:
     sections = []
-    current_title: str | None = None
+    current_heading: dict[str, Any] | None = None
     current_text: list[str] = []
+    heading_stack: list[dict[str, Any]] = []
+    counters: dict[int, int] = {}
 
     def flush() -> None:
-        nonlocal current_title, current_text
-        if current_title and not is_excluded_section(current_title, language):
+        nonlocal current_heading, current_text
+        if (
+            current_heading
+            and current_text
+            and not is_excluded_section(current_heading["title"], language)
+        ):
+            path = [item["title"] for item in heading_stack]
             sections.append(
                 {
-                    "index": len(sections) + 1,
-                    "title": current_title,
+                    "index": current_heading["index"],
+                    "level": current_heading["level"],
+                    "title": current_heading["title"],
+                    "parent_index": current_heading["parent_index"],
+                    "section_path": path,
                     "text": "\n\n".join(current_text).strip(),
                 }
             )
-        current_title = None
+        current_heading = None
         current_text = []
 
     for block in blocks:
         if block["type"] == "heading":
             flush()
-            current_title = block["text"]
-        elif current_title and block["type"] == "text":
+            level = int(block.get("level") or 2)
+            title = block["text"]
+            index = _section_index_for(level, counters)
+            heading_stack[:] = [
+                item for item in heading_stack if int(item["level"]) < level
+            ]
+            parent_index = heading_stack[-1]["index"] if heading_stack else None
+            current_heading = {
+                "index": index,
+                "level": level,
+                "title": title,
+                "parent_index": parent_index,
+            }
+            heading_stack.append(current_heading)
+        elif current_heading and block["type"] == "text":
             current_text.append(block["text"])
     flush()
     return sections
@@ -183,7 +237,7 @@ def parse_article_record(
     language: str,
 ) -> dict[str, Any]:
     metadata = extract_page_metadata(cached_response)
-    blocks = extract_blocks(cached_response)
+    blocks, warnings = extract_blocks(cached_response)
     lead = extract_lead(blocks)
     if not lead:
         raise ValueError("Wikipedia article lead is empty.")
@@ -200,5 +254,5 @@ def parse_article_record(
         "retrieved_at": cached_response["retrieved_at"],
         "lead": lead,
         "sections": extract_sections(blocks, language),
-        "warnings": [],
+        "warnings": warnings,
     }

@@ -51,7 +51,14 @@ def test_content_sections_are_preserved() -> None:
     )
 
     assert article["sections"] == [
-        {"index": 1, "title": "History", "text": "Started."}
+        {
+            "index": "1",
+            "level": 2,
+            "title": "History",
+            "parent_index": None,
+            "section_path": ["History"],
+            "text": "Started.",
+        }
     ]
 
 
@@ -82,6 +89,96 @@ def test_russian_service_sections_are_excluded() -> None:
     )
 
     assert [section["title"] for section in article["sections"]] == ["История"]
+
+
+def test_empty_parent_section_is_not_saved() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Health</h2>"
+            "<h3>Heart disease</h3><p>Useful text.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert [section["title"] for section in article["sections"]] == ["Heart disease"]
+
+
+def test_empty_parent_title_is_kept_in_child_section_path() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Health</h2>"
+            "<h3>Heart disease</h3><p>Useful text.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["section_path"] == ["Health", "Heart disease"]
+
+
+def test_nested_section_level_and_parent_index_are_saved() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Health</h2>"
+            "<h3>Heart disease</h3><p>Useful text.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["index"] == "1.1"
+    assert article["sections"][0]["level"] == 3
+    assert article["sections"][0]["parent_index"] == "1"
+
+
+def test_flat_section_has_section_path() -> None:
+    article = parse_article_record(
+        cached_response("<p>Lead.</p><h2>History</h2><p>Text.</p>"),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["section_path"] == ["History"]
+    assert article["sections"][0]["parent_index"] is None
+
+
+def test_gallery_section_is_excluded() -> None:
+    article = parse_article_record(
+        cached_response("<p>Lead.</p><h2>Gallery</h2><p>Caption.</p>"),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"] == []
+
+
+def test_russian_photo_section_is_excluded() -> None:
+    article = parse_article_record(
+        {
+            **cached_response("<p>Лид.</p><h2>Фотографии</h2><p>Подпись.</p>"),
+            "requested_language": "ru",
+        },
+        breed_id="mcoo",
+        language="ru",
+    )
+
+    assert article["sections"] == []
+
+
+def test_content_section_with_image_is_not_removed() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Appearance</h2>"
+            "<figure><figcaption>Cat photo</figcaption></figure>"
+            "<p>Body is strong.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["title"] == "Appearance"
+    assert article["sections"][0]["text"] == "Body is strong."
 
 
 def test_html_and_markup_are_cleaned() -> None:

@@ -14,7 +14,6 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from src.data.wikidata_client import WikidataClient, WikidataClientError
 from src.data.wikidata_resolver import (
-    TARGET_BREED_IDS,
     ensure_overrides_file,
     load_overrides,
     load_registry,
@@ -44,6 +43,13 @@ def write_jsonl_atomic(records: list[dict[str, Any]], output_path: Path) -> None
         raise
 
 
+def parse_breed_ids(value: str | None) -> set[str] | None:
+    if value is None:
+        return None
+    parsed = {item.strip() for item in value.split(",") if item.strip()}
+    return parsed or None
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build Wikidata staging enrichment for selected CatAPI breeds."
@@ -53,6 +59,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--unresolved-output", type=Path, default=DEFAULT_UNRESOLVED_PATH)
     parser.add_argument("--overrides", type=Path, default=DEFAULT_OVERRIDES_PATH)
     parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
+    parser.add_argument("--breed-ids", help="Optional comma-separated breed ids.")
     parser.add_argument("--refresh-cache", action="store_true")
     return parser.parse_args()
 
@@ -63,7 +70,7 @@ def main() -> int:
     try:
         ensure_overrides_file(args.overrides)
         overrides = load_overrides(args.overrides)
-        registry_records = load_registry(args.registry, set(TARGET_BREED_IDS))
+        registry_records = load_registry(args.registry, parse_breed_ids(args.breed_ids))
         client = WikidataClient(
             cache_dir=args.cache_dir,
             refresh_cache=args.refresh_cache,
@@ -72,6 +79,7 @@ def main() -> int:
         unresolved = [
             record for record in enrichment if record["match_method"] == "unresolved"
         ]
+        unresolved.sort(key=lambda item: item["breed_id"])
         write_jsonl_atomic(enrichment, args.output)
         write_jsonl_atomic(unresolved, args.unresolved_output)
     except (OSError, ValueError, WikidataClientError, json.JSONDecodeError) as exc:
@@ -84,6 +92,8 @@ def main() -> int:
     print(f"Output: {args.output}")
     print(f"Unresolved output: {args.unresolved_output}")
     print(f"Cache dir: {args.cache_dir}")
+    print(f"Cache hits: {client.cache_hits}")
+    print(f"HTTP requests: {client.http_requests}")
     return 0
 
 

@@ -1,0 +1,75 @@
+{
+  "beng:en": {
+    "excluded_sections": [
+      "Breed registration",
+      "Characteristics",
+      "Genetics",
+      "Health"
+    ],
+    "note": "Пустую секцию можно удалить",
+    "status": "approved"
+  },
+  "beng:ru": {
+    "excluded_sections": [
+      "Краткая информация"
+    ],
+    "note": "Пустую секцию можно удалить",
+    "status": "approved"
+  },
+  "bsho:en": {
+    "excluded_sections": [
+      "Breed gallery",
+      "Description",
+      "Breed registration"
+    ],
+    "note": "",
+    "status": "approved"
+  },
+  "bsho:ru": {
+    "excluded_sections": [],
+    "note": "",
+    "status": "approved"
+  },
+  "mcoo:en": {
+    "excluded_sections": [
+      "Gallery",
+      "History",
+      "Health",
+      "Characteristics"
+    ],
+    "note": "",
+    "status": "approved"
+  },
+  "mcoo:ru": {
+    "excluded_sections": [
+      "Фотографии"
+    ],
+    "note": "",
+    "status": "approved"
+  },
+  "sibe:en": {
+    "excluded_sections": [
+      "Description",
+      "Breed registration"
+    ],
+    "note": "",
+    "status": "approved"
+  },
+  "sibe:ru": {
+    "excluded_sections": [
+      "Описание породы"
+    ],
+    "note": "",
+    "status": "approved"
+  },
+  "sphy:en": {
+    "excluded_sections": [],
+    "note": "",
+    "status": "approved"
+  },
+  "sphy:ru": {
+    "excluded_sections": [],
+    "note": "",
+    "status": "approved"
+  }
+}

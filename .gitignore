@@ -12,6 +12,7 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 data/raw/
+data/cache/
 data/chroma/
 *.sqlite3
 chroma.sqlite3

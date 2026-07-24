@@ -20,15 +20,16 @@ DEFAULT_INPUT_PATH = Path("data/staging/wikidata_enrichment.jsonl")
 DEFAULT_OUTPUT_PATH = Path("data/staging/wikipedia_articles.jsonl")
 DEFAULT_UNRESOLVED_PATH = Path("data/reports/wikipedia_unresolved.jsonl")
 DEFAULT_CACHE_DIR = Path("data/cache/wikipedia")
-DEFAULT_BREED_IDS = ("beng", "bsho", "mcoo", "sibe", "sphy")
 DEFAULT_LANGUAGES = ("ru", "en")
 
 
-def parse_csv(value: str | None, default: tuple[str, ...]) -> set[str]:
+def parse_csv(value: str | None, default: tuple[str, ...] | None = None) -> set[str] | None:
     if value is None:
-        return set(default)
+        return set(default) if default is not None else None
     parsed = {item.strip() for item in value.split(",") if item.strip()}
-    return parsed or set(default)
+    if parsed:
+        return parsed
+    return set(default) if default is not None else None
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -79,7 +80,7 @@ def unresolved_record(
 def build_articles(
     enrichment_records: list[dict[str, Any]],
     client: WikipediaClient,
-    breed_ids: set[str],
+    breed_ids: set[str] | None,
     languages: set[str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     articles = []
@@ -88,7 +89,7 @@ def build_articles(
     selected_records = [
         record
         for record in enrichment_records
-        if record.get("breed_id") in breed_ids
+        if breed_ids is None or record.get("breed_id") in breed_ids
     ]
     selected_records.sort(key=lambda item: item["breed_id"])
 
@@ -168,8 +169,8 @@ def main() -> int:
         articles, unresolved = build_articles(
             enrichment_records,
             client=client,
-            breed_ids=parse_csv(args.breed_ids, DEFAULT_BREED_IDS),
-            languages=parse_csv(args.languages, DEFAULT_LANGUAGES),
+            breed_ids=parse_csv(args.breed_ids),
+            languages=parse_csv(args.languages, DEFAULT_LANGUAGES) or set(DEFAULT_LANGUAGES),
         )
         write_jsonl_atomic(articles, args.output)
         write_jsonl_atomic(unresolved, args.unresolved_output)
@@ -183,6 +184,8 @@ def main() -> int:
     print(f"Output: {args.output}")
     print(f"Unresolved output: {args.unresolved_output}")
     print(f"Cache dir: {args.cache_dir}")
+    print(f"Cache hits: {client.cache_hits}")
+    print(f"HTTP requests: {client.http_requests}")
     return 0
 
 

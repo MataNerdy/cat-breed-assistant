@@ -289,6 +289,34 @@ def test_registry_file_is_not_modified(tmp_path: Path) -> None:
     assert len(records) == 1
 
 
+def test_load_registry_without_filter_loads_all_records(tmp_path: Path) -> None:
+    registry_path = tmp_path / "breed_registry.jsonl"
+    records = [
+        registry_record("mcoo"),
+        registry_record("bsho", "British Shorthair"),
+        registry_record("sphy", "Sphynx"),
+        registry_record("beng", "Bengal"),
+        registry_record("sibe", "Siberian"),
+        registry_record("abys", "Abyssinian"),
+    ]
+    registry_path.write_text(
+        "".join(json.dumps(record) + "\n" for record in records),
+        encoding="utf-8",
+    )
+
+    loaded = load_registry(registry_path)
+
+    assert len(loaded) == 6
+    assert [record["breed_id"] for record in loaded] == [
+        "abys",
+        "beng",
+        "bsho",
+        "mcoo",
+        "sibe",
+        "sphy",
+    ]
+
+
 def test_enrichment_records_are_sorted_by_breed_id(tmp_path: Path) -> None:
     session = FakeSession(
         [

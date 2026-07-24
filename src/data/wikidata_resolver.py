@@ -7,10 +7,7 @@ from typing import Any
 from src.data.wikidata_client import WikidataClient, WikidataClientError
 
 
-TARGET_BREED_IDS = ("mcoo", "bsho", "sphy", "beng", "sibe")
-
-
-def load_registry(path: Path, breed_ids: set[str]) -> list[dict[str, Any]]:
+def load_registry(path: Path, breed_ids: set[str] | None = None) -> list[dict[str, Any]]:
     records = []
     with path.open("r", encoding="utf-8") as input_file:
         for line_number, line in enumerate(input_file, start=1):
@@ -21,7 +18,7 @@ def load_registry(path: Path, breed_ids: set[str]) -> list[dict[str, Any]]:
                 record = json.loads(line)
             except json.JSONDecodeError as exc:
                 raise ValueError(f"Invalid JSONL on line {line_number}: {exc}") from exc
-            if record.get("breed_id") in breed_ids:
+            if breed_ids is None or record.get("breed_id") in breed_ids:
                 records.append(record)
     records.sort(key=lambda item: item["breed_id"])
     return records

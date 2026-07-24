@@ -8,6 +8,7 @@ __pycache__/
 .DS_Store
 *.pyc
 data/raw/
+data/cache/
 data/chroma/
 *.sqlite3
 chroma.sqlite3

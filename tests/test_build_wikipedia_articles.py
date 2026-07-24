@@ -69,6 +69,19 @@ def test_missing_sitelink_goes_to_unresolved() -> None:
     assert unresolved[0]["reason"] == "missing_sitelink"
 
 
+def test_missing_enwiki_goes_to_unresolved() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record(enwiki=None)],
+        client=FakeClient({("mcoo", "ru"): cached_response("Мейн-кун")}),
+        breed_ids={"mcoo"},
+        languages={"en"},
+    )
+
+    assert articles == []
+    assert unresolved[0]["language"] == "en"
+    assert unresolved[0]["reason"] == "missing_sitelink"
+
+
 def test_missing_page_goes_to_unresolved() -> None:
     articles, unresolved = build_articles(
         [enrichment_record()],

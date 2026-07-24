@@ -53,11 +53,14 @@ class WikidataClient:
         self.timeout = timeout
         self.retries = retries
         self.refresh_cache = refresh_cache
+        self.cache_hits = 0
+        self.http_requests = 0
         self.session.headers.update({"User-Agent": USER_AGENT})
 
     def resolve_entity_id_from_wikipedia_url(self, wikipedia_url: str) -> str | None:
         resolution_cache_path = self._wikipedia_resolution_cache_path(wikipedia_url)
         if resolution_cache_path.exists() and not self.refresh_cache:
+            self.cache_hits += 1
             data = json.loads(resolution_cache_path.read_text(encoding="utf-8"))
             entity_id = data.get("entity_id")
             return entity_id if isinstance(entity_id, str) and entity_id else None
@@ -67,6 +70,7 @@ class WikidataClient:
         if not self.refresh_cache:
             cached_entity_id = self._find_cached_entity_by_sitelink(site_key, title)
             if cached_entity_id:
+                self.cache_hits += 1
                 self._write_wikipedia_resolution_cache(
                     resolution_cache_path,
                     wikipedia_url,
@@ -104,6 +108,7 @@ class WikidataClient:
     def get_entity(self, entity_id: str) -> dict[str, Any] | None:
         cache_path = self._entity_cache_path(entity_id)
         if cache_path.exists() and not self.refresh_cache:
+            self.cache_hits += 1
             data = json.loads(cache_path.read_text(encoding="utf-8"))
             return data.get("entities", {}).get(entity_id)
 
@@ -126,6 +131,7 @@ class WikidataClient:
     def search_entities(self, query: str, language: str = "en") -> list[dict[str, Any]]:
         cache_path = self._search_cache_path(query, language)
         if cache_path.exists() and not self.refresh_cache:
+            self.cache_hits += 1
             data = json.loads(cache_path.read_text(encoding="utf-8"))
             search = data.get("search", [])
             return search if isinstance(search, list) else []
@@ -159,6 +165,7 @@ class WikidataClient:
 
         for attempt in range(self.retries + 1):
             try:
+                self.http_requests += 1
                 response = self.session.get(url, params=params, timeout=self.timeout)
                 if response.status_code in TRANSIENT_STATUS_CODES:
                     last_error = WikidataClientError(

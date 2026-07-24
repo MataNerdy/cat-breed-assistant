@@ -37,11 +37,14 @@ class WikipediaClient:
         self.timeout = timeout
         self.retries = retries
         self.refresh_cache = refresh_cache
+        self.cache_hits = 0
+        self.http_requests = 0
         self.session.headers.update({"User-Agent": USER_AGENT})
 
     def fetch_article(self, breed_id: str, language: str, title: str) -> dict[str, Any]:
         cache_path = self._cache_path(breed_id, language)
         if cache_path.exists() and not self.refresh_cache:
+            self.cache_hits += 1
             return json.loads(cache_path.read_text(encoding="utf-8"))
 
         api_response = self._request_json(
@@ -79,6 +82,7 @@ class WikipediaClient:
 
         for attempt in range(self.retries + 1):
             try:
+                self.http_requests += 1
                 response = self.session.get(url, params=params, timeout=self.timeout)
                 if response.status_code in TRANSIENT_STATUS_CODES:
                     last_error = WikipediaClientError(
