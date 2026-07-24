@@ -4,9 +4,14 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
+
 from scripts.build_wikipedia_articles import (
+    BROADER_SOURCE_WARNING,
     build_articles,
+    load_source_overrides,
     read_jsonl,
+    validate_source_overrides,
     write_jsonl_atomic,
 )
 from src.data.wikipedia_client import WikipediaClientError
@@ -57,6 +62,20 @@ def cached_response(title: str = "Maine Coon", page_id: int = 1) -> dict:
     }
 
 
+def missing_page_response(title: str = "Missing page") -> dict:
+    return {
+        "retrieved_at": "2026-07-23T00:00:00Z",
+        "requested_language": "en",
+        "requested_title": title,
+        "api_response": {
+            "error": {
+                "code": "missingtitle",
+                "info": "The page you specified doesn't exist.",
+            }
+        },
+    }
+
+
 def test_missing_sitelink_goes_to_unresolved() -> None:
     articles, unresolved = build_articles(
         [enrichment_record(ruwiki=None)],
@@ -80,6 +99,246 @@ def test_missing_enwiki_goes_to_unresolved() -> None:
     assert articles == []
     assert unresolved[0]["language"] == "en"
     assert unresolved[0]["reason"] == "missing_sitelink"
+
+
+def test_manual_override_has_priority_over_missing_sitelink() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("ebur", enwiki=None, ruwiki=None)],
+        client=FakeClient({("ebur", "en"): cached_response("Burmese cat")}),
+        breed_ids={"ebur"},
+        languages={"en"},
+        source_overrides={
+            "ebur:en": {
+                "title": "Burmese cat",
+                "source_relation": "covered_by_broader_article",
+                "reason": "European Burmese is covered by Burmese cat.",
+            }
+        },
+    )
+
+    assert unresolved == []
+    assert articles[0]["breed_id"] == "ebur"
+    assert articles[0]["title"] == "Burmese cat"
+    assert articles[0]["source_resolution"] == {
+        "method": "manual_override",
+        "source_relation": "covered_by_broader_article",
+        "reason": "European Burmese is covered by Burmese cat.",
+    }
+
+
+def test_manual_override_has_priority_over_existing_sitelink() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("bamb", enwiki="Wrong", ruwiki="Wrong")],
+        client=FakeClient({("bamb", "ru"): cached_response("Бамбино (порода кошек)")}),
+        breed_ids={"bamb"},
+        languages={"ru"},
+        source_overrides={
+            "bamb:ru": {
+                "title": "Бамбино (порода кошек)",
+                "source_relation": "standalone_article",
+                "reason": "Verified article.",
+            }
+        },
+    )
+
+    assert unresolved == []
+    assert articles[0]["title"] == "Бамбино (порода кошек)"
+    assert articles[0]["source_resolution"]["method"] == "manual_override"
+    assert articles[0]["source_resolution"]["source_relation"] == "standalone_article"
+    assert articles[0]["warnings"] == []
+    assert articles[0]["source_resolution"]["reason"] == "Verified article."
+
+
+def test_covered_by_broader_article_gets_warning() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("ebur", enwiki=None)],
+        client=FakeClient({("ebur", "en"): cached_response("Burmese cat")}),
+        breed_ids={"ebur"},
+        languages={"en"},
+        source_overrides={
+            "ebur:en": {
+                "title": "Burmese cat",
+                "source_relation": "covered_by_broader_article",
+                "reason": "Covered by broader article.",
+            }
+        },
+    )
+
+    assert unresolved == []
+    assert articles[0]["source_resolution"]["source_relation"] == (
+        "covered_by_broader_article"
+    )
+    assert BROADER_SOURCE_WARNING in articles[0]["warnings"]
+
+
+def test_wikidata_sitelink_source_resolution_is_recorded() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record()],
+        client=FakeClient({("mcoo", "en"): cached_response()}),
+        breed_ids={"mcoo"},
+        languages={"en"},
+    )
+
+    assert unresolved == []
+    assert articles[0]["source_resolution"] == {
+        "method": "wikidata_sitelink",
+        "source_relation": "standalone_article",
+        "reason": None,
+    }
+
+
+def test_absent_source_overrides_file_is_allowed(tmp_path: Path) -> None:
+    assert load_source_overrides(tmp_path / "missing.json") == {}
+
+
+def test_load_source_overrides_rejects_missing_title(tmp_path: Path) -> None:
+    path = tmp_path / "wikipedia_source_overrides.json"
+    path.write_text(
+        json.dumps({"ebur:en": {"source_relation": "covered_by_broader_article"}}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="non-empty title"):
+        validate_source_overrides(
+            load_source_overrides(path),
+            [enrichment_record("ebur")],
+        )
+
+
+def test_invalid_override_key_raises_error() -> None:
+    with pytest.raises(ValueError, match="Invalid source override key"):
+        validate_source_overrides(
+            {
+                "ebur-en": {
+                    "title": "Burmese cat",
+                    "source_relation": "standalone_article",
+                    "reason": "x",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_unknown_override_breed_id_raises_error() -> None:
+    with pytest.raises(ValueError, match="Unknown breed_id"):
+        validate_source_overrides(
+            {
+                "xxxx:en": {
+                    "title": "Burmese cat",
+                    "source_relation": "standalone_article",
+                    "reason": "x",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_unsupported_override_language_raises_error() -> None:
+    with pytest.raises(ValueError, match="Unsupported language"):
+        validate_source_overrides(
+            {
+                "ebur:de": {
+                    "title": "Burmese cat",
+                    "source_relation": "standalone_article",
+                    "reason": "x",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_unknown_source_relation_raises_error() -> None:
+    with pytest.raises(ValueError, match="unsupported source_relation"):
+        validate_source_overrides(
+            {
+                "ebur:en": {
+                    "title": "Burmese cat",
+                    "source_relation": "maybe",
+                    "reason": "x",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_empty_reason_raises_error() -> None:
+    with pytest.raises(ValueError, match="non-empty reason"):
+        validate_source_overrides(
+            {
+                "ebur:en": {
+                    "title": "Burmese cat",
+                    "source_relation": "standalone_article",
+                    "reason": " ",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_wrong_verified_url_language_raises_error() -> None:
+    with pytest.raises(ValueError, match="verified_url"):
+        validate_source_overrides(
+            {
+                "ebur:ru": {
+                    "title": "Бурма (порода кошек)",
+                    "source_relation": "covered_by_broader_article",
+                    "reason": "x",
+                    "verified_url": "https://en.wikipedia.org/wiki/Burmese_cat",
+                }
+            },
+            [enrichment_record("ebur")],
+        )
+
+
+def test_override_missing_page_gets_specific_unresolved_reason() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("ebur", enwiki=None)],
+        client=FakeClient({("ebur", "en"): missing_page_response("Missing")}),
+        breed_ids={"ebur"},
+        languages={"en"},
+        source_overrides={
+            "ebur:en": {
+                "title": "Missing",
+                "source_relation": "covered_by_broader_article",
+                "reason": "Manual check.",
+            }
+        },
+    )
+
+    assert articles == []
+    assert unresolved[0]["reason"] == "override_page_not_found"
+
+
+def test_same_page_can_be_used_for_multiple_breed_ids() -> None:
+    articles, unresolved = build_articles(
+        [
+            enrichment_record("bure", enwiki="Burmese cat"),
+            enrichment_record("ebur", enwiki=None),
+        ],
+        client=FakeClient(
+            {
+                ("bure", "en"): cached_response("Burmese cat", page_id=10),
+                ("ebur", "en"): cached_response("Burmese cat", page_id=10),
+            }
+        ),
+        breed_ids={"bure", "ebur"},
+        languages={"en"},
+        source_overrides={
+            "ebur:en": {
+                "title": "Burmese cat",
+                "source_relation": "covered_by_broader_article",
+                "reason": "Covered by shared article.",
+            }
+        },
+    )
+
+    assert unresolved == []
+    assert [(article["breed_id"], article["page_id"]) for article in articles] == [
+        ("bure", 10),
+        ("ebur", 10),
+    ]
+    assert articles[0]["source_resolution"]["method"] == "wikidata_sitelink"
+    assert articles[1]["source_resolution"]["method"] == "manual_override"
 
 
 def test_missing_page_goes_to_unresolved() -> None:

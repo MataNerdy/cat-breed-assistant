@@ -1,0 +1,20 @@
+{
+  "bamb:ru": {
+    "reason": "Manually verified Russian Wikipedia article",
+    "source_relation": "standalone_article",
+    "title": "Бамбино (порода кошек)",
+    "verified_url": "https://ru.wikipedia.org/wiki/%D0%91%D0%B0%D0%BC%D0%B1%D0%B8%D0%BD%D0%BE_(%D0%BF%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_%D0%BA%D0%BE%D1%88%D0%B5%D0%BA)"
+  },
+  "ebur:en": {
+    "reason": "European Burmese is covered as the British/European type in the broader Burmese cat article",
+    "source_relation": "covered_by_broader_article",
+    "title": "Burmese cat",
+    "verified_url": "https://en.wikipedia.org/wiki/Burmese_cat"
+  },
+  "ebur:ru": {
+    "reason": "European Burmese is covered in the broader Russian article about the Burmese breed",
+    "source_relation": "covered_by_broader_article",
+    "title": "Бурма (порода кошек)",
+    "verified_url": "https://ru.wikipedia.org/wiki/%D0%91%D1%83%D1%80%D0%BC%D0%B0_(%D0%BF%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_%D0%BA%D0%BE%D1%88%D0%B5%D0%BA)"
+  }
+}
