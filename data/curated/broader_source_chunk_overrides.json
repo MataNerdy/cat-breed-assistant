@@ -24,17 +24,5 @@
     "include_lead": false,
     "included_section_paths": [],
     "reason": "Russian British Shorthair article has no approved British Longhair section"
-  },
-  "chee:en": {
-    "source_relation": "covered_by_broader_article",
-    "include_lead": false,
-    "included_section_paths": [],
-    "reason": "Current source is the Bengal cat article and is not approved for Cheetoh"
-  },
-  "chee:ru": {
-    "source_relation": "covered_by_broader_article",
-    "include_lead": false,
-    "included_section_paths": [],
-    "reason": "Current source is the Bengal cat article and is not approved for Cheetoh"
   }
 }

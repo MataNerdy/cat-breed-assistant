@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -24,13 +26,35 @@ def load_registry(path: Path, breed_ids: set[str] | None = None) -> list[dict[st
     return records
 
 
-def load_overrides(path: Path) -> dict[str, dict[str, str]]:
+QID_PATTERN = re.compile(r"^Q[1-9][0-9]*$")
+
+
+def load_overrides(
+    path: Path,
+    known_breed_ids: set[str] | None = None,
+) -> dict[str, dict[str, str]]:
     if not path.exists():
         return {}
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError(f"Expected overrides JSON object: {path}")
-    return data
+    overrides = {}
+    for breed_id, value in data.items():
+        if known_breed_ids is not None and breed_id not in known_breed_ids:
+            raise ValueError(f"Unknown breed_id in Wikidata override: {breed_id}")
+        if not isinstance(value, dict):
+            raise ValueError(f"Expected Wikidata override object for {breed_id}")
+        entity_id = value.get("entity_id") or value.get("wikidata_entity_id")
+        if not isinstance(entity_id, str) or not QID_PATTERN.match(entity_id):
+            raise ValueError(f"Invalid Wikidata Q-ID in override for {breed_id}")
+        reason = value.get("reason")
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError(f"Wikidata override for {breed_id} requires a reason")
+        overrides[breed_id] = {
+            "entity_id": entity_id,
+            "reason": reason.strip(),
+        }
+    return overrides
 
 
 def ensure_overrides_file(path: Path) -> None:
@@ -51,7 +75,7 @@ def resolve_breed_record(
 
     override = overrides.get(breed_id)
     if override:
-        entity_id = override.get("wikidata_entity_id")
+        entity_id = override.get("entity_id") or override.get("wikidata_entity_id")
         if entity_id:
             entity = client.get_entity(entity_id)
             return build_enrichment_record(
@@ -74,14 +98,21 @@ def resolve_breed_record(
         else:
             if entity_id:
                 entity = client.get_entity(entity_id)
-                return build_enrichment_record(
+                validation = validate_catapi_wikipedia_candidate(
                     registry_record,
-                    entity_id=entity_id,
-                    entity=entity,
-                    match_method="catapi_wikipedia_sitelink",
-                    match_confidence=1.0,
-                    warnings=[] if entity else ["Wikidata entity could not be loaded"],
+                    entity,
+                    wikipedia_url,
                 )
+                if validation["accepted"]:
+                    return build_enrichment_record(
+                        registry_record,
+                        entity_id=entity_id,
+                        entity=entity,
+                        match_method="catapi_wikipedia_sitelink",
+                        match_confidence=0.95,
+                        warnings=[] if entity else ["Wikidata entity could not be loaded"],
+                    )
+                warnings.append(validation["warning"])
 
     label_match = resolve_single_exact_search_match(client.search_entities(name_en), name_en)
     if label_match["status"] == "matched":
@@ -155,6 +186,67 @@ def resolve_single_exact_search_match(
     if len(entity_ids) > 1:
         return {"status": "ambiguous", "entity_id": None}
     return {"status": "unmatched", "entity_id": None}
+
+
+def normalize_match_text(value: str) -> str:
+    value = unicodedata.normalize("NFKC", value)
+    value = value.replace("_", " ")
+    value = re.sub(r"[-–—]", " ", value)
+    value = re.sub(r"\([^)]*\)", " ", value)
+    value = re.sub(r"[^\w\s]", " ", value, flags=re.UNICODE)
+    value = re.sub(r"\s+", " ", value).strip().casefold()
+    value = re.sub(r"\bcat\b$", "", value).strip()
+    return value
+
+
+def source_names_for(registry_record: dict[str, Any]) -> set[str]:
+    values = [registry_record.get("name_en")]
+    values.extend(registry_record.get("aliases_en") or [])
+    return {
+        normalize_match_text(value)
+        for value in values
+        if isinstance(value, str) and value.strip()
+    }
+
+
+def page_title_from_wikipedia_url(wikipedia_url: str) -> str:
+    from src.data.wikidata_client import parse_wikipedia_url
+
+    _, _, title = parse_wikipedia_url(wikipedia_url)
+    return title
+
+
+def validate_catapi_wikipedia_candidate(
+    registry_record: dict[str, Any],
+    entity: dict[str, Any] | None,
+    wikipedia_url: str,
+) -> dict[str, Any]:
+    if entity is None:
+        return {"accepted": False, "warning": "catapi_wikipedia_entity_missing"}
+
+    source_names = source_names_for(registry_record)
+    entity_label = extract_label(entity, "en")
+    normalized_label = normalize_match_text(entity_label) if entity_label else ""
+    page_title = page_title_from_wikipedia_url(wikipedia_url)
+    normalized_title = normalize_match_text(page_title)
+
+    if (
+        normalized_label in source_names
+        or normalized_title in source_names
+        or has_allowed_breed_modifier(normalized_label, source_names)
+        or has_allowed_breed_modifier(normalized_title, source_names)
+    ):
+        return {"accepted": True, "warning": None}
+    return {"accepted": False, "warning": "catapi_wikipedia_name_mismatch"}
+
+
+def has_allowed_breed_modifier(candidate: str, source_names: set[str]) -> bool:
+    allowed_suffixes = {"shorthair", "longhair", "bobtail"}
+    for source_name in source_names:
+        for suffix in allowed_suffixes:
+            if candidate == f"{source_name} {suffix}":
+                return True
+    return False
 
 
 def build_enrichment_record(

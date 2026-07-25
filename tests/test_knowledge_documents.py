@@ -77,6 +77,7 @@ def wikipedia_record(
             "source_relation": relation,
             "reason": None,
         },
+        "wiki_project": f"{language}wiki",
         "warnings": [],
     }
 
@@ -197,7 +198,59 @@ def test_scope_override_updates_wikipedia_source_relation() -> None:
         "method": "manual_section_approval",
         "source_relation": "section_of_another_article",
         "reason": "Only Bambino section is approved.",
+        "wiki_project": "enwiki",
     }
+
+
+def test_name_override_has_priority_over_wikidata_label() -> None:
+    document = build_knowledge_documents(
+        [registry_record("bamb", "Bambino")],
+        [wikidata_record("bamb")],
+        [],
+        name_overrides={"bamb": {"ru": "Бамбино"}},
+    )[0]
+
+    assert document["breed_name_ru"] == "Бамбино"
+
+
+def test_wikipedia_document_preserves_wiki_project() -> None:
+    record = wikipedia_record("chee", language="en")
+    record["wiki_project"] = "simplewiki"
+    record["source_url"] = "https://simple.wikipedia.org/wiki/Cheetoh"
+    record["source_resolution"] = {
+        "method": "manual_override",
+        "source_relation": "standalone_article",
+        "wiki_project": "simplewiki",
+        "reason": "Verified Simple English article.",
+    }
+    document = [
+        doc
+        for doc in build_knowledge_documents(
+            [registry_record("chee", "Cheetoh")],
+            [wikidata_record("chee")],
+            [record],
+        )
+        if doc["source"] == "wikipedia"
+    ][0]
+
+    assert document["language"] == "en"
+    assert document["provenance"]["wiki_project"] == "simplewiki"
+    assert document["provenance"]["source_resolution"]["wiki_project"] == "simplewiki"
+
+
+def test_catapi_text_omits_mismatched_wikipedia_url() -> None:
+    registry = registry_record("chee", "Cheetoh")
+    registry["catapi"]["raw"]["wikipedia_url"] = (
+        "https://en.wikipedia.org/wiki/Bengal_cat#Cheetoh"
+    )
+    wikidata = wikidata_record("chee")
+    wikidata["labels"]["en"] = "Cheetoh"
+    wikidata["match_method"] = "manual_override"
+
+    document = build_knowledge_documents([registry], [wikidata], [])[0]
+
+    assert "Bengal_cat" not in document["text"]
+    assert "Wikipedia URL" not in document["text"]
 
 
 def test_duplicate_document_id_raises_error() -> None:

@@ -16,5 +16,13 @@
     "source_relation": "covered_by_broader_article",
     "title": "Бурма (порода кошек)",
     "verified_url": "https://ru.wikipedia.org/wiki/%D0%91%D1%83%D1%80%D0%BC%D0%B0_(%D0%BF%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_%D0%BA%D0%BE%D1%88%D0%B5%D0%BA)"
+  },
+  "chee:en": {
+    "content_language": "en",
+    "reason": "Manually verified standalone Simple English Wikipedia article about the Cheetoh breed",
+    "source_relation": "standalone_article",
+    "title": "Cheetoh",
+    "verified_url": "https://simple.wikipedia.org/wiki/Cheetoh",
+    "wiki_project": "simplewiki"
   }
 }

@@ -69,11 +69,36 @@ def test_response_is_saved_to_cache(tmp_path: Path) -> None:
 
     client.fetch_article("mcoo", "en", "Maine Coon")
 
-    assert (tmp_path / "mcoo_en.json").exists()
+    assert (tmp_path / "mcoo_en_enwiki.json").exists()
+
+
+def test_simplewiki_uses_simple_endpoint(tmp_path: Path) -> None:
+    session = FakeSession([FakeResponse(parse_payload("Cheetoh"))])
+    client = WikipediaClient(cache_dir=tmp_path, session=session)
+
+    cached = client.fetch_article(
+        "chee",
+        "en",
+        "Cheetoh",
+        wiki_project="simplewiki",
+    )
+
+    assert cached["wiki_project"] == "simplewiki"
+    assert session.calls[0]["url"] == "https://simple.wikipedia.org/w/api.php"
+
+
+def test_cache_key_distinguishes_enwiki_and_simplewiki(tmp_path: Path) -> None:
+    session = FakeSession([FakeResponse(parse_payload("Cheetoh"))])
+    client = WikipediaClient(cache_dir=tmp_path, session=session)
+
+    client.fetch_article("chee", "en", "Cheetoh", wiki_project="simplewiki")
+
+    assert (tmp_path / "chee_en_simplewiki.json").exists()
+    assert not (tmp_path / "chee_en_enwiki.json").exists()
 
 
 def test_cached_response_avoids_http_call(tmp_path: Path) -> None:
-    cache_path = tmp_path / "mcoo_en.json"
+    cache_path = tmp_path / "mcoo_en_enwiki.json"
     cache_path.write_text(
         json.dumps(
             {
@@ -95,7 +120,7 @@ def test_cached_response_avoids_http_call(tmp_path: Path) -> None:
 
 
 def test_refresh_cache_updates_cache(tmp_path: Path) -> None:
-    cache_path = tmp_path / "mcoo_en.json"
+    cache_path = tmp_path / "mcoo_en_enwiki.json"
     cache_path.write_text(
         json.dumps(
             {

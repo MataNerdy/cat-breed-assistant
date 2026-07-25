@@ -22,8 +22,10 @@ def test_build_knowledge_documents_cli_is_deterministic(
     registry = tmp_path / "registry.jsonl"
     wikidata = tmp_path / "wikidata.jsonl"
     wikipedia = tmp_path / "wikipedia.jsonl"
+    name_overrides = tmp_path / "name_overrides.json"
     output = tmp_path / "knowledge_documents.jsonl"
     report = tmp_path / "report.json"
+    name_overrides.write_text("{}\n", encoding="utf-8")
     write_jsonl(
         registry,
         [
@@ -77,6 +79,8 @@ def test_build_knowledge_documents_cli_is_deterministic(
         str(wikidata),
         "--wikipedia",
         str(wikipedia),
+        "--name-overrides",
+        str(name_overrides),
         "--output",
         str(output),
         "--report",

@@ -22,8 +22,14 @@ class FakeClient:
         self.responses = responses
         self.calls = []
 
-    def fetch_article(self, breed_id: str, language: str, title: str) -> dict:
-        self.calls.append((breed_id, language, title))
+    def fetch_article(
+        self,
+        breed_id: str,
+        language: str,
+        title: str,
+        wiki_project: str | None = None,
+    ) -> dict:
+        self.calls.append((breed_id, language, title, wiki_project or f"{language}wiki"))
         response = self.responses[(breed_id, language)]
         if isinstance(response, Exception):
             raise response
@@ -123,6 +129,7 @@ def test_manual_override_has_priority_over_missing_sitelink() -> None:
         "method": "manual_override",
         "source_relation": "covered_by_broader_article",
         "reason": "European Burmese is covered by Burmese cat.",
+        "wiki_project": "enwiki",
     }
 
 
@@ -288,6 +295,86 @@ def test_wrong_verified_url_language_raises_error() -> None:
             },
             [enrichment_record("ebur")],
         )
+
+
+def test_simplewiki_source_override_is_validated() -> None:
+    overrides = validate_source_overrides(
+        {
+            "chee:en": {
+                "title": "Cheetoh",
+                "verified_url": "https://simple.wikipedia.org/wiki/Cheetoh",
+                "wiki_project": "simplewiki",
+                "content_language": "en",
+                "source_relation": "standalone_article",
+                "reason": "Verified Simple English article.",
+            }
+        },
+        [enrichment_record("chee")],
+    )
+
+    assert overrides["chee:en"]["wiki_project"] == "simplewiki"
+    assert overrides["chee:en"]["content_language"] == "en"
+
+
+def test_simplewiki_url_is_rejected_for_enwiki_project() -> None:
+    with pytest.raises(ValueError, match="verified_url"):
+        validate_source_overrides(
+            {
+                "chee:en": {
+                    "title": "Cheetoh",
+                    "verified_url": "https://simple.wikipedia.org/wiki/Cheetoh",
+                    "wiki_project": "enwiki",
+                    "content_language": "en",
+                    "source_relation": "standalone_article",
+                    "reason": "Wrong project.",
+                }
+            },
+            [enrichment_record("chee")],
+        )
+
+
+def test_cheetoh_simplewiki_article_keeps_language_en_and_project() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("chee", enwiki=None, ruwiki=None)],
+        client=FakeClient({("chee", "en"): cached_response("Cheetoh", page_id=99)}),
+        breed_ids={"chee"},
+        languages={"en"},
+        source_overrides={
+            "chee:en": {
+                "title": "Cheetoh",
+                "source_relation": "standalone_article",
+                "reason": "Verified Simple English article.",
+                "wiki_project": "simplewiki",
+                "content_language": "en",
+            }
+        },
+    )
+
+    assert unresolved == []
+    assert articles[0]["language"] == "en"
+    assert articles[0]["wiki_project"] == "simplewiki"
+    assert articles[0]["source_resolution"]["wiki_project"] == "simplewiki"
+
+
+def test_cheetoh_ru_without_verified_source_is_unresolved() -> None:
+    articles, unresolved = build_articles(
+        [enrichment_record("chee", enwiki=None, ruwiki=None)],
+        client=FakeClient({}),
+        breed_ids={"chee"},
+        languages={"ru"},
+        source_overrides={
+            "chee:en": {
+                "title": "Cheetoh",
+                "source_relation": "standalone_article",
+                "reason": "Verified Simple English article.",
+                "wiki_project": "simplewiki",
+                "content_language": "en",
+            }
+        },
+    )
+
+    assert articles == []
+    assert unresolved[0]["reason"] == "missing_verified_source"
 
 
 def test_override_missing_page_gets_specific_unresolved_reason() -> None:

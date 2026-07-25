@@ -11,6 +11,7 @@ from scripts.build_wikidata_enrichment import write_jsonl_atomic
 from src.data.wikidata_client import WikidataClient, WikidataClientError
 from src.data.wikidata_resolver import (
     build_enrichment_record,
+    load_overrides,
     load_registry,
     resolve_breed_record,
     resolve_registry_records,
@@ -181,6 +182,127 @@ def test_override_has_priority(tmp_path: Path) -> None:
     assert result["match_method"] == "manual_override"
     assert len(session.calls) == 1
     assert "Special:EntityData/Q999.json" in session.calls[0]["url"]
+
+
+def test_cheetoh_manual_override_resolves_to_q7329(tmp_path: Path) -> None:
+    session = FakeSession([FakeResponse(entity_payload("Q7329", en_label="Cheetoh"))])
+    client = WikidataClient(cache_dir=tmp_path, session=session)
+
+    result = resolve_breed_record(
+        registry_record(
+            "chee",
+            "Cheetoh",
+            wikipedia_url="https://en.wikipedia.org/wiki/Bengal_cat",
+        ),
+        client=client,
+        overrides={
+            "chee": {
+                "entity_id": "Q7329",
+                "reason": "Manually verified Cheetoh entity.",
+            }
+        },
+    )
+
+    assert result["entity_id"] == "Q7329"
+    assert result["match_method"] == "manual_override"
+
+
+def test_cheetoh_bengal_url_candidate_is_rejected(tmp_path: Path) -> None:
+    session = FakeSession(
+        [
+            FakeResponse(
+                {"query": {"pages": {"1": {"pageprops": {"wikibase_item": "Q42583"}}}}}
+            ),
+            FakeResponse(entity_payload("Q42583", en_label="Bengal cat")),
+            FakeResponse({"search": []}),
+        ]
+    )
+    client = WikidataClient(cache_dir=tmp_path, session=session)
+
+    result = resolve_breed_record(
+        registry_record(
+            "chee",
+            "Cheetoh",
+            wikipedia_url="https://en.wikipedia.org/wiki/Bengal_cat",
+        ),
+        client=client,
+        overrides={},
+    )
+
+    assert result["entity_id"] is None
+    assert "catapi_wikipedia_name_mismatch" in result["warnings"]
+
+
+def test_bengal_url_still_resolves_for_bengal(tmp_path: Path) -> None:
+    session = FakeSession(
+        [
+            FakeResponse(
+                {"query": {"pages": {"1": {"pageprops": {"wikibase_item": "Q42583"}}}}}
+            ),
+            FakeResponse(entity_payload("Q42583", en_label="Bengal cat")),
+        ]
+    )
+    client = WikidataClient(cache_dir=tmp_path, session=session)
+
+    result = resolve_breed_record(
+        registry_record(
+            "beng",
+            "Bengal",
+            wikipedia_url="https://en.wikipedia.org/wiki/Bengal_cat",
+        ),
+        client=client,
+        overrides={},
+    )
+
+    assert result["entity_id"] == "Q42583"
+    assert result["match_method"] == "catapi_wikipedia_sitelink"
+
+
+def test_explicit_shorthair_modifier_is_allowed_for_catapi_title(tmp_path: Path) -> None:
+    session = FakeSession(
+        [
+            FakeResponse(
+                {"query": {"pages": {"1": {"pageprops": {"wikibase_item": "Q999"}}}}}
+            ),
+            FakeResponse(entity_payload("Q999", en_label="Oriental Shorthair")),
+        ]
+    )
+    client = WikidataClient(cache_dir=tmp_path, session=session)
+
+    result = resolve_breed_record(
+        registry_record(
+            "orie",
+            "Oriental",
+            wikipedia_url="https://en.wikipedia.org/wiki/Oriental_Shorthair",
+        ),
+        client=client,
+        overrides={},
+    )
+
+    assert result["entity_id"] == "Q999"
+    assert result["warnings"] == []
+
+
+def test_wikidata_override_rejects_unknown_breed_id(tmp_path: Path) -> None:
+    path = tmp_path / "wikidata_overrides.json"
+    path.write_text(
+        json.dumps({"xxxx": {"entity_id": "Q1", "reason": "x"}}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="Unknown breed_id"):
+        load_overrides(path, {"chee"})
+
+
+def test_wikidata_override_rejects_invalid_qid(tmp_path: Path) -> None:
+    path = tmp_path / "wikidata_overrides.json"
+    path.write_text(
+        json.dumps({"chee": {"entity_id": "not-qid", "reason": "x"}}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="Invalid Wikidata Q-ID"):
+        load_overrides(path, {"chee"})
 
 
 def test_single_exact_label_is_confirmed(tmp_path: Path) -> None:

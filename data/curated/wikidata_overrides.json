@@ -1,1 +1,6 @@
-{}
+{
+  "chee": {
+    "entity_id": "Q7329",
+    "reason": "Manually verified Cheetoh entity; CatAPI Wikipedia URL incorrectly points to Bengal cat"
+  }
+}

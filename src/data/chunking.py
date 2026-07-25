@@ -228,6 +228,7 @@ def make_chunk(
             "source_url": provenance.get("source_url"),
             "page_id": provenance.get("page_id"),
             "revision_id": provenance.get("revision_id"),
+            "wiki_project": provenance.get("wiki_project"),
         }
     return {
         "schema_version": SCHEMA_VERSION,
@@ -527,6 +528,27 @@ def build_corpus_integrity_report(
         "overrides_with_missing_section_paths": [],
         "skipped_broader_sources": skipped_broader,
         "forbidden_cross_breed_duplicate_groups": text_groups,
+        "cheetoh_bengal_source_chunks": [
+            chunk["chunk_id"]
+            for chunk in chunks
+            if chunk["breed_id"] == "chee"
+            and chunk["source"] == "wikipedia"
+            and "Bengal" in str(chunk.get("provenance", {}).get("source_url"))
+        ],
+        "cheetoh_ru_wikipedia_chunks": [
+            chunk["chunk_id"]
+            for chunk in chunks
+            if chunk["breed_id"] == "chee"
+            and chunk["source"] == "wikipedia"
+            and chunk["language"] == "ru"
+        ],
+        "cheetoh_simplewiki_chunks": [
+            chunk["chunk_id"]
+            for chunk in chunks
+            if chunk["breed_id"] == "chee"
+            and chunk["source"] == "wikipedia"
+            and chunk.get("provenance", {}).get("wiki_project") == "simplewiki"
+        ],
     }
 
 
@@ -569,6 +591,10 @@ def enforce_corpus_integrity(report: dict[str, Any]) -> None:
         errors.append("scope overrides with missing section paths")
     if report["forbidden_cross_breed_duplicate_groups"]:
         errors.append("cross-breed duplicate Wikipedia chunk text")
+    if report["cheetoh_bengal_source_chunks"]:
+        errors.append("Cheetoh chunks still point to Bengal source")
+    if report["cheetoh_ru_wikipedia_chunks"]:
+        errors.append("Cheetoh RU Wikipedia chunks were created")
     if errors:
         raise ChunkingError("; ".join(errors))
 

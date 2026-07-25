@@ -215,8 +215,10 @@ def extract_sections(blocks: list[dict[str, Any]], language: str) -> list[dict[s
     return sections
 
 
-def build_source_url(language: str, title: str) -> str:
+def build_source_url(language: str, title: str, wiki_project: str | None = None) -> str:
     quoted_title = quote(title.replace(" ", "_"), safe="()_-")
+    if wiki_project == "simplewiki":
+        return f"https://simple.wikipedia.org/wiki/{quoted_title}"
     return f"https://{language}.wikipedia.org/wiki/{quoted_title}"
 
 
@@ -239,7 +241,11 @@ def parse_article_record(
         "page_id": metadata["page_id"],
         "revision_id": metadata["revision_id"],
         "source": "wikipedia",
-        "source_url": build_source_url(language, metadata["title"]),
+        "source_url": build_source_url(
+            language,
+            metadata["title"],
+            cached_response.get("wiki_project"),
+        ),
         "retrieved_at": cached_response["retrieved_at"],
         "lead": lead,
         "sections": extract_sections(blocks, language),

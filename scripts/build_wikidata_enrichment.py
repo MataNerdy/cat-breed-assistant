@@ -69,8 +69,11 @@ def main() -> int:
 
     try:
         ensure_overrides_file(args.overrides)
-        overrides = load_overrides(args.overrides)
         registry_records = load_registry(args.registry, parse_breed_ids(args.breed_ids))
+        overrides = load_overrides(
+            args.overrides,
+            {record["breed_id"] for record in registry_records},
+        )
         client = WikidataClient(
             cache_dir=args.cache_dir,
             refresh_cache=args.refresh_cache,

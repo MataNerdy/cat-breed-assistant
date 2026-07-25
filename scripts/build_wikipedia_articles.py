@@ -27,6 +27,12 @@ BROADER_SOURCE_WARNING = (
     "before chunking"
 )
 SUPPORTED_LANGUAGES = {"en", "ru"}
+SUPPORTED_WIKI_PROJECTS = {"enwiki", "ruwiki", "simplewiki"}
+WIKI_PROJECT_DOMAINS = {
+    "enwiki": "https://en.wikipedia.org/wiki/",
+    "ruwiki": "https://ru.wikipedia.org/wiki/",
+    "simplewiki": "https://simple.wikipedia.org/wiki/",
+}
 SUPPORTED_SOURCE_RELATIONS = {
     "standalone_article",
     "covered_by_broader_article",
@@ -106,9 +112,21 @@ def validate_source_overrides(
         if not isinstance(reason, str) or not reason.strip():
             raise ValueError(f"Source override {key!r} must contain a non-empty reason")
 
+        wiki_project = value.get("wiki_project") or f"{language}wiki"
+        if wiki_project not in SUPPORTED_WIKI_PROJECTS:
+            raise ValueError(f"Unsupported wiki_project in source override {key!r}")
+
+        content_language = value.get("content_language") or language
+        if content_language not in SUPPORTED_LANGUAGES:
+            raise ValueError(f"Unsupported content_language in source override {key!r}")
+        if content_language != language:
+            raise ValueError(
+                f"Source override {key!r} content_language must match key language"
+            )
+
         verified_url = value.get("verified_url")
         if verified_url is not None:
-            expected_prefix = f"https://{language}.wikipedia.org/wiki/"
+            expected_prefix = WIKI_PROJECT_DOMAINS[wiki_project]
             if not isinstance(verified_url, str) or not verified_url.startswith(
                 expected_prefix
             ):
@@ -121,6 +139,8 @@ def validate_source_overrides(
             "title": title.strip(),
             "source_relation": source_relation,
             "reason": reason.strip(),
+            "wiki_project": wiki_project,
+            "content_language": content_language,
             **(
                 {"verified_url": verified_url}
                 if isinstance(verified_url, str) and verified_url
@@ -175,12 +195,16 @@ def source_resolution(
     method: str,
     source_relation: str,
     reason: str | None = None,
+    wiki_project: str | None = None,
 ) -> dict[str, str | None]:
-    return {
+    resolution = {
         "method": method,
         "source_relation": source_relation,
         "reason": reason,
     }
+    if wiki_project:
+        resolution["wiki_project"] = wiki_project
+    return resolution
 
 
 def is_missing_page_response(cached_response: dict[str, Any]) -> bool:
@@ -221,24 +245,40 @@ def build_articles(
                     "manual_override",
                     override["source_relation"],
                     override["reason"],
+                    override.get("wiki_project") or f"{language}wiki",
                 )
                 if override
                 else source_resolution("wikidata_sitelink", "standalone_article")
             )
             if not isinstance(title, str) or not title:
+                reason = (
+                    "missing_verified_source"
+                    if any(key.startswith(f"{breed_id}:") for key in source_overrides)
+                    else "missing_sitelink"
+                )
                 unresolved.append(
                     unresolved_record(
                         breed_id,
                         language,
                         None,
-                        "missing_sitelink",
-                        f"{language} Wikipedia sitelink is missing",
+                        reason,
+                        f"{language} Wikipedia source is missing",
                     )
                 )
                 continue
 
             try:
-                cached_response = client.fetch_article(breed_id, language, title)
+                wiki_project = (
+                    override.get("wiki_project") or f"{language}wiki"
+                    if override
+                    else f"{language}wiki"
+                )
+                cached_response = client.fetch_article(
+                    breed_id,
+                    language,
+                    title,
+                    wiki_project=wiki_project,
+                )
                 if override and is_missing_page_response(cached_response):
                     unresolved.append(
                         unresolved_record(
@@ -252,6 +292,7 @@ def build_articles(
                     continue
                 article = parse_article_record(cached_response, breed_id, language)
                 article["source_resolution"] = resolution
+                article["wiki_project"] = wiki_project
                 if resolution["source_relation"] != "standalone_article":
                     warnings = article.setdefault("warnings", [])
                     if BROADER_SOURCE_WARNING not in warnings:

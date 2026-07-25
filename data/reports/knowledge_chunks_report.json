@@ -3,18 +3,17 @@
     "pers"
   ],
   "breeds_with_min_chunks": [
-    "chee",
     "ebur"
   ],
-  "broader_documents_skipped": 5,
+  "broader_documents_skipped": 3,
   "catapi_chunks": 67,
   "chunks_by_source": {
     "thecatapi": 67,
-    "wikipedia": 939
+    "wikipedia": 942
   },
   "chunks_by_source_relation": {
     "section_of_another_article": 2,
-    "standalone_article": 937,
+    "standalone_article": 940,
     "standalone_profile": 67
   },
   "chunks_longer_than_3000_characters": 0,
@@ -38,7 +37,7 @@
     "buri": 17,
     "char": 9,
     "chau": 14,
-    "chee": 1,
+    "chee": 4,
     "crex": 14,
     "csho": 9,
     "cspa": 9,
@@ -282,6 +281,13 @@
     }
   ],
   "corpus_integrity": {
+    "cheetoh_bengal_source_chunks": [],
+    "cheetoh_ru_wikipedia_chunks": [],
+    "cheetoh_simplewiki_chunks": [
+      "chee:wikipedia:en:overview:000",
+      "chee:wikipedia:en:1-appearance:000",
+      "chee:wikipedia:en:2-behavior:000"
+    ],
     "exact_duplicate_embedding_text": [],
     "exact_duplicate_text_between_breeds": [],
     "forbidden_cross_breed_duplicate_groups": [],
@@ -315,20 +321,6 @@
         "source_relation": "covered_by_broader_article"
       },
       {
-        "breed_id": "chee",
-        "document_id": "chee:wikipedia:en",
-        "language": "en",
-        "reason": "Broader source requires breed-specific section approval before chunking",
-        "source_relation": "covered_by_broader_article"
-      },
-      {
-        "breed_id": "chee",
-        "document_id": "chee:wikipedia:ru",
-        "language": "ru",
-        "reason": "Broader source requires breed-specific section approval before chunking",
-        "source_relation": "covered_by_broader_article"
-      },
-      {
         "breed_id": "ebur",
         "document_id": "ebur:wikipedia:en",
         "language": "en",
@@ -348,7 +340,7 @@
   "duplicate_chunk_ids": [],
   "duplicate_text_within_one_document": [],
   "empty_chunks": 0,
-  "en_chunks": 632,
+  "en_chunks": 635,
   "longest_20_chunks": [
     {
       "breed_id": "drex",
@@ -512,7 +504,7 @@
     }
   ],
   "maximum_chunk_length": 2949,
-  "median_chunk_length": 761.5,
+  "median_chunk_length": 756,
   "minimum_non_empty_chunk_length": 7,
   "ru_chunks": 374,
   "sections_split_into_multiple_chunks": [
@@ -683,7 +675,7 @@
     }
   ],
   "size_distribution": {
-    "0-500": 318,
+    "0-500": 321,
     "1001-2000": 237,
     "2001-2500": 57,
     "2501-3000": 35,
@@ -693,20 +685,6 @@
     {
       "breed_id": "bslo",
       "document_id": "bslo:wikipedia:ru",
-      "language": "ru",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "chee",
-      "document_id": "chee:wikipedia:en",
-      "language": "en",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "chee",
-      "document_id": "chee:wikipedia:ru",
       "language": "ru",
       "reason": "Broader source requires breed-specific section approval before chunking",
       "source_relation": "covered_by_broader_article"
@@ -726,7 +704,7 @@
       "source_relation": "covered_by_broader_article"
     }
   ],
-  "total_chunks": 1006,
+  "total_chunks": 1009,
   "unique_breeds_represented": 67,
   "warnings": [
     {
@@ -922,6 +900,6 @@
       ]
     }
   ],
-  "wikipedia_overview_chunks": 123,
-  "wikipedia_section_chunks": 816
+  "wikipedia_overview_chunks": 124,
+  "wikipedia_section_chunks": 818
 }

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from src.data.source_scope import scope_key
+from src.data.wikidata_resolver import normalize_match_text, page_title_from_wikipedia_url
 
 
 SCHEMA_VERSION = "1.0"
@@ -96,9 +97,13 @@ def unique_strings(values: list[Any]) -> list[str]:
 def breed_names_and_aliases(
     registry_record: dict[str, Any],
     wikidata_record: dict[str, Any] | None,
+    name_overrides: dict[str, dict[str, str]] | None = None,
 ) -> tuple[str, str | None, list[str]]:
     name_en = registry_record["name_en"]
-    name_ru = registry_record.get("name_ru")
+    breed_id = registry_record["breed_id"]
+    name_ru = (name_overrides or {}).get(breed_id, {}).get("ru")
+    if not name_ru:
+        name_ru = registry_record.get("name_ru")
     if not name_ru and wikidata_record:
         name_ru = (wikidata_record.get("labels") or {}).get("ru")
 
@@ -109,6 +114,35 @@ def breed_names_and_aliases(
         + list((wikidata_record or {}).get("aliases", {}).get("ru") or [])
     )
     return name_en, name_ru, aliases
+
+
+def load_name_overrides(
+    path: Path,
+    known_breed_ids: set[str] | None = None,
+) -> dict[str, dict[str, str]]:
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise KnowledgeDocumentError(f"Expected name overrides JSON object: {path}")
+    validated: dict[str, dict[str, str]] = {}
+    for breed_id, values in data.items():
+        if known_breed_ids is not None and breed_id not in known_breed_ids:
+            raise KnowledgeDocumentError(f"Unknown breed_id in name overrides: {breed_id}")
+        if not isinstance(values, dict):
+            raise KnowledgeDocumentError(f"Expected name override object for {breed_id}")
+        validated[breed_id] = {}
+        for language, value in values.items():
+            if language not in {"ru"}:
+                raise KnowledgeDocumentError(
+                    f"Unsupported name override language for {breed_id}: {language}"
+                )
+            if not isinstance(value, str) or not value.strip():
+                raise KnowledgeDocumentError(
+                    f"Name override for {breed_id}:{language} must be non-empty"
+                )
+            validated[breed_id][language] = value.strip()
+    return validated
 
 
 def format_rating(value: Any) -> str | None:
@@ -139,7 +173,40 @@ def split_temperament(value: Any) -> list[str]:
     return unique_strings(value.split(","))
 
 
-def build_catapi_text(raw: dict[str, Any]) -> str:
+def should_include_catapi_wikipedia_url(
+    raw: dict[str, Any],
+    registry_record: dict[str, Any],
+    wikidata_record: dict[str, Any] | None,
+) -> bool:
+    wikipedia_url = raw.get("wikipedia_url")
+    if not isinstance(wikipedia_url, str) or not wikipedia_url.strip():
+        return False
+
+    source_names = unique_strings(
+        [registry_record.get("name_en")]
+        + list(registry_record.get("aliases_en") or [])
+        + list(registry_record.get("aliases_ru") or [])
+    )
+    normalized_sources = {
+        normalize_match_text(value)
+        for value in source_names
+        if isinstance(value, str) and value.strip()
+    }
+    normalized_title = normalize_match_text(page_title_from_wikipedia_url(wikipedia_url))
+    if normalized_title in normalized_sources:
+        return True
+
+    if not wikidata_record:
+        return False
+    match_method = wikidata_record.get("match_method")
+    if match_method != "catapi_wikipedia_sitelink":
+        return False
+
+    label = (wikidata_record.get("labels") or {}).get("en")
+    return isinstance(label, str) and normalize_match_text(label) in normalized_sources
+
+
+def build_catapi_text(raw: dict[str, Any], include_wikipedia_url: bool = True) -> str:
     lines: list[str] = []
     add_line(lines, "Breed", raw.get("name"))
     add_line(lines, "Alternative names", raw.get("alt_names"))
@@ -194,19 +261,25 @@ def build_catapi_text(raw: dict[str, Any]) -> str:
         if value:
             lines.append(f"{label}: {value}")
 
-    add_line(lines, "Wikipedia URL", raw.get("wikipedia_url"))
+    if include_wikipedia_url:
+        add_line(lines, "Wikipedia URL", raw.get("wikipedia_url"))
     return "\n".join(lines)
 
 
 def build_catapi_document(
     registry_record: dict[str, Any],
     wikidata_record: dict[str, Any] | None,
+    name_overrides: dict[str, dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     breed_id = registry_record["breed_id"]
     raw = registry_record.get("catapi", {}).get("raw")
     if not isinstance(raw, dict):
         raise KnowledgeDocumentError(f"Registry record has missing catapi.raw: {breed_id}")
-    name_en, name_ru, aliases = breed_names_and_aliases(registry_record, wikidata_record)
+    name_en, name_ru, aliases = breed_names_and_aliases(
+        registry_record,
+        wikidata_record,
+        name_overrides=name_overrides,
+    )
     weight = raw.get("weight") if isinstance(raw.get("weight"), dict) else {}
     return {
         "schema_version": SCHEMA_VERSION,
@@ -219,7 +292,14 @@ def build_catapi_document(
         "source": "thecatapi",
         "document_type": "structured_profile",
         "title": f"{name_en} — structured breed profile",
-        "text": build_catapi_text(raw),
+        "text": build_catapi_text(
+            raw,
+            include_wikipedia_url=should_include_catapi_wikipedia_url(
+                raw,
+                registry_record,
+                wikidata_record,
+            ),
+        ),
         "structured_data": {
             "temperament": split_temperament(raw.get("temperament")),
             "origin": raw.get("origin"),
@@ -243,6 +323,7 @@ def build_wikipedia_document(
     registry_by_id: dict[str, dict[str, Any]],
     wikidata_by_id: dict[str, dict[str, Any]],
     scope_overrides: dict[str, dict[str, Any]] | None = None,
+    name_overrides: dict[str, dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     breed_id = article_record.get("breed_id")
     if breed_id not in registry_by_id:
@@ -250,7 +331,11 @@ def build_wikipedia_document(
 
     registry_record = registry_by_id[breed_id]
     wikidata_record = wikidata_by_id.get(breed_id)
-    name_en, name_ru, aliases = breed_names_and_aliases(registry_record, wikidata_record)
+    name_en, name_ru, aliases = breed_names_and_aliases(
+        registry_record,
+        wikidata_record,
+        name_overrides=name_overrides,
+    )
     language = article_record["language"]
     source_resolution = article_record.get("source_resolution") or {
         "method": "wikidata_sitelink",
@@ -265,6 +350,11 @@ def build_wikipedia_document(
             else "manual_scope_override",
             "source_relation": scope_override["source_relation"],
             "reason": scope_override["reason"],
+            **(
+                {"wiki_project": article_record.get("wiki_project")}
+                if article_record.get("wiki_project")
+                else {}
+            ),
         }
     return {
         "schema_version": SCHEMA_VERSION,
@@ -284,6 +374,7 @@ def build_wikipedia_document(
             "page_id": article_record.get("page_id"),
             "revision_id": article_record.get("revision_id"),
             "retrieved_at": article_record.get("retrieved_at"),
+            "wiki_project": article_record.get("wiki_project") or f"{language}wiki",
             "source_resolution": source_resolution,
         },
         "warnings": article_record.get("warnings") or [],
@@ -295,6 +386,7 @@ def build_knowledge_documents(
     wikidata_records: list[dict[str, Any]],
     wikipedia_records: list[dict[str, Any]],
     scope_overrides: dict[str, dict[str, Any]] | None = None,
+    name_overrides: dict[str, dict[str, str]] | None = None,
 ) -> list[dict[str, Any]]:
     registry_by_id = index_by_breed_id(registry_records, "registry")
     wikidata_by_id = index_by_breed_id(wikidata_records, "wikidata")
@@ -305,7 +397,11 @@ def build_knowledge_documents(
         )
 
     documents = [
-        build_catapi_document(record, wikidata_by_id.get(record["breed_id"]))
+        build_catapi_document(
+            record,
+            wikidata_by_id.get(record["breed_id"]),
+            name_overrides=name_overrides,
+        )
         for record in registry_records
     ]
     documents.extend(
@@ -314,6 +410,7 @@ def build_knowledge_documents(
             registry_by_id,
             wikidata_by_id,
             scope_overrides=scope_overrides,
+            name_overrides=name_overrides,
         )
         for record in wikipedia_records
     )

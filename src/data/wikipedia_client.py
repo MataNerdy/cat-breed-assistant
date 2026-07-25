@@ -17,6 +17,11 @@ USER_AGENT = (
     "(educational data pipeline; https://github.com/MataNerdy/cat-breed-assistant)"
 )
 TRANSIENT_STATUS_CODES = {429, 500, 502, 503, 504}
+WIKI_PROJECT_ENDPOINTS = {
+    "enwiki": "https://en.wikipedia.org/w/api.php",
+    "ruwiki": "https://ru.wikipedia.org/w/api.php",
+    "simplewiki": "https://simple.wikipedia.org/w/api.php",
+}
 
 
 class WikipediaClientError(RuntimeError):
@@ -41,14 +46,31 @@ class WikipediaClient:
         self.http_requests = 0
         self.session.headers.update({"User-Agent": USER_AGENT})
 
-    def fetch_article(self, breed_id: str, language: str, title: str) -> dict[str, Any]:
-        cache_path = self._cache_path(breed_id, language)
+    def fetch_article(
+        self,
+        breed_id: str,
+        language: str,
+        title: str,
+        wiki_project: str | None = None,
+    ) -> dict[str, Any]:
+        wiki_project = wiki_project or f"{language}wiki"
+        if wiki_project not in WIKI_PROJECT_ENDPOINTS:
+            raise WikipediaClientError(f"Unsupported wiki project: {wiki_project}")
+        cache_path = self._cache_path(breed_id, language, wiki_project)
         if cache_path.exists() and not self.refresh_cache:
             self.cache_hits += 1
             return json.loads(cache_path.read_text(encoding="utf-8"))
+        legacy_cache_path = self.cache_dir / f"{breed_id}_{language}.json"
+        if (
+            wiki_project == f"{language}wiki"
+            and legacy_cache_path.exists()
+            and not self.refresh_cache
+        ):
+            self.cache_hits += 1
+            return json.loads(legacy_cache_path.read_text(encoding="utf-8"))
 
         api_response = self._request_json(
-            f"https://{language}.wikipedia.org/w/api.php",
+            WIKI_PROJECT_ENDPOINTS[wiki_project],
             params={
                 "action": "parse",
                 "page": title,
@@ -63,6 +85,7 @@ class WikipediaClient:
                 "+00:00", "Z"
             ),
             "requested_language": language,
+            "wiki_project": wiki_project,
             "requested_title": title,
             "api_response": api_response,
         }
@@ -115,5 +138,5 @@ class WikipediaClient:
                 pass
         time.sleep(0.25 * (attempt + 1))
 
-    def _cache_path(self, breed_id: str, language: str) -> Path:
-        return self.cache_dir / f"{breed_id}_{language}.json"
+    def _cache_path(self, breed_id: str, language: str, wiki_project: str) -> Path:
+        return self.cache_dir / f"{breed_id}_{language}_{wiki_project}.json"

@@ -1,4 +1,11 @@
 {
+  "cheetoh_bengal_source_chunks": [],
+  "cheetoh_ru_wikipedia_chunks": [],
+  "cheetoh_simplewiki_chunks": [
+    "chee:wikipedia:en:overview:000",
+    "chee:wikipedia:en:1-appearance:000",
+    "chee:wikipedia:en:2-behavior:000"
+  ],
   "exact_duplicate_embedding_text": [],
   "exact_duplicate_text_between_breeds": [],
   "forbidden_cross_breed_duplicate_groups": [],
@@ -27,20 +34,6 @@
     {
       "breed_id": "bslo",
       "document_id": "bslo:wikipedia:ru",
-      "language": "ru",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "chee",
-      "document_id": "chee:wikipedia:en",
-      "language": "en",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "chee",
-      "document_id": "chee:wikipedia:ru",
       "language": "ru",
       "reason": "Broader source requires breed-specific section approval before chunking",
       "source_relation": "covered_by_broader_article"
