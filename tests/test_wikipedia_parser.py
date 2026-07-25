@@ -43,6 +43,21 @@ def test_lead_is_extracted() -> None:
     assert article["lead"] == "Maine Coon is a large cat."
 
 
+def test_navbox_inside_lead_is_removed_before_text_extraction() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Полезное описание породы.</p>"
+            "<table class='navbox'><tr><td><p>Персидская (PER)</p></td></tr></table>"
+            "<h2>История</h2><p>Текст.</p>"
+        ),
+        breed_id="hbro",
+        language="ru",
+    )
+
+    assert article["lead"] == "Полезное описание породы."
+    assert "Персидская" not in article["lead"]
+
+
 def test_content_sections_are_preserved() -> None:
     article = parse_article_record(
         cached_response("<p>Lead.</p><h2>History</h2><p>Started.</p>"),
@@ -222,6 +237,35 @@ def test_authority_control_is_excluded() -> None:
     assert "Authority data" not in article["sections"][0]["text"]
 
 
+def test_nested_navigation_markup_does_not_leak_after_first_child_endtag() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Temperament</h2>"
+            "<p>Russian Blue is calm.</p>"
+            "<table class='metadata navbox'><tr><td><p>Persian (PER)</p></td></tr></table>"
+            "<p>Useful ending.</p>"
+        ),
+        breed_id="rblu",
+        language="en",
+    )
+
+    assert article["sections"][0]["text"] == "Russian Blue is calm.\n\nUseful ending."
+
+
+def test_role_navigation_is_excluded_but_content_remains() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Temperament</h2>"
+            "<p>Russian Blue is calm.</p>"
+            "<div role='navigation'><p>Britannica J9U LCCN</p></div>"
+        ),
+        breed_id="rblu",
+        language="en",
+    )
+
+    assert article["sections"][0]["text"] == "Russian Blue is calm."
+
+
 def test_gallery_captions_are_excluded() -> None:
     article = parse_article_record(
         cached_response(
@@ -234,6 +278,31 @@ def test_gallery_captions_are_excluded() -> None:
     )
 
     assert article["sections"][0]["text"] == "Useful paragraph."
+
+
+def test_gallery_caption_only_section_is_not_created() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>Coat colour overview</h2>"
+            "<ul class='gallery mw-gallery-traditional'>"
+            "<li>Ruddy female</li><li>Blue kitten</li><li>Sorrel</li>"
+            "</ul>"
+        ),
+        breed_id="soma",
+        language="en",
+    )
+
+    assert article["sections"] == []
+
+
+def test_marker_only_text_is_not_saved_as_section() -> None:
+    article = parse_article_record(
+        cached_response("<p>Lead.</p><h2>Characteristics</h2><p>Source:</p>"),
+        breed_id="dons",
+        language="en",
+    )
+
+    assert article["sections"] == []
 
 
 def test_html_and_markup_are_cleaned() -> None:

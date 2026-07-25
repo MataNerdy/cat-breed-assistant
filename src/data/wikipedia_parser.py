@@ -11,18 +11,43 @@ from src.data.source_scope import is_service_section_path, is_service_section_ti
 
 SCHEMA_VERSION = "1.0"
 SKIPPED_CONTAINER_CLASSES = {
+    "ambox",
     "authority-control",
     "catlinks",
     "gallery",
+    "hatnote",
     "metadata",
     "mw-gallery",
+    "mw-gallery-traditional",
+    "mw-hidden-catlinks",
+    "mw-normal-catlinks",
     "mw-references-wrap",
     "navbox",
+    "navbox-inner",
+    "nomobile",
     "noprint",
     "portal",
+    "portalbox",
     "reflist",
+    "references",
+    "sidebar",
+    "sistersitebox",
+    "tleft",
     "thumb",
+    "tright",
     "vertical-navbox",
+}
+MARKER_ONLY_TEXTS = {
+    "source",
+    "sources",
+    "reference",
+    "references",
+    "источник",
+    "источники",
+    "фото",
+    "image",
+    "images",
+    "gallery",
 }
 
 
@@ -37,20 +62,16 @@ class ArticleHTMLExtractor(HTMLParser):
         self._buffer: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        attrs_dict = dict(attrs)
-        classes = set((attrs_dict.get("class") or "").split())
-        if "gallery" in classes or "mw-gallery" in classes:
-            self.warnings.append("Gallery/media markup was skipped during parsing.")
-        if (
-            tag in {"style", "script", "table", "figure", "sup"}
-            or "mw-editsection" in classes
-            or "reference" in classes
-            or classes.intersection(SKIPPED_CONTAINER_CLASSES)
-        ):
+        if self._skip_depth:
             self._skip_depth += 1
             return
 
-        if self._skip_depth:
+        if should_skip_element(tag, attrs):
+            classes = element_classes(attrs)
+            if classes.intersection({"gallery", "mw-gallery", "mw-gallery-traditional"}):
+                self.warnings.append("Gallery/media markup was skipped during parsing.")
+            self._flush()
+            self._skip_depth = 1
             return
 
         if tag in {"p", "li", "h2", "h3", "h4", "h5", "h6"}:
@@ -76,7 +97,7 @@ class ArticleHTMLExtractor(HTMLParser):
         if not self._current_tag:
             return
         text = clean_text(" ".join(self._buffer))
-        if text:
+        if text and not is_marker_only_text(text):
             block_type = (
                 "heading"
                 if self._current_tag in {"h2", "h3", "h4", "h5", "h6"}
@@ -99,6 +120,58 @@ def clean_text(value: str) -> str:
     value = re.sub(r"\[[^\]]*\]", "", value)
     value = re.sub(r"\s+", " ", value)
     return value.strip()
+
+
+def element_classes(attrs: list[tuple[str, str | None]]) -> set[str]:
+    classes: set[str] = set()
+    for name, value in attrs:
+        if name == "class" and value:
+            classes.update(value.split())
+    return classes
+
+
+def has_navigation_data_attribute(attrs: list[tuple[str, str | None]]) -> bool:
+    for name, value in attrs:
+        if not name.startswith("data-") or not value:
+            continue
+        normalized = value.casefold()
+        if "navigation" in normalized or "navbox" in normalized:
+            return True
+    return False
+
+
+def should_skip_element(tag: str, attrs: list[tuple[str, str | None]]) -> bool:
+    attrs_dict = dict(attrs)
+    classes = element_classes(attrs)
+    role = (attrs_dict.get("role") or "").casefold()
+    aria_label = (attrs_dict.get("aria-label") or "").casefold()
+
+    if tag in {"style", "script", "sup", "figure"}:
+        return True
+    if "mw-editsection" in classes or "reference" in classes:
+        return True
+    if classes.intersection(SKIPPED_CONTAINER_CLASSES):
+        return True
+    if role == "navigation":
+        return True
+    if "navigation" in aria_label:
+        return True
+    if has_navigation_data_attribute(attrs):
+        return True
+    if tag == "table":
+        return bool(
+            classes.intersection(SKIPPED_CONTAINER_CLASSES)
+            or role == "navigation"
+            or "navigation" in aria_label
+            or has_navigation_data_attribute(attrs)
+        )
+    return False
+
+
+def is_marker_only_text(value: str) -> bool:
+    normalized = clean_text(value).casefold().strip()
+    normalized = normalized.rstrip(":：.。").strip()
+    return normalized in MARKER_ONLY_TEXTS
 
 
 def is_excluded_section(title: str, language: str) -> bool:
