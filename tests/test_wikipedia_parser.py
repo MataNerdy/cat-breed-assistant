@@ -181,6 +181,61 @@ def test_content_section_with_image_is_not_removed() -> None:
     assert article["sections"][0]["text"] == "Body is strong."
 
 
+def test_child_of_references_is_excluded() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>References</h2>"
+            "<h3>Literature</h3><p>Book.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"] == []
+
+
+def test_navbox_is_excluded_but_regular_paragraph_remains() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>History</h2>"
+            "<div class='navbox'><p>Navigation box breeds.</p></div>"
+            "<p>Useful paragraph.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["text"] == "Useful paragraph."
+
+
+def test_authority_control_is_excluded() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>History</h2>"
+            "<div class='authority-control'><p>Authority data.</p></div>"
+            "<p>Useful paragraph.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert "Authority data" not in article["sections"][0]["text"]
+
+
+def test_gallery_captions_are_excluded() -> None:
+    article = parse_article_record(
+        cached_response(
+            "<p>Lead.</p><h2>History</h2>"
+            "<ul class='gallery'><li>Caption only.</li></ul>"
+            "<p>Useful paragraph.</p>"
+        ),
+        breed_id="mcoo",
+        language="en",
+    )
+
+    assert article["sections"][0]["text"] == "Useful paragraph."
+
+
 def test_html_and_markup_are_cleaned() -> None:
     assert clean_text("  A&nbsp;cat <ignored> [1] \n with   spaces ") == (
         "A cat <ignored> with spaces"

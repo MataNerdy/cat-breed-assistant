@@ -1,2 +1,5 @@
+{"breed_id": "bslo", "document_id": "bslo:wikipedia:ru", "language": "ru", "reason": "Broader source requires breed-specific section approval before chunking", "source_relation": "covered_by_broader_article"}
+{"breed_id": "chee", "document_id": "chee:wikipedia:en", "language": "en", "reason": "Broader source requires breed-specific section approval before chunking", "source_relation": "covered_by_broader_article"}
+{"breed_id": "chee", "document_id": "chee:wikipedia:ru", "language": "ru", "reason": "Broader source requires breed-specific section approval before chunking", "source_relation": "covered_by_broader_article"}
 {"breed_id": "ebur", "document_id": "ebur:wikipedia:en", "language": "en", "reason": "Broader source requires breed-specific section approval before chunking", "source_relation": "covered_by_broader_article"}
 {"breed_id": "ebur", "document_id": "ebur:wikipedia:ru", "language": "ru", "reason": "Broader source requires breed-specific section approval before chunking", "source_relation": "covered_by_broader_article"}

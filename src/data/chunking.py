@@ -9,6 +9,14 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
+from src.data.source_scope import (
+    SourceScopeError,
+    is_service_section_path,
+    load_scope_overrides,
+    normalize_section_path,
+    scope_key,
+)
+
 
 SCHEMA_VERSION = "1.0"
 BROADER_SKIP_REASON = (
@@ -68,14 +76,10 @@ def write_json_atomic(record: dict[str, Any], output_path: Path) -> None:
 
 
 def load_broader_overrides(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("{}\n", encoding="utf-8")
-        return {}
-    data = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(data, dict):
-        raise ChunkingError(f"Expected broader overrides JSON object: {path}")
-    return data
+    try:
+        return load_scope_overrides(path, create_if_missing=True)
+    except SourceScopeError as exc:
+        raise ChunkingError(str(exc)) from exc
 
 
 def slugify(value: str) -> str:
@@ -211,6 +215,7 @@ def make_chunk(
     section_level: int | None = None,
     parent_index: str | None = None,
     warnings: list[str] | None = None,
+    selection_method: str | None = None,
 ) -> dict[str, Any]:
     provenance = document.get("provenance") or {}
     if document["source"] == "thecatapi":
@@ -235,6 +240,7 @@ def make_chunk(
         "language": document["language"],
         "source": document["source"],
         "source_relation": source_relation_for(document),
+        "selection_method": selection_method,
         "chunk_type": chunk_type,
         "section_title": section_title,
         "section_path": section_path,
@@ -272,10 +278,28 @@ def chunk_wikipedia_document(
     document: dict[str, Any],
     target_chars: int,
     max_chars: int,
+    scope_override: dict[str, Any] | None = None,
+    excluded_section_paths: set[tuple[str, ...]] | None = None,
 ) -> list[dict[str, Any]]:
     chunks: list[dict[str, Any]] = []
+    include_lead = True
+    approved_paths: set[tuple[str, ...]] | None = None
+    selection_method = None
+    if scope_override:
+        include_lead = bool(scope_override["include_lead"])
+        approved_paths = {
+            normalize_section_path(path)
+            for path in scope_override["included_section_paths"]
+        }
+        selection_method = (
+            "manual_section_approval"
+            if scope_override["source_relation"] == "section_of_another_article"
+            else "manual_scope_override"
+        )
+    excluded_section_paths = excluded_section_paths or set()
+
     lead = (document.get("lead") or "").strip()
-    if lead:
+    if lead and include_lead:
         lead_parts, lead_split_warnings = split_text(lead, target_chars, max_chars)
         for part_index, lead_part in enumerate(lead_parts):
             chunks.append(
@@ -290,16 +314,26 @@ def chunk_wikipedia_document(
                     warnings=sorted(
                         set((document.get("warnings") or []) + lead_split_warnings)
                     ),
+                    selection_method=selection_method,
                 )
             )
 
     used_section_slugs: Counter[str] = Counter()
+    matched_paths: set[tuple[str, ...]] = set()
     for section in document.get("sections") or []:
         text = (section.get("text") or "").strip()
         if not text:
             continue
         section_title = section.get("title") or "Untitled section"
         section_path = section.get("section_path") or [section_title]
+        normalized_path = normalize_section_path(section_path)
+        if is_service_section_path(section_path):
+            continue
+        if approved_paths is None and normalized_path in excluded_section_paths:
+            continue
+        if approved_paths is not None and normalized_path not in approved_paths:
+            continue
+        matched_paths.add(normalized_path)
         base_slug = f"{section.get('index') or 'section'}-{slugify(section_title)}"
         used_section_slugs[base_slug] += 1
         slug = (
@@ -324,7 +358,15 @@ def chunk_wikipedia_document(
                     part_index=part_index,
                     text=part,
                     warnings=split_warnings,
+                    selection_method=selection_method,
                 )
+            )
+    if approved_paths is not None:
+        missing_paths = sorted(approved_paths - matched_paths)
+        if missing_paths:
+            raise ChunkingError(
+                f"Approved section paths were not found for {document['document_id']}: "
+                f"{missing_paths}"
             )
     return chunks
 
@@ -346,24 +388,72 @@ def build_chunks(
     max_chars: int = 3000,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     broader_overrides = broader_overrides or {}
-    if broader_overrides:
-        raise ChunkingError("Non-empty broader source chunk overrides are not supported yet")
 
     chunks: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
+    effective_documents: list[tuple[dict[str, Any], dict[str, Any] | None]] = []
     for document in documents:
+        key = scope_key(document["breed_id"], document["language"])
+        scope_override = broader_overrides.get(key)
+        if scope_override and document["source"] == "wikipedia":
+            document = {
+                **document,
+                "provenance": {
+                    **(document.get("provenance") or {}),
+                    "source_resolution": {
+                        "method": "manual_section_approval"
+                        if scope_override["source_relation"] == "section_of_another_article"
+                        else "manual_scope_override",
+                        "source_relation": scope_override["source_relation"],
+                        "reason": scope_override["reason"],
+                    },
+                },
+            }
+        effective_documents.append((document, scope_override))
+
+    approved_paths_by_source_url: dict[str, set[tuple[str, ...]]] = defaultdict(set)
+    for document, scope_override in effective_documents:
+        if document["source"] != "wikipedia" or not scope_override:
+            continue
+        source_url = (document.get("provenance") or {}).get("source_url")
+        if not isinstance(source_url, str) or not source_url:
+            continue
+        for section_path in scope_override.get("included_section_paths") or []:
+            approved_paths_by_source_url[source_url].add(normalize_section_path(section_path))
+
+    for document, scope_override in effective_documents:
         relation = source_relation_for(document)
-        if relation == "covered_by_broader_article":
+        if relation == "section_of_another_article" and not scope_override:
+            raise ChunkingError(f"section_of_another_article requires override: {key}")
+        if relation == "covered_by_broader_article" and not (
+            scope_override and scope_override.get("included_section_paths")
+        ):
             skipped.append(skipped_broader_record(document))
             continue
         if document["source"] == "thecatapi":
             chunks.extend(chunk_catapi_document(document))
         elif document["source"] == "wikipedia":
-            chunks.extend(chunk_wikipedia_document(document, target_chars, max_chars))
+            source_url = (document.get("provenance") or {}).get("source_url")
+            excluded_paths = (
+                approved_paths_by_source_url.get(source_url, set())
+                if isinstance(source_url, str)
+                else set()
+            )
+            chunks.extend(
+                chunk_wikipedia_document(
+                    document,
+                    target_chars,
+                    max_chars,
+                    scope_override=scope_override,
+                    excluded_section_paths=excluded_paths,
+                )
+            )
         else:
             raise ChunkingError(f"Unsupported document source: {document['source']}")
 
     ensure_unique_chunk_ids(chunks)
+    integrity = build_corpus_integrity_report(chunks, skipped)
+    enforce_corpus_integrity(integrity)
     chunks.sort(
         key=lambda item: (
             item["breed_id"],
@@ -378,6 +468,109 @@ def build_chunks(
     )
     skipped.sort(key=lambda item: (item["breed_id"], item["language"], item["document_id"]))
     return chunks, skipped
+
+
+def build_corpus_integrity_report(
+    chunks: list[dict[str, Any]],
+    skipped_broader: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    skipped_broader = skipped_broader or []
+    wikipedia_chunks = [chunk for chunk in chunks if chunk["source"] == "wikipedia"]
+
+    def shared_by(field: str) -> list[dict[str, Any]]:
+        values: dict[Any, set[str]] = defaultdict(set)
+        for chunk in wikipedia_chunks:
+            value = chunk.get("provenance", {}).get(field) if field != "source_url" else chunk.get("provenance", {}).get("source_url")
+            if value:
+                values[value].add(chunk["breed_id"])
+        return [
+            {field: value, "breed_ids": sorted(breed_ids)}
+            for value, breed_ids in sorted(values.items(), key=lambda item: str(item[0]))
+            if len(breed_ids) > 1
+        ]
+
+    text_groups = duplicate_groups_by_text(wikipedia_chunks, "text")
+    embedding_groups = duplicate_groups_by_text(chunks, "embedding_text")
+    service_paths = [
+        {
+            "chunk_id": chunk["chunk_id"],
+            "breed_id": chunk["breed_id"],
+            "section_path": chunk["section_path"],
+        }
+        for chunk in chunks
+        if is_service_section_path(chunk.get("section_path") or [])
+    ]
+    shared_standalone = []
+    for item in shared_by("source_url"):
+        related = [
+            chunk
+            for chunk in wikipedia_chunks
+            if chunk.get("provenance", {}).get("source_url") == item["source_url"]
+        ]
+        if any(chunk["source_relation"] == "standalone_article" for chunk in related):
+            if len({chunk["breed_id"] for chunk in related if chunk["source_relation"] == "standalone_article"}) > 1:
+                shared_standalone.append(item)
+
+    return {
+        "shared_source_url_between_breeds": shared_by("source_url"),
+        "shared_page_id_between_breeds": shared_by("page_id"),
+        "exact_duplicate_text_between_breeds": text_groups,
+        "exact_duplicate_embedding_text": embedding_groups,
+        "service_section_paths_in_chunks": service_paths,
+        "standalone_article_sources_used_by_multiple_breeds": shared_standalone,
+        "scoped_documents_without_override": [
+            chunk["document_id"]
+            for chunk in wikipedia_chunks
+            if chunk["source_relation"] == "section_of_another_article"
+            and chunk.get("selection_method") != "manual_section_approval"
+        ],
+        "overrides_with_missing_section_paths": [],
+        "skipped_broader_sources": skipped_broader,
+        "forbidden_cross_breed_duplicate_groups": text_groups,
+    }
+
+
+def duplicate_groups_by_text(chunks: list[dict[str, Any]], field: str) -> list[dict[str, Any]]:
+    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for chunk in chunks:
+        value = chunk.get(field)
+        if not isinstance(value, str) or not value.strip():
+            continue
+        grouped[value].append(
+            {
+                "chunk_id": chunk["chunk_id"],
+                "breed_id": chunk["breed_id"],
+                "document_id": chunk["document_id"],
+            }
+        )
+    duplicates = []
+    for value, rows in grouped.items():
+        breed_ids = sorted({row["breed_id"] for row in rows})
+        if len(breed_ids) > 1:
+            duplicates.append(
+                {
+                    "text_length": len(value),
+                    "breed_ids": breed_ids,
+                    "chunks": sorted(rows, key=lambda item: item["chunk_id"]),
+                }
+            )
+    return sorted(duplicates, key=lambda item: (item["breed_ids"], item["text_length"]))
+
+
+def enforce_corpus_integrity(report: dict[str, Any]) -> None:
+    errors = []
+    if report["service_section_paths_in_chunks"]:
+        errors.append("service section paths reached chunks")
+    if report["standalone_article_sources_used_by_multiple_breeds"]:
+        errors.append("standalone article source is shared by multiple breeds")
+    if report["scoped_documents_without_override"]:
+        errors.append("scoped documents without override")
+    if report["overrides_with_missing_section_paths"]:
+        errors.append("scope overrides with missing section paths")
+    if report["forbidden_cross_breed_duplicate_groups"]:
+        errors.append("cross-breed duplicate Wikipedia chunk text")
+    if errors:
+        raise ChunkingError("; ".join(errors))
 
 
 def ensure_unique_chunk_ids(chunks: list[dict[str, Any]]) -> None:
@@ -485,6 +678,7 @@ def build_chunks_report(
             if chunk.get("warnings")
         ],
         "skipped_broader_sources": skipped_broader,
+        "corpus_integrity": build_corpus_integrity_report(chunks, skipped_broader),
         "chunks_per_breed": dict(sorted(chunks_per_breed.items())),
         "breeds_with_min_chunks": sorted(
             breed_id

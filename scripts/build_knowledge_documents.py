@@ -18,6 +18,7 @@ from src.data.knowledge_documents import (
     write_json_atomic,
     write_jsonl_atomic,
 )
+from src.data.source_scope import load_scope_overrides
 
 
 DEFAULT_REGISTRY_PATH = Path("data/curated/breed_registry.jsonl")
@@ -25,6 +26,7 @@ DEFAULT_WIKIDATA_PATH = Path("data/staging/wikidata_enrichment.jsonl")
 DEFAULT_WIKIPEDIA_PATH = Path("data/staging/wikipedia_articles.jsonl")
 DEFAULT_OUTPUT_PATH = Path("data/processed/knowledge_documents.jsonl")
 DEFAULT_REPORT_PATH = Path("data/reports/knowledge_documents_report.json")
+DEFAULT_SCOPE_OVERRIDES_PATH = Path("data/curated/broader_source_chunk_overrides.json")
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,6 +38,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--wikipedia", type=Path, default=DEFAULT_WIKIPEDIA_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH)
+    parser.add_argument(
+        "--scope-overrides",
+        type=Path,
+        default=DEFAULT_SCOPE_OVERRIDES_PATH,
+    )
     return parser.parse_args()
 
 
@@ -45,10 +52,12 @@ def main() -> int:
         registry_records = read_jsonl(args.registry)
         wikidata_records = read_jsonl(args.wikidata)
         wikipedia_records = read_jsonl(args.wikipedia)
+        scope_overrides = load_scope_overrides(args.scope_overrides)
         documents = build_knowledge_documents(
             registry_records=registry_records,
             wikidata_records=wikidata_records,
             wikipedia_records=wikipedia_records,
+            scope_overrides=scope_overrides,
         )
         report = build_knowledge_documents_report(documents)
         write_jsonl_atomic(documents, args.output)
@@ -60,6 +69,7 @@ def main() -> int:
     print(f"Registry records: {len(registry_records)}")
     print(f"Wikidata records: {len(wikidata_records)}")
     print(f"Wikipedia records: {len(wikipedia_records)}")
+    print(f"Scope overrides: {args.scope_overrides}")
     print(f"Written knowledge documents: {len(documents)}")
     print(f"Output: {args.output}")
     print(f"Report: {args.report}")

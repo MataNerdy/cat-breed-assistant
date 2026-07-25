@@ -5,8 +5,9 @@
     "ru": 61
   },
   "documents_by_source_relation": {
-    "covered_by_broader_article": 2,
-    "standalone_article": 126,
+    "covered_by_broader_article": 5,
+    "section_of_another_article": 2,
+    "standalone_article": 121,
     "standalone_profile": 67
   },
   "documents_with_warnings": 37,

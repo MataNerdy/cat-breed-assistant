@@ -6,31 +6,23 @@ from html.parser import HTMLParser
 from typing import Any
 from urllib.parse import quote
 
+from src.data.source_scope import is_service_section_path, is_service_section_title
+
 
 SCHEMA_VERSION = "1.0"
-EXCLUDED_SECTION_TITLES = {
-    "ru": {
-        "примечания",
-        "ссылки",
-        "литература",
-        "источники",
-        "см. также",
-        "фотографии",
-        "галерея",
-        "изображения",
-    },
-    "en": {
-        "references",
-        "external links",
-        "further reading",
-        "bibliography",
-        "see also",
-        "notes",
-        "gallery",
-        "galleries",
-        "photo gallery",
-        "images",
-    },
+SKIPPED_CONTAINER_CLASSES = {
+    "authority-control",
+    "catlinks",
+    "gallery",
+    "metadata",
+    "mw-gallery",
+    "mw-references-wrap",
+    "navbox",
+    "noprint",
+    "portal",
+    "reflist",
+    "thumb",
+    "vertical-navbox",
 }
 
 
@@ -53,9 +45,7 @@ class ArticleHTMLExtractor(HTMLParser):
             tag in {"style", "script", "table", "figure", "sup"}
             or "mw-editsection" in classes
             or "reference" in classes
-            or "navbox" in classes
-            or "gallery" in classes
-            or "mw-gallery" in classes
+            or classes.intersection(SKIPPED_CONTAINER_CLASSES)
         ):
             self._skip_depth += 1
             return
@@ -112,8 +102,7 @@ def clean_text(value: str) -> str:
 
 
 def is_excluded_section(title: str, language: str) -> bool:
-    normalized = clean_text(title).casefold()
-    return normalized in EXCLUDED_SECTION_TITLES.get(language, set())
+    return is_service_section_title(clean_text(title))
 
 
 def extract_page_metadata(cached_response: dict[str, Any]) -> dict[str, Any]:
@@ -187,7 +176,7 @@ def extract_sections(blocks: list[dict[str, Any]], language: str) -> list[dict[s
         if (
             current_heading
             and current_text
-            and not is_excluded_section(current_heading["title"], language)
+            and not is_service_section_path([item["title"] for item in heading_stack])
         ):
             path = [item["title"] for item in heading_stack]
             sections.append(

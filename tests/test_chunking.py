@@ -183,6 +183,115 @@ def test_broader_article_is_skipped() -> None:
     assert skipped[0]["reason"] == BROADER_SKIP_REASON
 
 
+def test_section_of_another_article_requires_override() -> None:
+    with pytest.raises(ChunkingError, match="requires override"):
+        build_chunks([wikipedia_document("section_of_another_article")])
+
+
+def test_scoped_article_creates_only_approved_section_and_no_lead() -> None:
+    chunks, skipped = build_chunks(
+        [wikipedia_document()],
+        broader_overrides={
+            "mcoo:en": {
+                "breed_id": "mcoo",
+                "language": "en",
+                "source_relation": "section_of_another_article",
+                "include_lead": False,
+                "included_section_paths": [["Description", "Coat"]],
+                "reason": "Only Coat is approved.",
+            }
+        },
+    )
+
+    assert skipped == []
+    assert [chunk["section_path"] for chunk in chunks] == [["Description", "Coat"]]
+    assert chunks[0]["source_relation"] == "section_of_another_article"
+    assert chunks[0]["selection_method"] == "manual_section_approval"
+
+
+def test_missing_approved_section_path_fails() -> None:
+    with pytest.raises(ChunkingError, match="not found"):
+        build_chunks(
+            [wikipedia_document()],
+            broader_overrides={
+                "mcoo:en": {
+                    "breed_id": "mcoo",
+                    "language": "en",
+                    "source_relation": "section_of_another_article",
+                    "include_lead": False,
+                    "included_section_paths": [["Missing"]],
+                    "reason": "Missing path.",
+                }
+            },
+        )
+
+
+def test_service_section_paths_are_removed_in_chunking() -> None:
+    document = wikipedia_document()
+    document["sections"].append(
+        {
+            "index": "4.1",
+            "level": 3,
+            "parent_index": "4",
+            "section_path": ["References", "Literature"],
+            "title": "Literature",
+            "text": "Reference text.",
+        }
+    )
+
+    chunks, _ = build_chunks([document])
+
+    assert ["References", "Literature"] not in [chunk["section_path"] for chunk in chunks]
+
+
+def test_compact_russian_see_also_path_is_removed() -> None:
+    document = wikipedia_document()
+    document["sections"].append(
+        {
+            "index": "4",
+            "level": 2,
+            "parent_index": None,
+            "section_path": ["См.также"],
+            "title": "См.также",
+            "text": "Other breeds.",
+        }
+    )
+
+    chunks, _ = build_chunks([document])
+
+    assert ["См.также"] not in [chunk["section_path"] for chunk in chunks]
+
+
+def test_breed_gallery_and_source_sections_are_removed() -> None:
+    document = wikipedia_document()
+    document["sections"].extend(
+        [
+            {
+                "index": "4",
+                "level": 2,
+                "parent_index": None,
+                "section_path": ["Breed gallery"],
+                "title": "Breed gallery",
+                "text": "Caption.",
+            },
+            {
+                "index": "5",
+                "level": 2,
+                "parent_index": None,
+                "section_path": ["Источник"],
+                "title": "Источник",
+                "text": "Source text.",
+            },
+        ]
+    )
+
+    chunks, _ = build_chunks([document])
+    paths = [chunk["section_path"] for chunk in chunks]
+
+    assert ["Breed gallery"] not in paths
+    assert ["Источник"] not in paths
+
+
 def test_standalone_burmese_like_shared_page_is_chunked() -> None:
     doc = wikipedia_document("standalone_article")
     doc["breed_id"] = "bure"
@@ -193,14 +302,26 @@ def test_standalone_burmese_like_shared_page_is_chunked() -> None:
     assert chunks
 
 
-def test_same_page_used_for_multiple_breeds_does_not_error() -> None:
+def test_same_page_used_for_multiple_breeds_with_override_does_not_error() -> None:
     first = wikipedia_document()
     second = wikipedia_document()
     second["breed_id"] = "bure"
     second["document_id"] = "bure:wikipedia:en"
     second["provenance"]["page_id"] = first["provenance"]["page_id"]
 
-    chunks, skipped = build_chunks([first, second])
+    chunks, skipped = build_chunks(
+        [first, second],
+        broader_overrides={
+            "bure:en": {
+                "breed_id": "bure",
+                "language": "en",
+                "source_relation": "section_of_another_article",
+                "include_lead": False,
+                "included_section_paths": [["Health"]],
+                "reason": "Only Health is approved for this test.",
+            }
+        },
+    )
 
     assert skipped == []
     assert {chunk["breed_id"] for chunk in chunks} == {"mcoo", "bure"}
@@ -213,9 +334,15 @@ def test_empty_broader_overrides_object_is_valid(tmp_path: Path) -> None:
     assert load_broader_overrides(path) == {}
 
 
-def test_non_empty_broader_overrides_are_rejected_for_now() -> None:
-    with pytest.raises(ChunkingError, match="not supported yet"):
-        build_chunks([wikipedia_document()], broader_overrides={"ebur:en": {}})
+def test_shared_standalone_source_without_override_fails() -> None:
+    first = wikipedia_document()
+    second = wikipedia_document()
+    second["breed_id"] = "bure"
+    second["document_id"] = "bure:wikipedia:en"
+    second["provenance"]["page_id"] = first["provenance"]["page_id"]
+
+    with pytest.raises(ChunkingError, match="standalone article source"):
+        build_chunks([first, second])
 
 
 def test_two_chunk_writes_have_same_sha(tmp_path: Path) -> None:

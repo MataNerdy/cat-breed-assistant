@@ -14,6 +14,7 @@ from src.data.chunking import (
     ChunkingError,
     build_chunks,
     build_chunks_report,
+    build_corpus_integrity_report,
     load_broader_overrides,
     read_jsonl,
     write_json_atomic,
@@ -26,6 +27,7 @@ DEFAULT_OUTPUT_PATH = Path("data/processed/knowledge_chunks.jsonl")
 DEFAULT_REPORT_PATH = Path("data/reports/knowledge_chunks_report.json")
 DEFAULT_SKIPPED_BROADER_PATH = Path("data/reports/skipped_broader_sources.jsonl")
 DEFAULT_BROADER_OVERRIDES_PATH = Path("data/curated/broader_source_chunk_overrides.json")
+DEFAULT_INTEGRITY_REPORT_PATH = Path("data/reports/corpus_integrity_report.json")
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,6 +47,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=DEFAULT_BROADER_OVERRIDES_PATH,
     )
+    parser.add_argument(
+        "--integrity-report",
+        type=Path,
+        default=DEFAULT_INTEGRITY_REPORT_PATH,
+    )
     parser.add_argument("--target-chars", type=int, default=2200)
     parser.add_argument("--max-chars", type=int, default=3000)
     return parser.parse_args()
@@ -62,9 +69,11 @@ def main() -> int:
             max_chars=args.max_chars,
         )
         report = build_chunks_report(chunks, skipped_broader)
+        integrity_report = build_corpus_integrity_report(chunks, skipped_broader)
         write_jsonl_atomic(chunks, args.output)
         write_jsonl_atomic(skipped_broader, args.skipped_broader_output)
         write_json_atomic(report, args.report)
+        write_json_atomic(integrity_report, args.integrity_report)
     except (OSError, ValueError, json.JSONDecodeError, ChunkingError) as exc:
         print(f"Could not build knowledge chunks: {exc}")
         return 1
@@ -75,6 +84,7 @@ def main() -> int:
     print(f"Output: {args.output}")
     print(f"Report: {args.report}")
     print(f"Skipped broader output: {args.skipped_broader_output}")
+    print(f"Integrity report: {args.integrity_report}")
     return 0
 
 

@@ -6,6 +6,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from src.data.source_scope import scope_key
+
 
 SCHEMA_VERSION = "1.0"
 CATAPI_SOURCE_URL = "https://api.thecatapi.com/v1/breeds"
@@ -240,6 +242,7 @@ def build_wikipedia_document(
     article_record: dict[str, Any],
     registry_by_id: dict[str, dict[str, Any]],
     wikidata_by_id: dict[str, dict[str, Any]],
+    scope_overrides: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     breed_id = article_record.get("breed_id")
     if breed_id not in registry_by_id:
@@ -249,6 +252,20 @@ def build_wikipedia_document(
     wikidata_record = wikidata_by_id.get(breed_id)
     name_en, name_ru, aliases = breed_names_and_aliases(registry_record, wikidata_record)
     language = article_record["language"]
+    source_resolution = article_record.get("source_resolution") or {
+        "method": "wikidata_sitelink",
+        "source_relation": "standalone_article",
+        "reason": None,
+    }
+    scope_override = (scope_overrides or {}).get(scope_key(breed_id, language))
+    if scope_override:
+        source_resolution = {
+            "method": "manual_section_approval"
+            if scope_override["source_relation"] == "section_of_another_article"
+            else "manual_scope_override",
+            "source_relation": scope_override["source_relation"],
+            "reason": scope_override["reason"],
+        }
     return {
         "schema_version": SCHEMA_VERSION,
         "document_id": f"{breed_id}:wikipedia:{language}",
@@ -267,12 +284,7 @@ def build_wikipedia_document(
             "page_id": article_record.get("page_id"),
             "revision_id": article_record.get("revision_id"),
             "retrieved_at": article_record.get("retrieved_at"),
-            "source_resolution": article_record.get("source_resolution")
-            or {
-                "method": "wikidata_sitelink",
-                "source_relation": "standalone_article",
-                "reason": None,
-            },
+            "source_resolution": source_resolution,
         },
         "warnings": article_record.get("warnings") or [],
     }
@@ -282,6 +294,7 @@ def build_knowledge_documents(
     registry_records: list[dict[str, Any]],
     wikidata_records: list[dict[str, Any]],
     wikipedia_records: list[dict[str, Any]],
+    scope_overrides: dict[str, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     registry_by_id = index_by_breed_id(registry_records, "registry")
     wikidata_by_id = index_by_breed_id(wikidata_records, "wikidata")
@@ -296,7 +309,12 @@ def build_knowledge_documents(
         for record in registry_records
     ]
     documents.extend(
-        build_wikipedia_document(record, registry_by_id, wikidata_by_id)
+        build_wikipedia_document(
+            record,
+            registry_by_id,
+            wikidata_by_id,
+            scope_overrides=scope_overrides,
+        )
         for record in wikipedia_records
     )
     ensure_unique_document_ids(documents)

@@ -172,6 +172,34 @@ def test_covered_by_broader_article_is_preserved() -> None:
     )
 
 
+def test_scope_override_updates_wikipedia_source_relation() -> None:
+    document = [
+        doc
+        for doc in build_knowledge_documents(
+            [registry_record("bamb", "Bambino")],
+            [wikidata_record("bamb")],
+            [wikipedia_record("bamb")],
+            scope_overrides={
+                "bamb:en": {
+                    "breed_id": "bamb",
+                    "language": "en",
+                    "source_relation": "section_of_another_article",
+                    "include_lead": False,
+                    "included_section_paths": [["Bambino"]],
+                    "reason": "Only Bambino section is approved.",
+                }
+            },
+        )
+        if doc["source"] == "wikipedia"
+    ][0]
+
+    assert document["provenance"]["source_resolution"] == {
+        "method": "manual_section_approval",
+        "source_relation": "section_of_another_article",
+        "reason": "Only Bambino section is approved.",
+    }
+
+
 def test_duplicate_document_id_raises_error() -> None:
     with pytest.raises(KnowledgeDocumentError, match="Duplicate document IDs"):
         build_knowledge_documents(

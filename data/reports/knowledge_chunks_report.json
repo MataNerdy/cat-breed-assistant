@@ -1,18 +1,20 @@
 {
   "breeds_with_max_chunks": [
-    "bamb"
+    "pers"
   ],
   "breeds_with_min_chunks": [
+    "chee",
     "ebur"
   ],
-  "broader_documents_skipped": 2,
+  "broader_documents_skipped": 5,
   "catapi_chunks": 67,
   "chunks_by_source": {
     "thecatapi": 67,
-    "wikipedia": 1013
+    "wikipedia": 939
   },
   "chunks_by_source_relation": {
-    "standalone_article": 1013,
+    "section_of_another_article": 2,
+    "standalone_article": 937,
     "standalone_profile": 67
   },
   "chunks_longer_than_3000_characters": 0,
@@ -26,17 +28,17 @@
     "asho": 9,
     "awir": 11,
     "bali": 16,
-    "bamb": 48,
+    "bamb": 15,
     "beng": 21,
     "birm": 17,
     "bomb": 13,
-    "bsho": 15,
-    "bslo": 15,
+    "bsho": 13,
+    "bslo": 2,
     "bure": 16,
     "buri": 17,
-    "char": 10,
+    "char": 9,
     "chau": 14,
-    "chee": 21,
+    "chee": 1,
     "crex": 14,
     "csho": 9,
     "cspa": 9,
@@ -46,7 +48,7 @@
     "dons": 14,
     "drex": 10,
     "ebur": 1,
-    "emau": 20,
+    "emau": 18,
     "esho": 12,
     "hbro": 14,
     "hima": 16,
@@ -55,7 +57,7 @@
     "khao": 18,
     "kora": 12,
     "kuri": 12,
-    "lape": 18,
+    "lape": 16,
     "lihu": 7,
     "mala": 23,
     "manx": 29,
@@ -83,7 +85,7 @@
     "tonk": 17,
     "toyg": 7,
     "tvan": 26,
-    "ycho": 10
+    "ycho": 9
   },
   "chunks_with_warnings": [
     {
@@ -100,12 +102,6 @@
     },
     {
       "chunk_id": "bali:wikipedia:ru:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bamb:wikipedia:en:overview:000",
       "warnings": [
         "Gallery/media markup was skipped during parsing."
       ]
@@ -130,18 +126,6 @@
     },
     {
       "chunk_id": "bsho:wikipedia:ru:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bslo:wikipedia:en:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bslo:wikipedia:ru:overview:000",
       "warnings": [
         "Gallery/media markup was skipped during parsing."
       ]
@@ -297,10 +281,74 @@
       ]
     }
   ],
+  "corpus_integrity": {
+    "exact_duplicate_embedding_text": [],
+    "exact_duplicate_text_between_breeds": [],
+    "forbidden_cross_breed_duplicate_groups": [],
+    "overrides_with_missing_section_paths": [],
+    "scoped_documents_without_override": [],
+    "service_section_paths_in_chunks": [],
+    "shared_page_id_between_breeds": [
+      {
+        "breed_ids": [
+          "bsho",
+          "bslo"
+        ],
+        "page_id": 45323
+      }
+    ],
+    "shared_source_url_between_breeds": [
+      {
+        "breed_ids": [
+          "bsho",
+          "bslo"
+        ],
+        "source_url": "https://en.wikipedia.org/wiki/British_Shorthair"
+      }
+    ],
+    "skipped_broader_sources": [
+      {
+        "breed_id": "bslo",
+        "document_id": "bslo:wikipedia:ru",
+        "language": "ru",
+        "reason": "Broader source requires breed-specific section approval before chunking",
+        "source_relation": "covered_by_broader_article"
+      },
+      {
+        "breed_id": "chee",
+        "document_id": "chee:wikipedia:en",
+        "language": "en",
+        "reason": "Broader source requires breed-specific section approval before chunking",
+        "source_relation": "covered_by_broader_article"
+      },
+      {
+        "breed_id": "chee",
+        "document_id": "chee:wikipedia:ru",
+        "language": "ru",
+        "reason": "Broader source requires breed-specific section approval before chunking",
+        "source_relation": "covered_by_broader_article"
+      },
+      {
+        "breed_id": "ebur",
+        "document_id": "ebur:wikipedia:en",
+        "language": "en",
+        "reason": "Broader source requires breed-specific section approval before chunking",
+        "source_relation": "covered_by_broader_article"
+      },
+      {
+        "breed_id": "ebur",
+        "document_id": "ebur:wikipedia:ru",
+        "language": "ru",
+        "reason": "Broader source requires breed-specific section approval before chunking",
+        "source_relation": "covered_by_broader_article"
+      }
+    ],
+    "standalone_article_sources_used_by_multiple_breeds": []
+  },
   "duplicate_chunk_ids": [],
   "duplicate_text_within_one_document": [],
   "empty_chunks": 0,
-  "en_chunks": 698,
+  "en_chunks": 632,
   "longest_20_chunks": [
     {
       "breed_id": "drex",
@@ -464,19 +512,14 @@
     }
   ],
   "maximum_chunk_length": 2949,
-  "median_chunk_length": 746.5,
+  "median_chunk_length": 761.5,
   "minimum_non_empty_chunk_length": 7,
-  "ru_chunks": 382,
+  "ru_chunks": 374,
   "sections_split_into_multiple_chunks": [
     {
       "document_id": "abys:wikipedia:ru",
       "parts": 2,
       "section_index": "1"
-    },
-    {
-      "document_id": "bamb:wikipedia:en",
-      "parts": 2,
-      "section_index": "14"
     },
     {
       "document_id": "bamb:wikipedia:ru",
@@ -537,11 +580,6 @@
       "document_id": "kuri:wikipedia:ru",
       "parts": 2,
       "section_index": "2.2"
-    },
-    {
-      "document_id": "lape:wikipedia:en",
-      "parts": 2,
-      "section_index": "10"
     },
     {
       "document_id": "lape:wikipedia:en",
@@ -645,13 +683,34 @@
     }
   ],
   "size_distribution": {
-    "0-500": 353,
-    "1001-2000": 250,
-    "2001-2500": 61,
-    "2501-3000": 37,
-    "501-1000": 379
+    "0-500": 318,
+    "1001-2000": 237,
+    "2001-2500": 57,
+    "2501-3000": 35,
+    "501-1000": 359
   },
   "skipped_broader_sources": [
+    {
+      "breed_id": "bslo",
+      "document_id": "bslo:wikipedia:ru",
+      "language": "ru",
+      "reason": "Broader source requires breed-specific section approval before chunking",
+      "source_relation": "covered_by_broader_article"
+    },
+    {
+      "breed_id": "chee",
+      "document_id": "chee:wikipedia:en",
+      "language": "en",
+      "reason": "Broader source requires breed-specific section approval before chunking",
+      "source_relation": "covered_by_broader_article"
+    },
+    {
+      "breed_id": "chee",
+      "document_id": "chee:wikipedia:ru",
+      "language": "ru",
+      "reason": "Broader source requires breed-specific section approval before chunking",
+      "source_relation": "covered_by_broader_article"
+    },
     {
       "breed_id": "ebur",
       "document_id": "ebur:wikipedia:en",
@@ -667,7 +726,7 @@
       "source_relation": "covered_by_broader_article"
     }
   ],
-  "total_chunks": 1080,
+  "total_chunks": 1006,
   "unique_breeds_represented": 67,
   "warnings": [
     {
@@ -684,12 +743,6 @@
     },
     {
       "chunk_id": "bali:wikipedia:ru:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bamb:wikipedia:en:overview:000",
       "warnings": [
         "Gallery/media markup was skipped during parsing."
       ]
@@ -714,18 +767,6 @@
     },
     {
       "chunk_id": "bsho:wikipedia:ru:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bslo:wikipedia:en:overview:000",
-      "warnings": [
-        "Gallery/media markup was skipped during parsing."
-      ]
-    },
-    {
-      "chunk_id": "bslo:wikipedia:ru:overview:000",
       "warnings": [
         "Gallery/media markup was skipped during parsing."
       ]
@@ -881,6 +922,6 @@
       ]
     }
   ],
-  "wikipedia_overview_chunks": 128,
-  "wikipedia_section_chunks": 885
+  "wikipedia_overview_chunks": 123,
+  "wikipedia_section_chunks": 816
 }
