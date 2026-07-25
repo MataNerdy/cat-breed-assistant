@@ -1,0 +1,886 @@
+{
+  "breeds_with_max_chunks": [
+    "bamb"
+  ],
+  "breeds_with_min_chunks": [
+    "ebur"
+  ],
+  "broader_documents_skipped": 2,
+  "catapi_chunks": 67,
+  "chunks_by_source": {
+    "thecatapi": 67,
+    "wikipedia": 1013
+  },
+  "chunks_by_source_relation": {
+    "standalone_article": 1013,
+    "standalone_profile": 67
+  },
+  "chunks_longer_than_3000_characters": 0,
+  "chunks_per_breed": {
+    "abob": 5,
+    "abys": 27,
+    "acur": 12,
+    "aege": 11,
+    "amau": 12,
+    "amis": 17,
+    "asho": 9,
+    "awir": 11,
+    "bali": 16,
+    "bamb": 48,
+    "beng": 21,
+    "birm": 17,
+    "bomb": 13,
+    "bsho": 15,
+    "bslo": 15,
+    "bure": 16,
+    "buri": 17,
+    "char": 10,
+    "chau": 14,
+    "chee": 21,
+    "crex": 14,
+    "csho": 9,
+    "cspa": 9,
+    "ctif": 14,
+    "cymr": 9,
+    "cypr": 8,
+    "dons": 14,
+    "drex": 10,
+    "ebur": 1,
+    "emau": 20,
+    "esho": 12,
+    "hbro": 14,
+    "hima": 16,
+    "java": 7,
+    "jbob": 22,
+    "khao": 18,
+    "kora": 12,
+    "kuri": 12,
+    "lape": 18,
+    "lihu": 7,
+    "mala": 23,
+    "manx": 29,
+    "mcoo": 21,
+    "munc": 16,
+    "nebe": 11,
+    "norw": 17,
+    "ocic": 11,
+    "orie": 19,
+    "pers": 35,
+    "pixi": 10,
+    "raga": 18,
+    "ragd": 13,
+    "rblu": 16,
+    "sava": 17,
+    "sfol": 30,
+    "siam": 19,
+    "sibe": 27,
+    "sing": 13,
+    "snow": 23,
+    "soma": 30,
+    "sphy": 24,
+    "srex": 14,
+    "tang": 11,
+    "tonk": 17,
+    "toyg": 7,
+    "tvan": 26,
+    "ycho": 10
+  },
+  "chunks_with_warnings": [
+    {
+      "chunk_id": "amis:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "asho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bali:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bamb:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "birm:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "birm:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bsho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bsho:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bslo:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bslo:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bure:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bure:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "csho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "drex:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "emau:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "emau:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "hima:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "kora:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "lape:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mala:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mcoo:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mcoo:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "munc:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "norw:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "orie:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "pers:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "sava:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "siam:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "siam:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "soma:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "sphy:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tang:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tonk:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "toyg:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tvan:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    }
+  ],
+  "duplicate_chunk_ids": [],
+  "duplicate_text_within_one_document": [],
+  "empty_chunks": 0,
+  "en_chunks": 698,
+  "longest_20_chunks": [
+    {
+      "breed_id": "drex",
+      "chunk_id": "drex:wikipedia:ru:3-section:000",
+      "language": "ru",
+      "section_title": "Стандарт породы Девон-рекс",
+      "source": "wikipedia",
+      "text_length": 2949
+    },
+    {
+      "breed_id": "cypr",
+      "chunk_id": "cypr:wikipedia:en:3.1-breed-standards:000",
+      "language": "en",
+      "section_title": "Breed standards",
+      "source": "wikipedia",
+      "text_length": 2936
+    },
+    {
+      "breed_id": "jbob",
+      "chunk_id": "jbob:wikipedia:ru:2.2-cfa:000",
+      "language": "ru",
+      "section_title": "Стандарт породы по версии федерации CFA",
+      "source": "wikipedia",
+      "text_length": 2921
+    },
+    {
+      "breed_id": "esho",
+      "chunk_id": "esho:wikipedia:ru:3-section:000",
+      "language": "ru",
+      "section_title": "История породы",
+      "source": "wikipedia",
+      "text_length": 2913
+    },
+    {
+      "breed_id": "manx",
+      "chunk_id": "manx:wikipedia:en:5.2-manx-cat-genome-project:000",
+      "language": "en",
+      "section_title": "Manx Cat Genome Project",
+      "source": "wikipedia",
+      "text_length": 2909
+    },
+    {
+      "breed_id": "snow",
+      "chunk_id": "snow:wikipedia:ru:5.1-tica:000",
+      "language": "ru",
+      "section_title": "Стандарт породы сноу-шу по версии федерации TICA",
+      "source": "wikipedia",
+      "text_length": 2901
+    },
+    {
+      "breed_id": "abys",
+      "chunk_id": "abys:wikipedia:ru:4.1-cfa:000",
+      "language": "ru",
+      "section_title": "Стандарт породы по версии CFA",
+      "source": "wikipedia",
+      "text_length": 2895
+    },
+    {
+      "breed_id": "sfol",
+      "chunk_id": "sfol:wikipedia:en:5.2-registry-bans:000",
+      "language": "en",
+      "section_title": "Registry bans",
+      "source": "wikipedia",
+      "text_length": 2893
+    },
+    {
+      "breed_id": "pers",
+      "chunk_id": "pers:wikipedia:en:5.1.1-colouration:000",
+      "language": "en",
+      "section_title": "Colouration",
+      "source": "wikipedia",
+      "text_length": 2880
+    },
+    {
+      "breed_id": "sfol",
+      "chunk_id": "sfol:wikipedia:ru:4.1-section:000",
+      "language": "ru",
+      "section_title": "Остеохондродисплазия",
+      "source": "wikipedia",
+      "text_length": 2864
+    },
+    {
+      "breed_id": "bamb",
+      "chunk_id": "bamb:wikipedia:ru:5.1-farus:001",
+      "language": "ru",
+      "section_title": "Предварительный стандарт FARUS",
+      "source": "wikipedia",
+      "text_length": 2858
+    },
+    {
+      "breed_id": "lape",
+      "chunk_id": "lape:wikipedia:ru:2.1-section:000",
+      "language": "ru",
+      "section_title": "Голова",
+      "source": "wikipedia",
+      "text_length": 2856
+    },
+    {
+      "breed_id": "tvan",
+      "chunk_id": "tvan:wikipedia:ru:6-section:000",
+      "language": "ru",
+      "section_title": "Генетика ванского окраса у кошек",
+      "source": "wikipedia",
+      "text_length": 2837
+    },
+    {
+      "breed_id": "manx",
+      "chunk_id": "manx:wikipedia:en:3.1.4-coat:000",
+      "language": "en",
+      "section_title": "Coat",
+      "source": "wikipedia",
+      "text_length": 2829
+    },
+    {
+      "breed_id": "kuri",
+      "chunk_id": "kuri:wikipedia:ru:2.2-section:000",
+      "language": "ru",
+      "section_title": "Строение хвоста",
+      "source": "wikipedia",
+      "text_length": 2817
+    },
+    {
+      "breed_id": "pers",
+      "chunk_id": "pers:wikipedia:en:6.3-internal-medical-conditions:000",
+      "language": "en",
+      "section_title": "Internal medical conditions",
+      "source": "wikipedia",
+      "text_length": 2802
+    },
+    {
+      "breed_id": "sfol",
+      "chunk_id": "sfol:wikipedia:en:4.1-osteochondrodysplasia:000",
+      "language": "en",
+      "section_title": "Osteochondrodysplasia",
+      "source": "wikipedia",
+      "text_length": 2773
+    },
+    {
+      "breed_id": "pers",
+      "chunk_id": "pers:wikipedia:en:2.3-modern-persian-peke-face-and-ultra-typing:000",
+      "language": "en",
+      "section_title": "Modern Persian (peke-face and ultra-typing)",
+      "source": "wikipedia",
+      "text_length": 2767
+    },
+    {
+      "breed_id": "bali",
+      "chunk_id": "bali:wikipedia:ru:2-section:000",
+      "language": "ru",
+      "section_title": "Общее описание внешнего вида",
+      "source": "wikipedia",
+      "text_length": 2765
+    },
+    {
+      "breed_id": "bure",
+      "chunk_id": "bure:wikipedia:en:1-history:000",
+      "language": "en",
+      "section_title": "History",
+      "source": "wikipedia",
+      "text_length": 2726
+    }
+  ],
+  "maximum_chunk_length": 2949,
+  "median_chunk_length": 746.5,
+  "minimum_non_empty_chunk_length": 7,
+  "ru_chunks": 382,
+  "sections_split_into_multiple_chunks": [
+    {
+      "document_id": "abys:wikipedia:ru",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "bamb:wikipedia:en",
+      "parts": 2,
+      "section_index": "14"
+    },
+    {
+      "document_id": "bamb:wikipedia:ru",
+      "parts": 3,
+      "section_index": "5.1"
+    },
+    {
+      "document_id": "bamb:wikipedia:ru",
+      "parts": 3,
+      "section_index": "5.2"
+    },
+    {
+      "document_id": "bure:wikipedia:en",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "bure:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2"
+    },
+    {
+      "document_id": "chau:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1.2"
+    },
+    {
+      "document_id": "cypr:wikipedia:en",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "cypr:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1"
+    },
+    {
+      "document_id": "emau:wikipedia:ru",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "emau:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2"
+    },
+    {
+      "document_id": "esho:wikipedia:ru",
+      "parts": 2,
+      "section_index": "3"
+    },
+    {
+      "document_id": "jbob:wikipedia:en",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "kuri:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2.2"
+    },
+    {
+      "document_id": "lape:wikipedia:en",
+      "parts": 2,
+      "section_index": "10"
+    },
+    {
+      "document_id": "lape:wikipedia:en",
+      "parts": 2,
+      "section_index": "7"
+    },
+    {
+      "document_id": "manx:wikipedia:en",
+      "parts": 2,
+      "section_index": "1.1"
+    },
+    {
+      "document_id": "manx:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1.1"
+    },
+    {
+      "document_id": "manx:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1.4"
+    },
+    {
+      "document_id": "manx:wikipedia:en",
+      "parts": 2,
+      "section_index": "5.2"
+    },
+    {
+      "document_id": "mcoo:wikipedia:ru",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "orie:wikipedia:ru",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "orie:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2"
+    },
+    {
+      "document_id": "pers:wikipedia:en",
+      "parts": 2,
+      "section_index": "1.1"
+    },
+    {
+      "document_id": "pers:wikipedia:en",
+      "parts": 2,
+      "section_index": "2.3"
+    },
+    {
+      "document_id": "pers:wikipedia:en",
+      "parts": 2,
+      "section_index": "5.1.1"
+    },
+    {
+      "document_id": "rblu:wikipedia:ru",
+      "parts": 2,
+      "section_index": "3"
+    },
+    {
+      "document_id": "sava:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1"
+    },
+    {
+      "document_id": "siam:wikipedia:en",
+      "parts": 2,
+      "section_index": "5"
+    },
+    {
+      "document_id": "snow:wikipedia:ru",
+      "parts": 2,
+      "section_index": "5.1"
+    },
+    {
+      "document_id": "sphy:wikipedia:ru",
+      "parts": 2,
+      "section_index": "1"
+    },
+    {
+      "document_id": "sphy:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2.1"
+    },
+    {
+      "document_id": "srex:wikipedia:ru",
+      "parts": 2,
+      "section_index": "2.2"
+    },
+    {
+      "document_id": "tvan:wikipedia:en",
+      "parts": 2,
+      "section_index": "3.1"
+    },
+    {
+      "document_id": "tvan:wikipedia:ru",
+      "parts": 3,
+      "section_index": "2"
+    }
+  ],
+  "size_distribution": {
+    "0-500": 353,
+    "1001-2000": 250,
+    "2001-2500": 61,
+    "2501-3000": 37,
+    "501-1000": 379
+  },
+  "skipped_broader_sources": [
+    {
+      "breed_id": "ebur",
+      "document_id": "ebur:wikipedia:en",
+      "language": "en",
+      "reason": "Broader source requires breed-specific section approval before chunking",
+      "source_relation": "covered_by_broader_article"
+    },
+    {
+      "breed_id": "ebur",
+      "document_id": "ebur:wikipedia:ru",
+      "language": "ru",
+      "reason": "Broader source requires breed-specific section approval before chunking",
+      "source_relation": "covered_by_broader_article"
+    }
+  ],
+  "total_chunks": 1080,
+  "unique_breeds_represented": 67,
+  "warnings": [
+    {
+      "chunk_id": "amis:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "asho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bali:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bamb:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "birm:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "birm:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bsho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bsho:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bslo:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bslo:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bure:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "bure:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "csho:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "drex:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "emau:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "emau:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "hima:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "kora:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "lape:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mala:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mcoo:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "mcoo:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "munc:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "norw:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "orie:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "pers:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "sava:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "siam:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "siam:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "soma:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "sphy:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tang:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tonk:wikipedia:en:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "toyg:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    },
+    {
+      "chunk_id": "tvan:wikipedia:ru:overview:000",
+      "warnings": [
+        "Gallery/media markup was skipped during parsing."
+      ]
+    }
+  ],
+  "wikipedia_overview_chunks": 128,
+  "wikipedia_section_chunks": 885
+}

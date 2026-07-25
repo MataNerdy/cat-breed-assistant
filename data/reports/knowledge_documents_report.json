@@ -1,0 +1,19 @@
+{
+  "catapi_documents": 67,
+  "documents_by_language": {
+    "en": 134,
+    "ru": 61
+  },
+  "documents_by_source_relation": {
+    "covered_by_broader_article": 2,
+    "standalone_article": 126,
+    "standalone_profile": 67
+  },
+  "documents_with_warnings": 37,
+  "duplicate_document_ids": [],
+  "en_wikipedia_documents": 67,
+  "ru_wikipedia_documents": 61,
+  "total_documents": 195,
+  "unique_breeds": 67,
+  "wikipedia_documents": 128
+}
