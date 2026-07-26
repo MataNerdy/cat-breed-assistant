@@ -1,57 +1,15 @@
 {
   "cheetoh_bengal_source_chunks": [],
   "cheetoh_ru_wikipedia_chunks": [],
-  "cheetoh_simplewiki_chunks": [
-    "chee:wikipedia:en:overview:000",
-    "chee:wikipedia:en:1-appearance:000",
-    "chee:wikipedia:en:2-behavior:000"
-  ],
+  "cheetoh_simplewiki_chunks": [],
   "exact_duplicate_embedding_text": [],
   "exact_duplicate_text_between_breeds": [],
   "forbidden_cross_breed_duplicate_groups": [],
   "overrides_with_missing_section_paths": [],
   "scoped_documents_without_override": [],
   "service_section_paths_in_chunks": [],
-  "shared_page_id_between_breeds": [
-    {
-      "breed_ids": [
-        "bsho",
-        "bslo"
-      ],
-      "page_id": 45323
-    }
-  ],
-  "shared_source_url_between_breeds": [
-    {
-      "breed_ids": [
-        "bsho",
-        "bslo"
-      ],
-      "source_url": "https://en.wikipedia.org/wiki/British_Shorthair"
-    }
-  ],
-  "skipped_broader_sources": [
-    {
-      "breed_id": "bslo",
-      "document_id": "bslo:wikipedia:ru",
-      "language": "ru",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "ebur",
-      "document_id": "ebur:wikipedia:en",
-      "language": "en",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    },
-    {
-      "breed_id": "ebur",
-      "document_id": "ebur:wikipedia:ru",
-      "language": "ru",
-      "reason": "Broader source requires breed-specific section approval before chunking",
-      "source_relation": "covered_by_broader_article"
-    }
-  ],
+  "shared_page_id_between_breeds": [],
+  "shared_source_url_between_breeds": [],
+  "skipped_broader_sources": [],
   "standalone_article_sources_used_by_multiple_breeds": []
 }

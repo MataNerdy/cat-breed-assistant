@@ -1,0 +1,36 @@
+input_chunks_path: data/processed/knowledge_chunks.jsonl
+skipped_broader_sources_path: data/reports/skipped_broader_sources.jsonl
+output_dir: data/evaluation/retrieval/v1
+seed: 42
+breed_limit: 10
+target_count: 30
+questions_per_chunk_min: 1
+questions_per_chunk_max: 3
+generator_prompt_version: retrieval_eval_generator_v1
+validator_prompt_version: retrieval_eval_validator_v1
+
+generator_a:
+  provider: gemini
+  model: gemini-2.5-flash
+  temperature: 0.4
+  timeout_seconds: 60
+  max_retries: 2
+validator_a:
+  provider: mistral
+  model: mistral-small-latest
+  temperature: 0.0
+  timeout_seconds: 60
+  max_retries: 2
+
+generator_b:
+  provider: mistral
+  model: mistral-small-latest
+  temperature: 0.4
+  timeout_seconds: 60
+  max_retries: 2
+validator_b:
+  provider: gemini
+  model: gemini-2.5-flash
+  temperature: 0.0
+  timeout_seconds: 60
+  max_retries: 2
