@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
@@ -505,6 +506,7 @@ def run_unused_breeds_pipeline(
     config: PilotConfig,
     questions_per_breed: int = 3,
     resume: bool = False,
+    api_call_delay_seconds: float = 0.0,
     provider_factory: ProviderFactory = make_provider,
 ) -> RunManifest:
     if questions_per_breed < 1:
@@ -555,6 +557,11 @@ def run_unused_breeds_pipeline(
             providers[key] = provider_factory(model_config)
         return providers[key]
 
+    def complete_json_with_delay(provider: EvaluationProvider, system_prompt: str, user_prompt: str) -> str:
+        if api_call_delay_seconds > 0:
+            time.sleep(api_call_delay_seconds)
+        return provider.complete_json(system_prompt, user_prompt)
+
     def current_candidates_for_breed(breed_id: str) -> list[RetrievalEvaluationCandidate]:
         return [candidate for candidate in candidates if candidate.breed_id == breed_id]
 
@@ -581,7 +588,8 @@ def run_unused_breeds_pipeline(
             raw_generated: str | None = None
             try:
                 generator = provider_for(generator_config)
-                raw_generated = generator.complete_json(
+                raw_generated = complete_json_with_delay(
+                    generator,
                     provider_system_prompt("generator"),
                     generator_user_prompt(
                         chunk,
@@ -627,7 +635,8 @@ def run_unused_breeds_pipeline(
                 raw_validation: str | None = None
                 try:
                     validator = provider_for(validator_config)
-                    raw_validation = validator.complete_json(
+                    raw_validation = complete_json_with_delay(
+                        validator,
                         provider_system_prompt("validator"),
                         validator_user_prompt(
                             chunk,
@@ -720,6 +729,7 @@ def run_unused_breeds_pipeline(
 def run_pipeline(
     config: PilotConfig,
     resume: bool = False,
+    api_call_delay_seconds: float = 0.0,
     provider_factory: ProviderFactory = make_provider,
 ) -> RunManifest:
     configs = [
@@ -762,6 +772,11 @@ def run_pipeline(
             providers[key] = provider_factory(model_config)
         return providers[key]
 
+    def complete_json_with_delay(provider: EvaluationProvider, system_prompt: str, user_prompt: str) -> str:
+        if api_call_delay_seconds > 0:
+            time.sleep(api_call_delay_seconds)
+        return provider.complete_json(system_prompt, user_prompt)
+
     for selected_item in selected:
         chunk = selected_item.chunk
         if chunk.chunk_id in processed_chunks:
@@ -773,7 +788,8 @@ def run_pipeline(
         raw_generated: str | None = None
         try:
             generator = provider_for(generator_config)
-            raw_generated = generator.complete_json(
+            raw_generated = complete_json_with_delay(
+                generator,
                 provider_system_prompt("generator"),
                 generator_user_prompt(
                     chunk,
@@ -807,7 +823,8 @@ def run_pipeline(
             raw_validation: str | None = None
             try:
                 validator = provider_for(validator_config)
-                raw_validation = validator.complete_json(
+                raw_validation = complete_json_with_delay(
+                    validator,
                     provider_system_prompt("validator"),
                     validator_user_prompt(chunk, generated),
                 )

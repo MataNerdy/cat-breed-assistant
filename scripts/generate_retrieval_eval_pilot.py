@@ -31,6 +31,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--breed-limit", type=int)
     parser.add_argument("--unused-breeds", action="store_true")
     parser.add_argument("--questions-per-breed", type=int, default=3)
+    parser.add_argument(
+        "--api-call-delay-seconds",
+        type=float,
+        default=0.0,
+        help="Optional delay before each LLM API call, useful for free-tier rate limits.",
+    )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -62,9 +68,14 @@ def main() -> int:
                 config,
                 questions_per_breed=args.questions_per_breed,
                 resume=args.resume,
+                api_call_delay_seconds=args.api_call_delay_seconds,
             )
         else:
-            manifest = run_pipeline(config, resume=args.resume)
+            manifest = run_pipeline(
+                config,
+                resume=args.resume,
+                api_call_delay_seconds=args.api_call_delay_seconds,
+            )
         print(json.dumps(manifest.model_dump(mode="json"), ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError, EvaluationProviderError) as exc:
