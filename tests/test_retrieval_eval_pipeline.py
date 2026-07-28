@@ -18,6 +18,10 @@ from src.cat_breed_assistant.evaluation.retrieval.pipeline import (
     run_pipeline,
     run_unused_breeds_pipeline,
 )
+from src.cat_breed_assistant.evaluation.retrieval.question_types import (
+    RetrievalQuestionType,
+    normalize_question_type,
+)
 from src.cat_breed_assistant.evaluation.retrieval.sampling import (
     deterministic_sample_chunks,
     is_informative_chunk,
@@ -25,6 +29,7 @@ from src.cat_breed_assistant.evaluation.retrieval.sampling import (
     load_source_chunks,
 )
 from src.cat_breed_assistant.evaluation.retrieval.schemas import (
+    GenerationConfig,
     GeneratedQuestion,
     ModelConfig,
     PilotConfig,
@@ -164,6 +169,7 @@ def config(tmp_path: Path, chunks_path: Path, skipped_path: Path, target_count: 
         target_count=target_count,
         questions_per_chunk_min=1,
         questions_per_chunk_max=1,
+        generation=GenerationConfig(query_language="en", answer_language="en"),
         generator_a=ModelConfig(provider="gemini", model="gemini-test", temperature=0.3),
         validator_a=ModelConfig(provider="mistral", model="mistral-test", temperature=0.0),
         generator_b=ModelConfig(provider="mistral", model="mistral-test", temperature=0.3),
@@ -211,7 +217,7 @@ class FakeProvider:
                         ),
                         "answer": "calm temperament",
                         "evidence_quote": quote,
-                        "question_type": "fact_lookup",
+                        "question_type": "temperament",
                         "difficulty": "easy",
                         "breed_name_present": True,
                     }
@@ -247,7 +253,12 @@ class DistinctFakeProvider:
             )
         source = payload["source_chunk"]
         chunk_id = source["chunk_id"]
-        question_type = chunk_id.split(":")[-2]
+        raw_question_type = chunk_id.split(":")[-2]
+        question_type = {
+            "care": "behavior",
+            "origin": "origin",
+            "temperament": "temperament",
+        }.get(raw_question_type, "physical_characteristic")
         quote = source["text"].split(".")[0]
         return json.dumps(
             {
@@ -271,6 +282,70 @@ def fake_factory(model_config: ModelConfig):
 
 def distinct_fake_factory(model_config: ModelConfig):
     return DistinctFakeProvider(model_config)
+
+
+class RussianFakeProvider:
+    def __init__(self, model_config: ModelConfig) -> None:
+        self.provider = model_config.provider
+        self.model = model_config.model
+
+    def complete_json(self, system_prompt: str, user_prompt: str) -> str:
+        payload = json.loads(user_prompt)
+        if payload["task"] == "Validate one retrieval evaluation candidate.":
+            return json.dumps(
+                {
+                    "is_answerable": True,
+                    "answer_supported": True,
+                    "evidence_supported": True,
+                    "question_is_natural": True,
+                    "question_copies_source": False,
+                    "answer_leaked_in_question": False,
+                    "requires_external_knowledge": False,
+                    "is_ambiguous": False,
+                    "fact_is_distinct_from_existing_questions": True,
+                    "question_type_is_distinct": True,
+                    "query_language_is_correct": True,
+                    "answer_language_is_correct": True,
+                    "question_type_is_valid": True,
+                    "question_type_matches_fact": True,
+                    "translation_preserves_meaning": True,
+                    "approved": True,
+                    "rejection_reasons": [],
+                }
+            )
+        source = payload["source_chunk"]
+        quote = source["text"].split(".")[0]
+        return json.dumps(
+            {
+                "questions": [
+                    {
+                        "query": f"Какой факт происхождения указан для {source['breed_id']}?",
+                        "answer": "Порода связана с указанным местом происхождения.",
+                        "evidence_quote": quote,
+                        "question_type": "origin_country",
+                        "difficulty": "easy",
+                        "breed_name_present": True,
+                    }
+                ]
+            }
+        )
+
+
+class QuotaFakeProvider:
+    def __init__(self, model_config: ModelConfig) -> None:
+        self.provider = model_config.provider
+        self.model = model_config.model
+
+    def complete_json(self, system_prompt: str, user_prompt: str) -> str:
+        raise EvaluationProviderError("429 RESOURCE_EXHAUSTED quota exceeded")
+
+
+def russian_fake_factory(model_config: ModelConfig):
+    return RussianFakeProvider(model_config)
+
+
+def quota_fake_factory(model_config: ModelConfig):
+    return QuotaFakeProvider(model_config)
 
 
 def test_deterministic_sampling(tmp_path: Path) -> None:
@@ -314,7 +389,7 @@ def test_schema_validation_rejects_non_pending_auto_candidate() -> None:
                 "answer": "answer",
                 "evidence_quote": "answer",
                 "language": "en",
-                "question_type": "fact",
+                "question_type": "history",
                 "difficulty": "easy",
                 "breed_name_present": True,
                 "generator_provider": "gemini",
@@ -349,12 +424,21 @@ def test_evidence_quote_substring_validation() -> None:
         query="What is mentioned?",
         answer="unknown",
         evidence_quote="not in source",
-        question_type="fact",
+        question_type="history",
         difficulty="easy",
         breed_name_present=False,
     )
 
-    assert locally_validate_candidate(generated, source, set()) == "evidence_quote_not_found"
+    assert (
+        locally_validate_candidate(
+            generated,
+            source,
+            set(),
+            query_language="en",
+            answer_language="en",
+        )
+        == "evidence_quote_not_found"
+    )
 
 
 def test_duplicate_query_rejection() -> None:
@@ -363,13 +447,22 @@ def test_duplicate_query_rejection() -> None:
         query="What temperament is mentioned?",
         answer="calm temperament",
         evidence_quote="calm temperament",
-        question_type="fact",
+        question_type="temperament",
         difficulty="easy",
         breed_name_present=False,
     )
     seen = {normalize_query("What temperament is mentioned?")}
 
-    assert locally_validate_candidate(generated, source, seen) == "duplicate_normalized_query"
+    assert (
+        locally_validate_candidate(
+            generated,
+            source,
+            seen,
+            query_language="en",
+            answer_language="en",
+        )
+        == "duplicate_normalized_query"
+    )
 
 
 def test_stable_provider_role_assignment(tmp_path: Path) -> None:
@@ -621,7 +714,7 @@ def test_unused_breeds_caps_candidates_per_breed_at_three(tmp_path: Path, monkey
     ) == 3
 
 
-def test_local_validation_rejects_same_question_type_and_evidence_for_breed() -> None:
+def test_local_validation_rejects_same_evidence_for_breed() -> None:
     source = load_source_chunks_from_records([chunk("mcoo", "origin", text="A distinct origin fact. More text for context.")])[0]
     generated = GeneratedQuestion(
         query="What origin detail is stated for mcoo?",
@@ -644,8 +737,15 @@ def test_local_validation_rejects_same_question_type_and_evidence_for_breed() ->
     ]
 
     assert (
-        locally_validate_candidate(generated, source, set(), existing_for_breed=existing)
-        == "duplicate_question_type_for_breed"
+        locally_validate_candidate(
+            generated,
+            source,
+            set(),
+            existing_for_breed=existing,
+            query_language="en",
+            answer_language="en",
+        )
+        == "duplicate_evidence_quote_for_breed"
     )
 
 
@@ -698,7 +798,7 @@ def test_unused_breeds_dry_run_separates_unused_topups_and_shortfalls(tmp_path: 
     write_jsonl(
         tmp_path / "out" / "pilot_candidates.jsonl",
         [
-            candidate_record("bsho", "bsho:wikipedia:en:existing:000", question_type="existing"),
+            candidate_record("bsho", "bsho:wikipedia:en:existing:000", question_type="history"),
         ],
     )
     write_jsonl(tmp_path / "out" / "pilot_rejections.jsonl", [])
@@ -770,7 +870,7 @@ def test_unused_breeds_skips_fully_covered_breed(tmp_path: Path, monkeypatch) ->
             candidate_record(
                 "abys",
                 "abys:wikipedia:en:care:000",
-                question_type="care",
+                question_type="behavior",
                 evidence_quote="distinct care detail",
             ),
         ],
@@ -791,6 +891,280 @@ def test_unused_breeds_skips_fully_covered_breed(tmp_path: Path, monkeypatch) ->
     ]
 
     assert sum(1 for candidate in candidates if candidate["breed_id"] == "abys") == 3
+
+
+def test_russian_question_and_answer_are_accepted() -> None:
+    source = load_source_chunks_from_records(
+        [
+            chunk(
+                "nebe",
+                "development",
+                text=(
+                    "The modern Nebelung was developed in the 1980s by Cora Cobb "
+                    "of Nebelheim Cattery in the US."
+                ),
+            )
+        ]
+    )[0]
+    generated = GeneratedQuestion(
+        query="Кто создал современную породу Nebelung?",
+        answer="Современную породу Nebelung создала Кора Кобб.",
+        evidence_quote="The modern Nebelung was developed in the 1980s by Cora Cobb",
+        question_type="breed_development",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert locally_validate_candidate(generated, source, set()) is None
+
+
+def test_fully_english_query_is_rejected_for_russian_generation() -> None:
+    source = load_source_chunks_from_records([chunk("bsho", "origin")])[0]
+    generated = GeneratedQuestion(
+        query="Where did the British Shorthair originate?",
+        answer="Порода произошла из Великобритании.",
+        evidence_quote="calm temperament",
+        question_type="origin",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert locally_validate_candidate(generated, source, set()) == "wrong_query_language"
+
+
+def test_latin_breed_name_is_allowed_inside_russian_query() -> None:
+    source = load_source_chunks_from_records([chunk("mcoo", "origin")])[0]
+    generated = GeneratedQuestion(
+        query="Где появилась порода Maine Coon?",
+        answer="Порода связана с указанным происхождением.",
+        evidence_quote="calm temperament",
+        question_type="origin",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert locally_validate_candidate(generated, source, set()) is None
+
+
+def test_question_type_enum_and_safe_mapping() -> None:
+    assert normalize_question_type("origin_country") == RetrievalQuestionType.ORIGIN
+    assert normalize_question_type("life_expectancy") == RetrievalQuestionType.LIFESPAN
+    assert normalize_question_type("appearance") == RetrievalQuestionType.PHYSICAL_CHARACTERISTIC
+    assert normalize_question_type("historical_fact") == RetrievalQuestionType.HISTORY
+    assert normalize_question_type("alternative_name") == RetrievalQuestionType.ALIAS
+
+
+def test_unknown_question_type_is_rejected() -> None:
+    with pytest.raises(ValueError, match="invalid_question_type"):
+        GeneratedQuestion(
+            query="Какой факт указан?",
+            answer="Указан факт.",
+            evidence_quote="fact",
+            question_type="factoid",
+            difficulty="easy",
+            breed_name_present=False,
+        )
+
+
+def test_history_and_breed_development_are_distinct_question_types() -> None:
+    history = GeneratedQuestion(
+        query="Что показало исследование захоронения кошки на Кипре?",
+        answer="Оно показало исторический факт.",
+        evidence_quote="study",
+        question_type="history",
+        difficulty="medium",
+        breed_name_present=False,
+    )
+    development = GeneratedQuestion(
+        query="Кто создал современную породу Nebelung?",
+        answer="Её создала Кора Кобб.",
+        evidence_quote="developed",
+        question_type="breed_development",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert history.question_type == RetrievalQuestionType.HISTORY
+    assert development.question_type == RetrievalQuestionType.BREED_DEVELOPMENT
+
+
+def test_alias_requires_explicit_alias_evidence() -> None:
+    source = load_source_chunks_from_records([chunk("bali", "origin")])[0]
+    generated = GeneratedQuestion(
+        query="Как ещё называют балинезийскую кошку?",
+        answer="Её называют длинношёрстной сиамской.",
+        evidence_quote="calm temperament",
+        question_type="alias",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert locally_validate_candidate(generated, source, set()) == "alias_not_explicitly_supported"
+
+
+def test_english_evidence_quote_is_preserved_as_exact_substring() -> None:
+    text = "Alternative names: Long-haired Siamese. Origin: United States."
+    source = load_source_chunks_from_records([chunk("bali", "alias", text=text)])[0]
+    generated = GeneratedQuestion(
+        query="Как ещё называют балинезийскую кошку?",
+        answer="Её также называют Long-haired Siamese.",
+        evidence_quote="Alternative names: Long-haired Siamese",
+        question_type="alternative_name",
+        difficulty="easy",
+        breed_name_present=True,
+    )
+
+    assert generated.question_type == RetrievalQuestionType.ALIAS
+    assert locally_validate_candidate(generated, source, set()) is None
+
+
+def test_existing_english_candidates_are_not_migrated_on_resume(tmp_path: Path, monkeypatch) -> None:
+    chunks_path = tmp_path / "chunks.jsonl"
+    skipped_path = tmp_path / "skipped.jsonl"
+    cfg = config(tmp_path, chunks_path, skipped_path).model_copy(
+        update={"generation": GenerationConfig(query_language="ru", answer_language="ru")}
+    )
+    write_jsonl(chunks_path, chunks_for_unused_breeds())
+    write_jsonl(skipped_path, [])
+    write_jsonl(
+        tmp_path / "out" / "pilot_candidates.jsonl",
+        [candidate_record("bsho", "bsho:wikipedia:en:origin:000")],
+    )
+    write_jsonl(tmp_path / "out" / "pilot_rejections.jsonl", [])
+    monkeypatch.setenv("GEMINI_API_KEY", "fake")
+    monkeypatch.setenv("MISTRAL_API_KEY", "fake")
+
+    run_unused_breeds_pipeline(
+        cfg,
+        questions_per_breed=1,
+        resume=True,
+        provider_factory=russian_fake_factory,
+    )
+    candidates = [
+        json.loads(line)
+        for line in (tmp_path / "out" / "pilot_candidates.jsonl").read_text().splitlines()
+    ]
+
+    assert candidates[0]["query"].startswith("What is one")
+
+
+def test_translation_of_same_evidence_is_rejected_as_duplicate_fact() -> None:
+    source = load_source_chunks_from_records([chunk("bsho", "origin")])[0]
+    existing = [
+        RetrievalEvaluationCandidate.model_validate(
+            candidate_record(
+                "bsho",
+                source.chunk_id,
+                query="What temperament is mentioned?",
+                evidence_quote="calm temperament",
+            )
+        )
+    ]
+    generated = GeneratedQuestion(
+        query="Какой характер упоминается?",
+        answer="Упоминается спокойный характер.",
+        evidence_quote="calm temperament",
+        question_type="temperament",
+        difficulty="easy",
+        breed_name_present=False,
+    )
+
+    assert (
+        locally_validate_candidate(generated, source, set(), existing_for_breed=existing)
+        == "duplicate_evidence_quote_for_breed"
+    )
+
+
+def test_generator_prompt_prefers_underrepresented_categories() -> None:
+    from src.cat_breed_assistant.evaluation.retrieval.prompts import generator_user_prompt
+
+    source = load_source_chunks_from_records([chunk("bsho", "origin")])[0]
+    prompt = generator_user_prompt(
+        source,
+        min_questions=1,
+        max_questions=1,
+        query_language="ru",
+        answer_language="ru",
+        global_question_type_counts={"origin": 10, "health": 0},
+    )
+
+    assert "underrepresented" in prompt
+    assert '"health": 0' in prompt
+
+
+def test_manifest_tracks_question_type_stats(tmp_path: Path, monkeypatch) -> None:
+    chunks_path = tmp_path / "chunks.jsonl"
+    skipped_path = tmp_path / "skipped.jsonl"
+    cfg = config(tmp_path, chunks_path, skipped_path).model_copy(
+        update={"generation": GenerationConfig(query_language="ru", answer_language="ru")}
+    )
+    write_jsonl(chunks_path, chunks_for_unused_breeds())
+    write_jsonl(skipped_path, [])
+    monkeypatch.setenv("GEMINI_API_KEY", "fake")
+    monkeypatch.setenv("MISTRAL_API_KEY", "fake")
+
+    manifest = run_unused_breeds_pipeline(
+        cfg,
+        questions_per_breed=1,
+        provider_factory=russian_fake_factory,
+    )
+
+    assert manifest.query_language == "ru"
+    assert manifest.answer_language == "ru"
+    assert manifest.generated_by_question_type["origin"] == 3
+    assert manifest.pending_review_count == 3
+
+
+def test_unused_breeds_can_stop_after_max_new_candidates(tmp_path: Path, monkeypatch) -> None:
+    chunks_path = tmp_path / "chunks.jsonl"
+    skipped_path = tmp_path / "skipped.jsonl"
+    cfg = config(tmp_path, chunks_path, skipped_path).model_copy(
+        update={"generation": GenerationConfig(query_language="ru", answer_language="ru")}
+    )
+    write_jsonl(chunks_path, chunks_for_unused_breeds())
+    write_jsonl(skipped_path, [])
+    monkeypatch.setenv("GEMINI_API_KEY", "fake")
+    monkeypatch.setenv("MISTRAL_API_KEY", "fake")
+
+    manifest = run_unused_breeds_pipeline(
+        cfg,
+        questions_per_breed=3,
+        max_new_candidates=2,
+        provider_factory=russian_fake_factory,
+    )
+
+    assert manifest.pending_review_count == 2
+    assert sum(manifest.generated_by_question_type.values()) == 2
+
+
+def test_retryable_provider_errors_are_not_semantic_rejections(tmp_path: Path, monkeypatch) -> None:
+    chunks_path = tmp_path / "chunks.jsonl"
+    skipped_path = tmp_path / "skipped.jsonl"
+    cfg = config(tmp_path, chunks_path, skipped_path).model_copy(
+        update={"generation": GenerationConfig(query_language="ru", answer_language="ru")}
+    )
+    write_jsonl(chunks_path, chunks_for_unused_breeds())
+    write_jsonl(skipped_path, [])
+    monkeypatch.setenv("GEMINI_API_KEY", "fake")
+    monkeypatch.setenv("MISTRAL_API_KEY", "fake")
+
+    manifest = run_unused_breeds_pipeline(
+        cfg,
+        questions_per_breed=1,
+        provider_factory=quota_fake_factory,
+    )
+    rejections_path = tmp_path / "out" / "pilot_rejections.jsonl"
+    provider_errors = [
+        json.loads(line)
+        for line in (tmp_path / "out" / "pilot_provider_errors.jsonl").read_text().splitlines()
+    ]
+
+    assert not rejections_path.exists() or not rejections_path.read_text().strip()
+    assert provider_errors
+    assert provider_errors[0]["error_type"] == "quota_exhausted"
+    assert provider_errors[0]["retryable"] is True
+    assert manifest.stopped_by_circuit_breaker is True
+    assert manifest.provider_error_count == 3
 
 
 def load_source_chunks_from_records(records: list[dict]):

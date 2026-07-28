@@ -24,6 +24,10 @@ from src.cat_breed_assistant.evaluation.retrieval.io import (
     write_json_atomic,
     write_jsonl_atomic,
 )
+from src.cat_breed_assistant.evaluation.retrieval.question_types import (
+    QUESTION_TYPE_VALUES,
+    all_question_type_counts,
+)
 from src.cat_breed_assistant.evaluation.retrieval.prompts import (
     generator_user_prompt,
     validator_user_prompt,
@@ -43,6 +47,7 @@ from src.cat_breed_assistant.evaluation.retrieval.schemas import (
     GeneratedQuestionBatch,
     ModelConfig,
     PilotConfig,
+    ProviderErrorRecord,
     RejectionRecord,
     RetrievalEvaluationCandidate,
     RunManifest,
@@ -90,6 +95,8 @@ def apply_cli_overrides(
     seed: int | None = None,
     target_count: int | None = None,
     breed_limit: int | None = None,
+    query_language: str | None = None,
+    answer_language: str | None = None,
 ) -> PilotConfig:
     updates = {}
     if seed is not None:
@@ -98,6 +105,13 @@ def apply_cli_overrides(
         updates["target_count"] = target_count
     if breed_limit is not None:
         updates["breed_limit"] = breed_limit
+    generation_updates = {}
+    if query_language is not None:
+        generation_updates["query_language"] = query_language
+    if answer_language is not None:
+        generation_updates["answer_language"] = answer_language
+    if generation_updates:
+        updates["generation"] = config.generation.model_copy(update=generation_updates)
     return config.model_copy(update=updates)
 
 
@@ -112,6 +126,7 @@ def output_paths(config: PilotConfig) -> dict[str, Path]:
     return {
         "candidates": output_dir / "pilot_candidates.jsonl",
         "rejections": output_dir / "pilot_rejections.jsonl",
+        "provider_errors": output_dir / "pilot_provider_errors.jsonl",
         "manifest": output_dir / "pilot_run_manifest.json",
     }
 
@@ -135,6 +150,8 @@ def run_id_for_unused_breeds(
         "seed": config.seed,
         "questions_per_breed": questions_per_breed,
         "mode": "unused_breeds",
+        "query_language": config.generation.query_language,
+        "answer_language": config.generation.answer_language,
         "input_sha": input_sha,
     }
     return f"retrieval-eval-unused-breeds-{stable_hash(payload)[:12]}"
@@ -204,6 +221,64 @@ def used_chunk_ids_for_breed(
     return {candidate.chunk_id for candidate in candidates if candidate.breed_id == breed_id}
 
 
+def candidate_question_type_counts(
+    candidates: list[RetrievalEvaluationCandidate],
+    run_id: str | None = None,
+) -> dict[str, int]:
+    counts = all_question_type_counts()
+    for candidate in candidates:
+        if run_id is not None and candidate.run_id != run_id:
+            continue
+        if candidate.question_type in counts:
+            counts[candidate.question_type] += 1
+    return counts
+
+
+def semantic_rejection_counts(rejections: list[RejectionRecord], run_id: str | None = None) -> dict[str, int]:
+    rows = [record for record in rejections if run_id is None or record.run_id == run_id]
+    return {
+        "rejected_invalid_question_type": sum(
+            "invalid_question_type" in record.reason for record in rows
+        ),
+        "rejected_wrong_query_language": sum(
+            "wrong_query_language" in record.reason for record in rows
+        ),
+        "rejected_wrong_answer_language": sum(
+            "wrong_answer_language" in record.reason for record in rows
+        ),
+    }
+
+
+def classify_provider_error(exc: EvaluationProviderError) -> tuple[str, bool]:
+    reason = str(exc)
+    lowered = reason.casefold()
+    if "429" in reason or "resource_exhausted" in lowered or "quota" in lowered:
+        return "quota_exhausted", True
+    if "timed out" in lowered or "timeout" in lowered:
+        return "timeout", True
+    return "provider_error", True
+
+
+def provider_error_record(
+    chunk: SourceChunk,
+    stage: str,
+    exc: EvaluationProviderError,
+    provider: str,
+    run_id: str,
+) -> ProviderErrorRecord:
+    error_type, retryable = classify_provider_error(exc)
+    return ProviderErrorRecord(
+        error_type=error_type,
+        provider=provider,
+        retryable=retryable,
+        chunk_id=chunk.chunk_id,
+        run_id=run_id,
+        stage=stage,
+        reason=str(exc),
+        created_at=utc_now(),
+    )
+
+
 def create_manifest(
     config: PilotConfig,
     run_id: str,
@@ -231,6 +306,8 @@ def create_manifest(
             "generator": config.generator_prompt_version,
             "validator": config.validator_prompt_version,
         },
+        query_language=config.generation.query_language,
+        answer_language=config.generation.answer_language,
     )
 
 
@@ -293,7 +370,12 @@ def update_manifest_counts(
     manifest: RunManifest,
     candidates: list[RetrievalEvaluationCandidate],
     rejections: list[RejectionRecord],
+    provider_errors: list[ProviderErrorRecord] | None = None,
+    run_id_for_type_counts: str | None = None,
+    stopped_by_circuit_breaker: bool = False,
 ) -> RunManifest:
+    provider_errors = provider_errors or []
+    rejection_stats = semantic_rejection_counts(rejections, run_id_for_type_counts)
     return manifest.model_copy(
         update={
             "generated_count": len(candidates) + len(rejections),
@@ -301,6 +383,13 @@ def update_manifest_counts(
             "pending_review_count": len(candidates),
             "rejected_count": len(rejections),
             "finished_at": utc_now(),
+            "generated_by_question_type": candidate_question_type_counts(
+                candidates,
+                run_id_for_type_counts,
+            ),
+            "provider_error_count": len(provider_errors),
+            "stopped_by_circuit_breaker": stopped_by_circuit_breaker,
+            **rejection_stats,
         }
     )
 
@@ -321,7 +410,46 @@ def dry_run(config: PilotConfig) -> DryRunResult:
         selected_chunk_ids=selected_chunk_ids(selected),
         api_key_available=api_key_availability(),
         input_chunks_sha256=sha256_file(input_path),
+        query_language=config.generation.query_language,
+        answer_language=config.generation.answer_language,
+        allowed_question_types=list(QUESTION_TYPE_VALUES),
     )
+
+
+def available_question_types_for_chunk(chunk: SourceChunk) -> set[str]:
+    text = f"{chunk.section_title or ''} {' '.join(chunk.section_path)} {chunk.text}".casefold()
+    available: set[str] = set()
+    if any(marker in text for marker in ["origin:", "origin ", "from ", "native to", "country"]):
+        available.add("origin")
+    if any(marker in text for marker in ["life span:", "lifespan", "years"]):
+        available.add("lifespan")
+    if any(marker in text for marker in ["temperament:", "affectionate", "gentle", "active", "playful"]):
+        available.add("temperament")
+    if any(marker in text for marker in ["coat", "tail", "ear", "body", "colour", "color", "appearance", "hair"]):
+        available.add("physical_characteristic")
+    if any(marker in text for marker in ["history", "ancient", "century", "first", "study", "burial"]):
+        available.add("history")
+    if any(marker in text for marker in ["alternative names:", "alt names", "also known"]):
+        available.add("alias")
+    if any(marker in text for marker in ["behavior", "children", "dog", "stranger", "activity", "energy"]):
+        available.add("behavior")
+    if any(marker in text for marker in ["health", "disease", "genetic", "medical", "hypertrophic"]):
+        available.add("health")
+    if any(marker in text for marker in ["developed", "foundation", "recognition", "standard", "created"]):
+        available.add("breed_development")
+    return available
+
+
+def estimate_question_type_targets(expected_count: int) -> dict[str, int]:
+    counts = all_question_type_counts()
+    question_types = list(QUESTION_TYPE_VALUES)
+    if expected_count <= 0:
+        return counts
+    base = expected_count // len(question_types)
+    remainder = expected_count % len(question_types)
+    for index, question_type in enumerate(question_types):
+        counts[question_type] = base + (1 if index < remainder else 0)
+    return counts
 
 
 def dry_run_unused_breeds(
@@ -356,6 +484,7 @@ def dry_run_unused_breeds(
     expected_top_up_candidates = 0
     unavailable_candidate_slots = 0
     expected_max_candidates = 0
+    chunk_ids_by_type = {question_type: [] for question_type in QUESTION_TYPE_VALUES}
     for breed_id in target_breeds:
         used_chunks = used_chunk_ids_for_breed(existing_candidates, breed_id)
         available_chunks = [
@@ -367,6 +496,9 @@ def dry_run_unused_breeds(
         selected_by_breed[breed_id] = [
             chunk.chunk_id for chunk in available_chunks[:missing]
         ]
+        for chunk in available_chunks[:missing]:
+            for question_type in available_question_types_for_chunk(chunk):
+                chunk_ids_by_type[question_type].append(chunk.chunk_id)
         requested_candidate_slots += missing
         expected_max_candidates += available_for_breed
         unavailable_candidate_slots += shortfall_for_breed
@@ -396,6 +528,15 @@ def dry_run_unused_breeds(
         approximate_validator_calls=expected_max_candidates,
         api_key_available=api_key_availability(),
         input_chunks_sha256=sha256_file(input_path),
+        query_language=config.generation.query_language,
+        answer_language=config.generation.answer_language,
+        allowed_question_types=list(QUESTION_TYPE_VALUES),
+        used_question_types=candidate_question_type_counts(existing_candidates),
+        estimated_question_type_targets=estimate_question_type_targets(expected_max_candidates),
+        chunk_ids_by_available_question_type=chunk_ids_by_type,
+        sparse_question_types=[
+            question_type for question_type, chunk_ids in chunk_ids_by_type.items() if len(chunk_ids) < 3
+        ],
     )
 
 
@@ -476,6 +617,8 @@ def make_manifest_with_unused_coverage(
     new_candidates_by_breed: dict[str, int],
     rejected_by_breed: dict[str, int],
     questions_per_breed: int,
+    provider_errors: list[ProviderErrorRecord] | None = None,
+    stopped_by_circuit_breaker: bool = False,
 ) -> RunManifest:
     stats = coverage_stats(
         all_breed_ids,
@@ -486,7 +629,14 @@ def make_manifest_with_unused_coverage(
         rejected_by_breed,
         questions_per_breed,
     )
-    return update_manifest_counts(manifest, candidates, rejections).model_copy(update=stats)
+    return update_manifest_counts(
+        manifest,
+        candidates,
+        rejections,
+        provider_errors=provider_errors,
+        run_id_for_type_counts=manifest.run_id,
+        stopped_by_circuit_breaker=stopped_by_circuit_breaker,
+    ).model_copy(update=stats)
 
 
 def append_rejection(
@@ -502,15 +652,38 @@ def append_rejection(
     rejected_by_breed[chunk.breed_id] += 1
 
 
+def append_provider_error(
+    provider_errors: list[ProviderErrorRecord],
+    consecutive_provider_errors: dict[str, int],
+    chunk: SourceChunk,
+    stage: str,
+    exc: EvaluationProviderError,
+    provider: str,
+    run_id: str,
+) -> None:
+    provider_errors.append(provider_error_record(chunk, stage, exc, provider, run_id))
+    consecutive_provider_errors[provider] += 1
+
+
+def circuit_breaker_tripped(
+    consecutive_provider_errors: dict[str, int],
+    threshold: int = 2,
+) -> bool:
+    return any(count >= threshold for count in consecutive_provider_errors.values())
+
+
 def run_unused_breeds_pipeline(
     config: PilotConfig,
     questions_per_breed: int = 3,
     resume: bool = False,
     api_call_delay_seconds: float = 0.0,
+    max_new_candidates: int | None = None,
     provider_factory: ProviderFactory = make_provider,
 ) -> RunManifest:
     if questions_per_breed < 1:
         raise ValueError("questions_per_breed must be greater than zero")
+    if max_new_candidates is not None and max_new_candidates < 1:
+        raise ValueError("max_new_candidates must be greater than zero")
     configs = [
         config.generator_a,
         config.validator_a,
@@ -533,6 +706,10 @@ def run_unused_breeds_pipeline(
         paths["candidates"],
         paths["rejections"],
     )
+    provider_errors = [
+        ProviderErrorRecord.model_validate(record)
+        for record in read_jsonl(paths["provider_errors"])
+    ]
     existing_by_breed = candidates_by_breed(list(candidates))
     target_breeds = [
         breed_id
@@ -549,6 +726,7 @@ def run_unused_breeds_pipeline(
     providers: dict[tuple[str, str], EvaluationProvider] = {}
     new_candidates_by_breed: dict[str, int] = defaultdict(int)
     rejected_by_breed: dict[str, int] = defaultdict(int)
+    consecutive_provider_errors: dict[str, int] = defaultdict(int)
     next_chunk_index_by_breed: dict[str, int] = defaultdict(int)
 
     def provider_for(model_config: ModelConfig) -> EvaluationProvider:
@@ -596,10 +774,45 @@ def run_unused_breeds_pipeline(
                         min_questions=1,
                         max_questions=1,
                         existing_questions=existing_questions,
+                        query_language=config.generation.query_language,
+                        answer_language=config.generation.answer_language,
+                        global_question_type_counts=candidate_question_type_counts(
+                            candidates,
+                            run_id,
+                        ),
                     ),
                 )
                 generated_batch = parse_generated_batch(raw_generated)
-            except (EvaluationProviderError, ValidationError, ValueError) as exc:
+            except EvaluationProviderError as exc:
+                append_provider_error(
+                    provider_errors,
+                    consecutive_provider_errors,
+                    chunk,
+                    "generator",
+                    exc,
+                    generator_config.provider,
+                    run_id,
+                )
+                manifest = make_manifest_with_unused_coverage(
+                    manifest,
+                    all_breeds,
+                    target_breeds,
+                    existing_by_breed,
+                    candidates,
+                    rejections,
+                    new_candidates_by_breed,
+                    rejected_by_breed,
+                    questions_per_breed,
+                    provider_errors=provider_errors,
+                    stopped_by_circuit_breaker=circuit_breaker_tripped(
+                        consecutive_provider_errors
+                    ),
+                )
+                persist(paths, candidates, rejections, manifest, provider_errors)
+                if manifest.stopped_by_circuit_breaker:
+                    return manifest
+                continue
+            except (ValidationError, ValueError) as exc:
                 append_rejection(
                     rejections,
                     rejected_by_breed,
@@ -609,7 +822,8 @@ def run_unused_breeds_pipeline(
                     raw_generated,
                     run_id,
                 )
-                persist(paths, candidates, rejections, manifest)
+                consecutive_provider_errors[generator_config.provider] = 0
+                persist(paths, candidates, rejections, manifest, provider_errors)
                 continue
 
             accepted_for_breed = False
@@ -620,6 +834,8 @@ def run_unused_breeds_pipeline(
                     chunk,
                     seen_queries,
                     existing_for_breed=existing_questions,
+                    query_language=config.generation.query_language,
+                    answer_language=config.generation.answer_language,
                 )
                 if reason:
                     append_rejection(
@@ -642,10 +858,41 @@ def run_unused_breeds_pipeline(
                             chunk,
                             generated,
                             existing_questions=existing_questions,
+                            query_language=config.generation.query_language,
+                            answer_language=config.generation.answer_language,
                         ),
                     )
                     validation = parse_validation_result(raw_validation)
-                except (EvaluationProviderError, ValidationError, ValueError) as exc:
+                except EvaluationProviderError as exc:
+                    append_provider_error(
+                        provider_errors,
+                        consecutive_provider_errors,
+                        chunk,
+                        "validator",
+                        exc,
+                        validator_config.provider,
+                        run_id,
+                    )
+                    manifest = make_manifest_with_unused_coverage(
+                        manifest,
+                        all_breeds,
+                        target_breeds,
+                        existing_by_breed,
+                        candidates,
+                        rejections,
+                        new_candidates_by_breed,
+                        rejected_by_breed,
+                        questions_per_breed,
+                        provider_errors=provider_errors,
+                        stopped_by_circuit_breaker=circuit_breaker_tripped(
+                            consecutive_provider_errors
+                        ),
+                    )
+                    persist(paths, candidates, rejections, manifest, provider_errors)
+                    if manifest.stopped_by_circuit_breaker:
+                        return manifest
+                    continue
+                except (ValidationError, ValueError) as exc:
                     append_rejection(
                         rejections,
                         rejected_by_breed,
@@ -655,6 +902,7 @@ def run_unused_breeds_pipeline(
                         raw_validation,
                         run_id,
                     )
+                    consecutive_provider_errors[validator_config.provider] = 0
                     continue
 
                 if not validator_accepts(validation):
@@ -682,6 +930,8 @@ def run_unused_breeds_pipeline(
                 )
                 seen_queries.add(normalize_query(generated.query))
                 new_candidates_by_breed[breed_id] += 1
+                consecutive_provider_errors[generator_config.provider] = 0
+                consecutive_provider_errors[validator_config.provider] = 0
                 accepted_for_breed = True
                 break
             if accepted_for_breed:
@@ -695,8 +945,14 @@ def run_unused_breeds_pipeline(
                     new_candidates_by_breed,
                     rejected_by_breed,
                     questions_per_breed,
+                    provider_errors=provider_errors,
                 )
-                persist(paths, candidates, rejections, manifest)
+                persist(paths, candidates, rejections, manifest, provider_errors)
+                if (
+                    max_new_candidates is not None
+                    and sum(new_candidates_by_breed.values()) >= max_new_candidates
+                ):
+                    return manifest
             else:
                 manifest = make_manifest_with_unused_coverage(
                     manifest,
@@ -708,8 +964,9 @@ def run_unused_breeds_pipeline(
                     new_candidates_by_breed,
                     rejected_by_breed,
                     questions_per_breed,
+                    provider_errors=provider_errors,
                 )
-                persist(paths, candidates, rejections, manifest)
+                persist(paths, candidates, rejections, manifest, provider_errors)
 
     final_manifest = make_manifest_with_unused_coverage(
         manifest,
@@ -721,8 +978,9 @@ def run_unused_breeds_pipeline(
         new_candidates_by_breed,
         rejected_by_breed,
         questions_per_breed,
+        provider_errors=provider_errors,
     )
-    persist(paths, candidates, rejections, final_manifest)
+    persist(paths, candidates, rejections, final_manifest, provider_errors)
     return final_manifest
 
 
@@ -795,6 +1053,8 @@ def run_pipeline(
                     chunk,
                     config.questions_per_chunk_min,
                     config.questions_per_chunk_max,
+                    query_language=config.generation.query_language,
+                    answer_language=config.generation.answer_language,
                 ),
             )
             generated_batch = parse_generated_batch(raw_generated)
@@ -808,7 +1068,13 @@ def run_pipeline(
 
         accepted_for_chunk = 0
         for generated in generated_batch.questions:
-            reason = locally_validate_candidate(generated, chunk, seen_queries)
+            reason = locally_validate_candidate(
+                generated,
+                chunk,
+                seen_queries,
+                query_language=config.generation.query_language,
+                answer_language=config.generation.answer_language,
+            )
             if reason:
                 rejections.append(
                     rejection(
@@ -826,7 +1092,12 @@ def run_pipeline(
                 raw_validation = complete_json_with_delay(
                     validator,
                     provider_system_prompt("validator"),
-                    validator_user_prompt(chunk, generated),
+                    validator_user_prompt(
+                        chunk,
+                        generated,
+                        query_language=config.generation.query_language,
+                        answer_language=config.generation.answer_language,
+                    ),
                 )
                 validation = parse_validation_result(raw_validation)
             except (EvaluationProviderError, ValidationError, ValueError) as exc:
@@ -877,7 +1148,13 @@ def persist(
     candidates: list[RetrievalEvaluationCandidate],
     rejections: list[RejectionRecord],
     manifest: RunManifest,
+    provider_errors: list[ProviderErrorRecord] | None = None,
 ) -> None:
     write_jsonl_atomic([item.model_dump(mode="json") for item in candidates], paths["candidates"])
     write_jsonl_atomic([item.model_dump(mode="json") for item in rejections], paths["rejections"])
+    if provider_errors is not None:
+        write_jsonl_atomic(
+            [item.model_dump(mode="json") for item in provider_errors],
+            paths["provider_errors"],
+        )
     write_json_atomic(manifest.model_dump(mode="json"), paths["manifest"])

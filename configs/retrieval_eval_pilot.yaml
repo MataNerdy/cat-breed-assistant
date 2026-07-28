@@ -9,6 +9,10 @@ questions_per_chunk_max: 3
 generator_prompt_version: retrieval_eval_generator_v1
 validator_prompt_version: retrieval_eval_validator_v1
 
+generation:
+  query_language: ru
+  answer_language: ru
+
 generator_a:
   provider: gemini
   model: gemini-2.5-flash

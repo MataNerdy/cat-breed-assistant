@@ -44,31 +44,42 @@ def question_field(question: Any, field_name: str) -> str:
     return str(value or "")
 
 
+def contains_cyrillic(value: str) -> bool:
+    return bool(re.search(r"[А-Яа-яЁё]", value))
+
+
 def locally_validate_candidate(
     candidate: GeneratedQuestion,
     chunk: SourceChunk,
     seen_queries: set[str],
     existing_for_breed: list[Any] | None = None,
+    query_language: str = "ru",
+    answer_language: str = "ru",
 ) -> str | None:
     existing_for_breed = existing_for_breed or []
     if len(candidate.query.strip()) < 8:
         return "question_too_short"
+    if not candidate.answer.strip():
+        return "answer_too_short"
+    if query_language == "ru" and not contains_cyrillic(candidate.query):
+        return "wrong_query_language"
+    if answer_language == "ru" and not contains_cyrillic(candidate.answer):
+        return "wrong_answer_language"
     if candidate.evidence_quote not in chunk.text:
         return "evidence_quote_not_found"
+    if candidate.question_type.value == "alias":
+        evidence = normalized_text(candidate.evidence_quote)
+        if not any(marker in evidence for marker in ["alternative", "alias", "also known", "alt name"]):
+            return "alias_not_explicitly_supported"
     if answer_leaked_in_query(candidate.query, candidate.answer):
         return "answer_leaked_in_question"
     normalized = normalize_query(candidate.query)
     if normalized in seen_queries:
         return "duplicate_normalized_query"
-    candidate_question_type = normalized_text(candidate.question_type)
     candidate_evidence = normalized_text(candidate.evidence_quote)
     for existing in existing_for_breed:
         if normalized == normalize_query(question_field(existing, "query")):
             return "duplicate_normalized_query_for_breed"
-        if candidate_question_type and candidate_question_type == normalized_text(
-            question_field(existing, "question_type")
-        ):
-            return "duplicate_question_type_for_breed"
         if candidate_evidence and candidate_evidence == normalized_text(
             question_field(existing, "evidence_quote")
         ):
@@ -91,4 +102,9 @@ def validator_accepts(result: ValidationResult) -> bool:
         and not result.is_ambiguous
         and result.fact_is_distinct_from_existing_questions
         and result.question_type_is_distinct
+        and result.query_language_is_correct
+        and result.answer_language_is_correct
+        and result.question_type_is_valid
+        and result.question_type_matches_fact
+        and result.translation_preserves_meaning
     )

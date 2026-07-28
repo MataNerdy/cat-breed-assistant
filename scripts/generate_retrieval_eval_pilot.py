@@ -29,8 +29,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int)
     parser.add_argument("--target-count", type=int)
     parser.add_argument("--breed-limit", type=int)
+    parser.add_argument("--query-language")
+    parser.add_argument("--answer-language")
     parser.add_argument("--unused-breeds", action="store_true")
     parser.add_argument("--questions-per-breed", type=int, default=3)
+    parser.add_argument("--max-new-candidates", type=int)
     parser.add_argument(
         "--api-call-delay-seconds",
         type=float,
@@ -50,6 +53,8 @@ def main() -> int:
             seed=args.seed,
             target_count=args.target_count,
             breed_limit=args.breed_limit,
+            query_language=args.query_language,
+            answer_language=args.answer_language,
         )
         if args.dry_run:
             if args.unused_breeds:
@@ -69,6 +74,7 @@ def main() -> int:
                 questions_per_breed=args.questions_per_breed,
                 resume=args.resume,
                 api_call_delay_seconds=args.api_call_delay_seconds,
+                max_new_candidates=args.max_new_candidates,
             )
         else:
             manifest = run_pipeline(

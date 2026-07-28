@@ -4,6 +4,12 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
+from src.cat_breed_assistant.evaluation.retrieval.question_types import (
+    RetrievalQuestionType,
+    all_question_type_counts,
+    normalize_question_type,
+)
+
 
 Difficulty = Literal["easy", "medium", "hard"]
 FinalStatus = Literal["pending_review", "approved", "rejected"]
@@ -18,6 +24,11 @@ class ModelConfig(BaseModel):
     max_retries: int = 2
 
 
+class GenerationConfig(BaseModel):
+    query_language: str = "ru"
+    answer_language: str = "ru"
+
+
 class PilotConfig(BaseModel):
     input_chunks_path: str = "data/processed/knowledge_chunks.jsonl"
     skipped_broader_sources_path: str = "data/reports/skipped_broader_sources.jsonl"
@@ -29,6 +40,7 @@ class PilotConfig(BaseModel):
     questions_per_chunk_max: int = 3
     generator_prompt_version: str = "retrieval_eval_generator_v1"
     validator_prompt_version: str = "retrieval_eval_validator_v1"
+    generation: GenerationConfig = Field(default_factory=GenerationConfig)
     generator_a: ModelConfig
     validator_a: ModelConfig
     generator_b: ModelConfig
@@ -73,17 +85,29 @@ class GeneratedQuestion(BaseModel):
     query: str
     answer: str
     evidence_quote: str
-    question_type: str
+    question_type: RetrievalQuestionType
     difficulty: Difficulty
     breed_name_present: bool
 
-    @field_validator("query", "answer", "evidence_quote", "question_type")
+    @field_validator("query", "answer", "evidence_quote")
     @classmethod
     def non_empty_string(cls, value: str) -> str:
         value = value.strip()
         if not value:
             raise ValueError("field must be non-empty")
         return value
+
+    @field_validator("question_type", mode="before")
+    @classmethod
+    def normalize_question_type_value(cls, value: object) -> RetrievalQuestionType:
+        if isinstance(value, RetrievalQuestionType):
+            return value
+        if not isinstance(value, str):
+            raise ValueError("invalid_question_type")
+        normalized = normalize_question_type(value)
+        if normalized is None:
+            raise ValueError("invalid_question_type")
+        return normalized
 
 
 class GeneratedQuestionBatch(BaseModel):
@@ -101,6 +125,11 @@ class ValidationResult(BaseModel):
     is_ambiguous: bool
     fact_is_distinct_from_existing_questions: bool = True
     question_type_is_distinct: bool = True
+    query_language_is_correct: bool = True
+    answer_language_is_correct: bool = True
+    question_type_is_valid: bool = True
+    question_type_matches_fact: bool = True
+    translation_preserves_meaning: bool = True
     approved: bool
     rejection_reasons: list[str] = Field(default_factory=list)
 
@@ -153,6 +182,17 @@ class RejectionRecord(BaseModel):
     run_id: str
 
 
+class ProviderErrorRecord(BaseModel):
+    error_type: Literal["quota_exhausted", "timeout", "provider_error"]
+    provider: str
+    retryable: bool
+    chunk_id: str
+    run_id: str
+    stage: Literal["generator", "validator"]
+    reason: str
+    created_at: str
+
+
 class RunManifest(BaseModel):
     run_id: str
     seed: int
@@ -177,6 +217,14 @@ class RunManifest(BaseModel):
     partially_covered_breeds: int | None = None
     questions_per_breed: int | None = None
     coverage_by_breed: dict[str, dict[str, Any]] = Field(default_factory=dict)
+    query_language: str = "ru"
+    answer_language: str = "ru"
+    generated_by_question_type: dict[str, int] = Field(default_factory=all_question_type_counts)
+    rejected_invalid_question_type: int = 0
+    rejected_wrong_query_language: int = 0
+    rejected_wrong_answer_language: int = 0
+    provider_error_count: int = 0
+    stopped_by_circuit_breaker: bool = False
 
 
 class DryRunResult(BaseModel):
@@ -184,6 +232,9 @@ class DryRunResult(BaseModel):
     selected_chunk_ids: list[str]
     api_key_available: dict[str, bool]
     input_chunks_sha256: str
+    query_language: str = "ru"
+    answer_language: str = "ru"
+    allowed_question_types: list[str] = Field(default_factory=list)
 
 
 class UnusedBreedDryRunResult(BaseModel):
@@ -203,6 +254,13 @@ class UnusedBreedDryRunResult(BaseModel):
     approximate_validator_calls: int
     api_key_available: dict[str, bool]
     input_chunks_sha256: str
+    query_language: str = "ru"
+    answer_language: str = "ru"
+    allowed_question_types: list[str] = Field(default_factory=list)
+    used_question_types: dict[str, int] = Field(default_factory=dict)
+    estimated_question_type_targets: dict[str, int] = Field(default_factory=dict)
+    chunk_ids_by_available_question_type: dict[str, list[str]] = Field(default_factory=dict)
+    sparse_question_types: list[str] = Field(default_factory=list)
 
 
 JsonDict = dict[str, Any]
