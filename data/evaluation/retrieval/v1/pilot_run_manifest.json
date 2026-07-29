@@ -56,9 +56,9 @@
         "aege:wikipedia:en:1-history:000",
         "aege:wikipedia:en:2-aegean-cats-as-pets:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "location",
         "numeric_rating",
@@ -69,15 +69,17 @@
     },
     "amau": {
       "chunk_ids": [
-        "amau:catapi:profile:000"
+        "amau:catapi:profile:000",
+        "amau:wikipedia:en:1-history:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
-        "atomic_fact"
+        "atomic_fact",
+        "history"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "amis": {
@@ -100,14 +102,16 @@
     "asho": {
       "chunk_ids": [
         "asho:catapi:profile:000",
-        "asho:wikipedia:en:1-history:000"
+        "asho:wikipedia:en:1-history:000",
+        "asho:wikipedia:en:2.1-appearance:000"
       ],
-      "existing_count": 1,
-      "final_candidate_count": 2,
+      "existing_count": 2,
+      "final_candidate_count": 3,
       "generated_count": 1,
       "question_types": [
         "atomic_fact",
-        "breed_development"
+        "breed_development",
+        "physical_characteristic"
       ],
       "rejected_count": 0,
       "requested_count": 3
@@ -132,13 +136,15 @@
     "bali": {
       "chunk_ids": [
         "bali:catapi:profile:000",
-        "bali:wikipedia:en:1-history-and-development:000"
+        "bali:wikipedia:en:1-history-and-development:000",
+        "bali:wikipedia:en:1.1-balinese-javanese:000"
       ],
       "existing_count": 2,
-      "final_candidate_count": 2,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 1,
       "question_types": [
         "alternative_names",
+        "breed_development",
         "history"
       ],
       "rejected_count": 0,
@@ -156,43 +162,49 @@
         "atomic_fact",
         "breed_development"
       ],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "beng": {
       "chunk_ids": [
-        "beng:catapi:profile:000"
+        "beng:catapi:profile:000",
+        "beng:wikipedia:en:1-etymology:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
-        "numeric_rating"
+        "numeric_rating",
+        "origin"
       ],
       "rejected_count": 0,
       "requested_count": 3
     },
     "birm": {
       "chunk_ids": [
-        "birm:catapi:profile:000"
+        "birm:catapi:profile:000",
+        "birm:wikipedia:en:1-history:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
-        "Factual"
+        "Factual",
+        "physical_characteristic"
       ],
       "rejected_count": 0,
       "requested_count": 3
     },
     "bomb": {
       "chunk_ids": [
-        "bomb:catapi:profile:000"
+        "bomb:catapi:profile:000",
+        "bomb:wikipedia:en:1-history:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
+        "history",
         "origin"
       ],
       "rejected_count": 0,
@@ -210,17 +222,19 @@
         "breed_development",
         "factual"
       ],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "bslo": {
       "chunk_ids": [
-        "bslo:catapi:profile:000"
+        "bslo:catapi:profile:000",
+        "bslo:wikipedia:en:4-british-longhair:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
+        "alias",
         "lifespan"
       ],
       "rejected_count": 0,
@@ -238,7 +252,7 @@
         "factoid",
         "origin"
       ],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "buri": {
@@ -256,35 +270,43 @@
     },
     "char": {
       "chunk_ids": [
-        "char:catapi:profile:000"
+        "char:catapi:profile:000",
+        "char:wikipedia:en:1-history:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
+        "history",
         "lifespan"
       ],
       "rejected_count": 0,
       "requested_count": 3
     },
     "chau": {
-      "chunk_ids": [],
+      "chunk_ids": [
+        "chau:catapi:profile:000"
+      ],
       "existing_count": 0,
-      "final_candidate_count": 0,
-      "generated_count": 0,
-      "question_types": [],
+      "final_candidate_count": 1,
+      "generated_count": 1,
+      "question_types": [
+        "behavior"
+      ],
       "rejected_count": 0,
       "requested_count": 3
     },
     "chee": {
       "chunk_ids": [
-        "chee:catapi:profile:000"
+        "chee:catapi:profile:000",
+        "chee:wikipedia:en:1-appearance:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
-        "origin"
+        "origin",
+        "physical_characteristic"
       ],
       "rejected_count": 0,
       "requested_count": 3
@@ -735,29 +757,29 @@
       "requested_count": 3
     }
   },
-  "finished_at": "2026-07-28T12:44:23Z",
-  "fully_covered_breeds": 9,
+  "finished_at": "2026-07-29T14:04:24Z",
+  "fully_covered_breeds": 11,
   "generated_by_question_type": {
-    "alias": 0,
-    "behavior": 0,
-    "breed_development": 4,
+    "alias": 1,
+    "behavior": 1,
+    "breed_development": 5,
     "health": 0,
-    "history": 3,
+    "history": 6,
     "lifespan": 1,
-    "origin": 3,
-    "physical_characteristic": 0,
+    "origin": 4,
+    "physical_characteristic": 3,
     "temperament": 1
   },
-  "generated_count": 242,
+  "generated_count": 256,
   "generator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
   },
   "input_chunks_path": "data/processed/knowledge_chunks.jsonl",
   "input_chunks_sha256": "76449018fa354e8619201836f7d82aaf7338d0e6bd28e2ad9164d14fd20d183b",
-  "newly_covered_breeds": 0,
-  "partially_covered_breeds": 14,
-  "pending_review_count": 59,
+  "newly_covered_breeds": 1,
+  "partially_covered_breeds": 13,
+  "pending_review_count": 69,
   "previously_covered_breeds": 23,
   "prompt_versions": {
     "generator": "retrieval_eval_generator_v1",
@@ -766,7 +788,7 @@
   "provider_error_count": 2,
   "query_language": "ru",
   "questions_per_breed": 3,
-  "rejected_count": 183,
+  "rejected_count": 187,
   "rejected_invalid_question_type": 0,
   "rejected_wrong_answer_language": 2,
   "rejected_wrong_query_language": 0,
@@ -774,7 +796,6 @@
   "seed": 42,
   "selected_breed_ids": [
     "acur",
-    "aege",
     "amau",
     "asho",
     "bali",
@@ -837,9 +858,6 @@
     "acur:catapi:profile:000",
     "acur:wikipedia:en:1-history:000",
     "acur:wikipedia:en:2-genetics-and-health:000",
-    "aege:catapi:profile:000",
-    "aege:wikipedia:en:1-history:000",
-    "aege:wikipedia:en:2-aegean-cats-as-pets:000",
     "amau:catapi:profile:000",
     "amau:wikipedia:en:1-history:000",
     "amau:wikipedia:en:2-grooming:000",
@@ -1009,11 +1027,11 @@
     "ycho:wikipedia:en:1-history:000",
     "ycho:wikipedia:en:2-breed-registration:000"
   ],
-  "started_at": "2026-07-28T12:41:12Z",
-  "stopped_by_circuit_breaker": true,
+  "started_at": "2026-07-29T13:56:18Z",
+  "stopped_by_circuit_breaker": false,
   "target_unused_breeds": 44,
   "total_available_breeds": 67,
-  "validator_approved_count": 59,
+  "validator_approved_count": 69,
   "validator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
