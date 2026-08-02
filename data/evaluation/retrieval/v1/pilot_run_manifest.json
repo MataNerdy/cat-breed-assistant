@@ -673,7 +673,7 @@
       "final_candidate_count": 0,
       "generated_count": 0,
       "question_types": [],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "nebe": {
@@ -695,15 +695,19 @@
       "final_candidate_count": 0,
       "generated_count": 0,
       "question_types": [],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "ocic": {
-      "chunk_ids": [],
+      "chunk_ids": [
+        "ocic:catapi:profile:000"
+      ],
       "existing_count": 0,
-      "final_candidate_count": 0,
-      "generated_count": 0,
-      "question_types": [],
+      "final_candidate_count": 1,
+      "generated_count": 1,
+      "question_types": [
+        "lifespan"
+      ],
       "rejected_count": 0,
       "requested_count": 3
     },
@@ -899,7 +903,7 @@
       "requested_count": 3
     }
   },
-  "finished_at": "2026-08-02T19:57:02Z",
+  "finished_at": "2026-08-02T20:00:02Z",
   "fully_covered_breeds": 28,
   "generated_by_question_type": {
     "alias": 4,
@@ -907,30 +911,30 @@
     "breed_development": 11,
     "health": 3,
     "history": 17,
-    "lifespan": 7,
+    "lifespan": 8,
     "origin": 17,
     "physical_characteristic": 8,
     "temperament": 3
   },
-  "generated_count": 347,
+  "generated_count": 350,
   "generator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
   },
   "input_chunks_path": "data/processed/knowledge_chunks.jsonl",
   "input_chunks_sha256": "76449018fa354e8619201836f7d82aaf7338d0e6bd28e2ad9164d14fd20d183b",
-  "newly_covered_breeds": 3,
-  "partially_covered_breeds": 16,
-  "pending_review_count": 120,
+  "newly_covered_breeds": 4,
+  "partially_covered_breeds": 17,
+  "pending_review_count": 121,
   "previously_covered_breeds": 41,
   "prompt_versions": {
     "generator": "retrieval_eval_generator_v1",
     "validator": "retrieval_eval_validator_v1"
   },
-  "provider_error_count": 10,
+  "provider_error_count": 13,
   "query_language": "ru",
   "questions_per_breed": 3,
-  "rejected_count": 227,
+  "rejected_count": 229,
   "rejected_invalid_question_type": 0,
   "rejected_wrong_answer_language": 11,
   "rejected_wrong_query_language": 0,
@@ -1114,10 +1118,10 @@
     "ycho:wikipedia:en:2-breed-registration:000"
   ],
   "started_at": "2026-08-02T19:47:06Z",
-  "stopped_by_circuit_breaker": false,
+  "stopped_by_circuit_breaker": true,
   "target_unused_breeds": 26,
   "total_available_breeds": 67,
-  "validator_approved_count": 120,
+  "validator_approved_count": 121,
   "validator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
