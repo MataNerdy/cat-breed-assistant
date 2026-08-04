@@ -157,16 +157,18 @@
     "bamb": {
       "chunk_ids": [
         "bamb:catapi:profile:000",
-        "bamb:wikipedia:en:8-bambino:000"
+        "bamb:wikipedia:en:8-bambino:000",
+        "bamb:wikipedia:ru:1-section:000"
       ],
       "existing_count": 2,
-      "final_candidate_count": 2,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 1,
       "question_types": [
         "atomic_fact",
-        "breed_development"
+        "breed_development",
+        "history"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "beng": {
@@ -336,16 +338,18 @@
     "crex": {
       "chunk_ids": [
         "crex:catapi:profile:000",
-        "crex:wikipedia:en:1-characteristics:000"
+        "crex:wikipedia:en:1-characteristics:000",
+        "crex:wikipedia:en:1.1-appearance:000"
       ],
       "existing_count": 2,
-      "final_candidate_count": 2,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 1,
       "question_types": [
         "behavior",
+        "physical_characteristic",
         "temperament"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "csho": {
@@ -367,15 +371,17 @@
     },
     "cspa": {
       "chunk_ids": [
-        "cspa:catapi:profile:000"
+        "cspa:catapi:profile:000",
+        "cspa:wikipedia:en:1-history:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 2,
+      "generated_count": 1,
       "question_types": [
+        "breed_development",
         "health"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "ctif": {
@@ -383,14 +389,14 @@
         "ctif:catapi:profile:000",
         "ctif:wikipedia:en:1.1-new-york-us-1960s1970s:000"
       ],
-      "existing_count": 1,
+      "existing_count": 2,
       "final_candidate_count": 2,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "history",
         "origin"
       ],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "cymr": {
@@ -550,9 +556,9 @@
         "jbob:wikipedia:en:1-history:000",
         "jbob:wikipedia:en:2-breed-standard:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "health",
         "origin",
@@ -597,9 +603,9 @@
         "kuri:wikipedia:en:1-history:000",
         "kuri:wikipedia:en:2-breed-recognition:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "breed_development",
         "lifespan",
@@ -648,16 +654,16 @@
         "alias",
         "history"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "manx": {
       "chunk_ids": [
         "manx:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "origin"
       ],
@@ -674,16 +680,16 @@
       "question_types": [
         "origin"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "munc": {
       "chunk_ids": [
         "munc:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "origin"
       ],
@@ -695,9 +701,9 @@
         "nebe:catapi:profile:000",
         "nebe:wikipedia:en:1.2-development-in-the-us:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "factoid",
         "temperament"
@@ -709,9 +715,9 @@
       "chunk_ids": [
         "norw:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "lifespan"
       ],
@@ -723,9 +729,9 @@
         "ocic:catapi:profile:000",
         "ocic:wikipedia:en:1.1-origin:000"
       ],
-      "existing_count": 1,
+      "existing_count": 2,
       "final_candidate_count": 2,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "breed_development",
         "lifespan"
@@ -737,9 +743,9 @@
       "chunk_ids": [
         "orie:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "lifespan"
       ],
@@ -750,9 +756,9 @@
       "chunk_ids": [
         "pers:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "alias"
       ],
@@ -779,9 +785,9 @@
       "chunk_ids": [
         "raga:catapi:profile:000"
       ],
-      "existing_count": 0,
+      "existing_count": 1,
       "final_candidate_count": 1,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "origin"
       ],
@@ -794,7 +800,7 @@
       "final_candidate_count": 0,
       "generated_count": 0,
       "question_types": [],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "rblu": {
@@ -803,7 +809,7 @@
       "final_candidate_count": 0,
       "generated_count": 0,
       "question_types": [],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "sava": {
@@ -812,7 +818,7 @@
       "final_candidate_count": 0,
       "generated_count": 0,
       "question_types": [],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "sfol": {
@@ -937,40 +943,40 @@
       "requested_count": 3
     }
   },
-  "finished_at": "2026-08-03T20:04:14Z",
-  "fully_covered_breeds": 31,
+  "finished_at": "2026-08-04T14:40:09Z",
+  "fully_covered_breeds": 33,
   "generated_by_question_type": {
     "alias": 5,
     "behavior": 3,
-    "breed_development": 13,
+    "breed_development": 14,
     "health": 3,
-    "history": 18,
+    "history": 19,
     "lifespan": 10,
     "origin": 20,
-    "physical_characteristic": 9,
+    "physical_characteristic": 10,
     "temperament": 4
   },
-  "generated_count": 375,
+  "generated_count": 385,
   "generator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
   },
   "input_chunks_path": "data/processed/knowledge_chunks.jsonl",
   "input_chunks_sha256": "76449018fa354e8619201836f7d82aaf7338d0e6bd28e2ad9164d14fd20d183b",
-  "newly_covered_breeds": 6,
-  "partially_covered_breeds": 20,
-  "pending_review_count": 132,
-  "previously_covered_breeds": 45,
+  "newly_covered_breeds": 0,
+  "partially_covered_breeds": 18,
+  "pending_review_count": 135,
+  "previously_covered_breeds": 51,
   "prompt_versions": {
     "generator": "retrieval_eval_generator_v1",
     "validator": "retrieval_eval_validator_v1"
   },
-  "provider_error_count": 15,
+  "provider_error_count": 16,
   "query_language": "ru",
   "questions_per_breed": 3,
-  "rejected_count": 243,
+  "rejected_count": 250,
   "rejected_invalid_question_type": 0,
-  "rejected_wrong_answer_language": 15,
+  "rejected_wrong_answer_language": 17,
   "rejected_wrong_query_language": 0,
   "run_id": "retrieval-eval-unused-breeds-3e8cf410f797",
   "seed": 42,
@@ -984,16 +990,13 @@
     "drex",
     "ebur",
     "esho",
-    "jbob",
     "kora",
-    "kuri",
     "lape",
     "lihu",
     "mala",
     "manx",
     "mcoo",
     "munc",
-    "nebe",
     "norw",
     "ocic",
     "orie",
@@ -1040,15 +1043,9 @@
     "esho:catapi:profile:000",
     "esho:wikipedia:en:1-history:000",
     "esho:wikipedia:en:2.1-appearance:000",
-    "jbob:catapi:profile:000",
-    "jbob:wikipedia:en:1-history:000",
-    "jbob:wikipedia:en:2-breed-standard:000",
     "kora:catapi:profile:000",
     "kora:wikipedia:en:1-history:000",
     "kora:wikipedia:en:2-appearance:000",
-    "kuri:catapi:profile:000",
-    "kuri:wikipedia:en:1-history:000",
-    "kuri:wikipedia:en:2-breed-recognition:000",
     "lape:catapi:profile:000",
     "lape:wikipedia:en:1-breed-profile:000",
     "lape:wikipedia:en:2-history:000",
@@ -1067,9 +1064,6 @@
     "munc:catapi:profile:000",
     "munc:wikipedia:en:1.1-breed-creation:000",
     "munc:wikipedia:en:1.2-registry-history:000",
-    "nebe:catapi:profile:000",
-    "nebe:wikipedia:en:1.1-early-origins:000",
-    "nebe:wikipedia:en:1.2-development-in-the-us:000",
     "norw:catapi:profile:000",
     "norw:wikipedia:en:1-history:000",
     "norw:wikipedia:en:2-registration:000",
@@ -1131,11 +1125,11 @@
     "ycho:wikipedia:en:1-history:000",
     "ycho:wikipedia:en:2-breed-registration:000"
   ],
-  "started_at": "2026-08-03T19:50:10Z",
-  "stopped_by_circuit_breaker": true,
-  "target_unused_breeds": 22,
+  "started_at": "2026-08-04T14:31:30Z",
+  "stopped_by_circuit_breaker": false,
+  "target_unused_breeds": 16,
   "total_available_breeds": 67,
-  "validator_approved_count": 132,
+  "validator_approved_count": 135,
   "validator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
