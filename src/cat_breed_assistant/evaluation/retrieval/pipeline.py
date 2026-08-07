@@ -456,6 +456,7 @@ def dry_run_unused_breeds(
     config: PilotConfig,
     questions_per_breed: int,
     resume: bool = False,
+    breed_ids: set[str] | None = None,
 ) -> UnusedBreedDryRunResult:
     input_path = Path(config.input_chunks_path)
     chunks = load_source_chunks(input_path)
@@ -477,6 +478,8 @@ def dry_run_unused_breeds(
         if not existing_by_breed.get(breed_id)
         or (resume and len(existing_by_breed.get(breed_id, [])) < questions_per_breed)
     ]
+    if breed_ids is not None:
+        target_breeds = [breed_id for breed_id in target_breeds if breed_id in breed_ids]
     selected_by_breed: dict[str, list[str]] = {}
     shortfalls: dict[str, str] = {}
     requested_candidate_slots = 0
@@ -678,6 +681,7 @@ def run_unused_breeds_pipeline(
     resume: bool = False,
     api_call_delay_seconds: float = 0.0,
     max_new_candidates: int | None = None,
+    breed_ids: set[str] | None = None,
     provider_factory: ProviderFactory = make_provider,
 ) -> RunManifest:
     if questions_per_breed < 1:
@@ -717,6 +721,8 @@ def run_unused_breeds_pipeline(
         if not existing_by_breed.get(breed_id)
         or (resume and len(existing_by_breed.get(breed_id, [])) < questions_per_breed)
     ]
+    if breed_ids is not None:
+        target_breeds = [breed_id for breed_id in target_breeds if breed_id in breed_ids]
     selected = [
         SelectedChunk(chunk=chunk, selection_reason="unused breed round-robin source chunk", selection_index=index)
         for index, breed_id in enumerate(target_breeds)

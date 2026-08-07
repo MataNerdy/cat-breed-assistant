@@ -21,6 +21,15 @@ from src.cat_breed_assistant.evaluation.retrieval.pipeline import (
 )
 
 
+def parse_breed_ids(value: str | None) -> set[str] | None:
+    if value is None:
+        return None
+    breed_ids = {item.strip() for item in value.split(",") if item.strip()}
+    if not breed_ids:
+        raise ValueError("--breed-ids must contain at least one breed id")
+    return breed_ids
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate pilot retrieval evaluation candidates with Gemini/Mistral."
@@ -32,6 +41,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--query-language")
     parser.add_argument("--answer-language")
     parser.add_argument("--unused-breeds", action="store_true")
+    parser.add_argument(
+        "--breed-ids",
+        help="Comma-separated CatAPI breed ids to process in unused-breeds mode.",
+    )
     parser.add_argument("--questions-per-breed", type=int, default=3)
     parser.add_argument("--max-new-candidates", type=int)
     parser.add_argument(
@@ -56,12 +69,14 @@ def main() -> int:
             query_language=args.query_language,
             answer_language=args.answer_language,
         )
+        breed_ids = parse_breed_ids(args.breed_ids)
         if args.dry_run:
             if args.unused_breeds:
                 result = dry_run_unused_breeds(
                     config,
                     questions_per_breed=args.questions_per_breed,
                     resume=args.resume,
+                    breed_ids=breed_ids,
                 )
             else:
                 result = dry_run(config)
@@ -75,6 +90,7 @@ def main() -> int:
                 resume=args.resume,
                 api_call_delay_seconds=args.api_call_delay_seconds,
                 max_new_candidates=args.max_new_candidates,
+                breed_ids=breed_ids,
             )
         else:
             manifest = run_pipeline(
