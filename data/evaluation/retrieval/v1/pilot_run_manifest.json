@@ -245,11 +245,12 @@
         "bslo:wikipedia:en:4-british-longhair:000"
       ],
       "existing_count": 2,
-      "final_candidate_count": 2,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 1,
       "question_types": [
         "alias",
-        "lifespan"
+        "lifespan",
+        "temperament"
       ],
       "rejected_count": 0,
       "requested_count": 3
@@ -408,9 +409,9 @@
         "cymr:wikipedia:en:1-history:000",
         "cymr:wikipedia:en:2.1-body:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "breed_development",
         "origin",
@@ -458,15 +459,15 @@
         "drex:wikipedia:en:2-appearance:000",
         "drex:wikipedia:en:3-health:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "health",
         "origin",
         "physical_characteristic"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "ebur": {
@@ -474,12 +475,14 @@
         "ebur:catapi:profile:000"
       ],
       "existing_count": 1,
-      "final_candidate_count": 1,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 2,
       "question_types": [
-        "origin"
+        "lifespan",
+        "origin",
+        "temperament"
       ],
-      "rejected_count": 0,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "emau": {
@@ -655,16 +658,18 @@
     "lihu": {
       "chunk_ids": [
         "lihu:catapi:profile:000",
+        "lihu:wikipedia:en:1.2.1-china:000",
         "lihu:wikipedia:en:1.2.2-international:000"
       ],
-      "existing_count": 1,
-      "final_candidate_count": 2,
-      "generated_count": 1,
+      "existing_count": 3,
+      "final_candidate_count": 3,
+      "generated_count": 0,
       "question_types": [
+        "breed_development",
         "history",
         "origin"
       ],
-      "rejected_count": 2,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "mala": {
@@ -756,15 +761,15 @@
         "norw:wikipedia:en:1-history:000",
         "norw:wikipedia:en:3.1-appearance:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "history",
         "lifespan",
         "physical_characteristic"
       ],
-      "rejected_count": 2,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "ocic": {
@@ -957,13 +962,14 @@
         "sing:wikipedia:en:1.1-foundation:000"
       ],
       "existing_count": 2,
-      "final_candidate_count": 2,
-      "generated_count": 0,
+      "final_candidate_count": 3,
+      "generated_count": 1,
       "question_types": [
+        "behavior",
         "breed_development",
         "lifespan"
       ],
-      "rejected_count": 3,
+      "rejected_count": 1,
       "requested_count": 3
     },
     "snow": {
@@ -972,9 +978,9 @@
         "snow:wikipedia:en:1-history:000",
         "snow:wikipedia:en:2.1-breed-recognition:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "breed_development",
         "origin",
@@ -985,15 +991,19 @@
     },
     "soma": {
       "chunk_ids": [
-        "soma:catapi:profile:000"
+        "soma:catapi:profile:000",
+        "soma:wikipedia:en:1-history:000",
+        "soma:wikipedia:en:2-breed-registration:000"
       ],
-      "existing_count": 1,
-      "final_candidate_count": 1,
+      "existing_count": 3,
+      "final_candidate_count": 3,
       "generated_count": 0,
       "question_types": [
-        "lifespan"
+        "history",
+        "lifespan",
+        "origin"
       ],
-      "rejected_count": 2,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "sphy": {
@@ -1019,9 +1029,9 @@
         "srex:wikipedia:en:1-history:000",
         "srex:wikipedia:en:2-appearance:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "lifespan",
         "origin",
@@ -1083,15 +1093,15 @@
         "tvan:wikipedia:en:1-history:000",
         "tvan:wikipedia:en:2.1-popularity:000"
       ],
-      "existing_count": 2,
+      "existing_count": 3,
       "final_candidate_count": 3,
-      "generated_count": 1,
+      "generated_count": 0,
       "question_types": [
         "breed_development",
         "health",
         "history"
       ],
-      "rejected_count": 1,
+      "rejected_count": 0,
       "requested_count": 3
     },
     "ycho": {
@@ -1112,20 +1122,20 @@
       "requested_count": 3
     }
   },
-  "finished_at": "2026-08-10T17:49:02Z",
-  "fully_covered_breeds": 62,
+  "finished_at": "2026-08-12T22:29:49Z",
+  "fully_covered_breeds": 67,
   "generated_by_question_type": {
     "alias": 6,
-    "behavior": 5,
-    "breed_development": 32,
+    "behavior": 6,
+    "breed_development": 33,
     "health": 6,
-    "history": 35,
-    "lifespan": 14,
-    "origin": 29,
+    "history": 36,
+    "lifespan": 15,
+    "origin": 30,
     "physical_characteristic": 24,
-    "temperament": 7
+    "temperament": 9
   },
-  "generated_count": 526,
+  "generated_count": 539,
   "generator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"
@@ -1133,8 +1143,8 @@
   "input_chunks_path": "data/processed/knowledge_chunks.jsonl",
   "input_chunks_sha256": "76449018fa354e8619201836f7d82aaf7338d0e6bd28e2ad9164d14fd20d183b",
   "newly_covered_breeds": 0,
-  "partially_covered_breeds": 5,
-  "pending_review_count": 205,
+  "partially_covered_breeds": 0,
+  "pending_review_count": 212,
   "previously_covered_breeds": 67,
   "prompt_versions": {
     "generator": "retrieval_eval_generator_v1",
@@ -1143,62 +1153,30 @@
   "provider_error_count": 30,
   "query_language": "ru",
   "questions_per_breed": 3,
-  "rejected_count": 321,
+  "rejected_count": 327,
   "rejected_invalid_question_type": 1,
-  "rejected_wrong_answer_language": 37,
+  "rejected_wrong_answer_language": 38,
   "rejected_wrong_query_language": 0,
   "run_id": "retrieval-eval-unused-breeds-3e8cf410f797",
   "seed": 42,
   "selected_breed_ids": [
     "bslo",
-    "cymr",
-    "drex",
     "ebur",
-    "lihu",
-    "norw",
-    "sing",
-    "snow",
-    "soma",
-    "srex",
-    "tvan"
+    "sing"
   ],
   "selected_chunk_ids": [
     "bslo:catapi:profile:000",
     "bslo:wikipedia:en:4-british-longhair:000",
-    "cymr:catapi:profile:000",
-    "cymr:wikipedia:en:1-history:000",
-    "cymr:wikipedia:en:2.1-body:000",
-    "drex:catapi:profile:000",
-    "drex:wikipedia:en:1.1-origin:000",
-    "drex:wikipedia:en:2-appearance:000",
     "ebur:catapi:profile:000",
-    "lihu:catapi:profile:000",
-    "lihu:wikipedia:en:1.1-origin:000",
-    "lihu:wikipedia:en:1.2.1-china:000",
-    "norw:catapi:profile:000",
-    "norw:wikipedia:en:1-history:000",
-    "norw:wikipedia:en:2-registration:000",
     "sing:catapi:profile:000",
     "sing:wikipedia:en:1.1-foundation:000",
-    "sing:wikipedia:en:1.2-controversy:000",
-    "snow:catapi:profile:000",
-    "snow:wikipedia:en:1-history:000",
-    "snow:wikipedia:en:2.1-breed-recognition:000",
-    "soma:catapi:profile:000",
-    "soma:wikipedia:en:1-history:000",
-    "soma:wikipedia:en:2-breed-registration:000",
-    "srex:catapi:profile:000",
-    "srex:wikipedia:en:1-history:000",
-    "srex:wikipedia:en:2-appearance:000",
-    "tvan:catapi:profile:000",
-    "tvan:wikipedia:en:1-history:000",
-    "tvan:wikipedia:en:2-breed-registration:000"
+    "sing:wikipedia:en:1.2-controversy:000"
   ],
-  "started_at": "2026-08-10T17:39:35Z",
+  "started_at": "2026-08-12T22:26:30Z",
   "stopped_by_circuit_breaker": false,
   "target_unused_breeds": 0,
   "total_available_breeds": 67,
-  "validator_approved_count": 205,
+  "validator_approved_count": 212,
   "validator_models": {
     "gemini": "gemini-2.5-flash",
     "mistral": "mistral-small-latest"

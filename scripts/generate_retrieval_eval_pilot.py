@@ -45,6 +45,11 @@ def parse_args() -> argparse.Namespace:
         "--breed-ids",
         help="Comma-separated CatAPI breed ids to process in unused-breeds mode.",
     )
+    parser.add_argument(
+        "--allow-reused-chunks",
+        action="store_true",
+        help="Allow generating additional distinct questions from chunks that already have candidates.",
+    )
     parser.add_argument("--questions-per-breed", type=int, default=3)
     parser.add_argument("--max-new-candidates", type=int)
     parser.add_argument(
@@ -77,6 +82,7 @@ def main() -> int:
                     questions_per_breed=args.questions_per_breed,
                     resume=args.resume,
                     breed_ids=breed_ids,
+                    allow_reused_chunks=args.allow_reused_chunks,
                 )
             else:
                 result = dry_run(config)
@@ -91,6 +97,7 @@ def main() -> int:
                 api_call_delay_seconds=args.api_call_delay_seconds,
                 max_new_candidates=args.max_new_candidates,
                 breed_ids=breed_ids,
+                allow_reused_chunks=args.allow_reused_chunks,
             )
         else:
             manifest = run_pipeline(

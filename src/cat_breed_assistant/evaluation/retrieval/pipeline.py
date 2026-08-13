@@ -457,6 +457,7 @@ def dry_run_unused_breeds(
     questions_per_breed: int,
     resume: bool = False,
     breed_ids: set[str] | None = None,
+    allow_reused_chunks: bool = False,
 ) -> UnusedBreedDryRunResult:
     input_path = Path(config.input_chunks_path)
     chunks = load_source_chunks(input_path)
@@ -490,10 +491,17 @@ def dry_run_unused_breeds(
     chunk_ids_by_type = {question_type: [] for question_type in QUESTION_TYPE_VALUES}
     for breed_id in target_breeds:
         used_chunks = used_chunk_ids_for_breed(existing_candidates, breed_id)
-        available_chunks = [
-            chunk for chunk in chunks_by_breed.get(breed_id, []) if chunk.chunk_id not in used_chunks
-        ]
         missing = max(questions_per_breed - len(existing_by_breed.get(breed_id, [])), 0)
+        if allow_reused_chunks:
+            source_chunks = chunks_by_breed.get(breed_id, [])
+            available_chunks = [
+                source_chunks[index % len(source_chunks)]
+                for index in range(missing)
+            ] if source_chunks else []
+        else:
+            available_chunks = [
+                chunk for chunk in chunks_by_breed.get(breed_id, []) if chunk.chunk_id not in used_chunks
+            ]
         available_for_breed = min(missing, len(available_chunks))
         shortfall_for_breed = max(missing - len(available_chunks), 0)
         selected_by_breed[breed_id] = [
@@ -682,6 +690,7 @@ def run_unused_breeds_pipeline(
     api_call_delay_seconds: float = 0.0,
     max_new_candidates: int | None = None,
     breed_ids: set[str] | None = None,
+    allow_reused_chunks: bool = False,
     provider_factory: ProviderFactory = make_provider,
 ) -> RunManifest:
     if questions_per_breed < 1:
@@ -757,12 +766,17 @@ def run_unused_breeds_pipeline(
             chunks_for_breed = chunks_by_breed.get(breed_id, [])
             used_chunks = used_chunk_ids_for_breed(candidates, breed_id)
             chunk: SourceChunk | None = None
-            while next_chunk_index_by_breed[breed_id] < len(chunks_for_breed):
-                candidate_chunk = chunks_for_breed[next_chunk_index_by_breed[breed_id]]
+            if allow_reused_chunks and chunks_for_breed:
+                index = next_chunk_index_by_breed[breed_id]
+                chunk = chunks_for_breed[index % len(chunks_for_breed)]
                 next_chunk_index_by_breed[breed_id] += 1
-                if candidate_chunk.chunk_id not in used_chunks:
-                    chunk = candidate_chunk
-                    break
+            else:
+                while next_chunk_index_by_breed[breed_id] < len(chunks_for_breed):
+                    candidate_chunk = chunks_for_breed[next_chunk_index_by_breed[breed_id]]
+                    next_chunk_index_by_breed[breed_id] += 1
+                    if candidate_chunk.chunk_id not in used_chunks:
+                        chunk = candidate_chunk
+                        break
             if chunk is None:
                 continue
 
