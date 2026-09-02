@@ -3,7 +3,7 @@ from src.breed_retriever import build_breed_context
 from src.gemini_client import generate_gemini_answer
 from src.llm_client import generate_llm_answer
 from src.mistral_client import generate_mistral_answer
-from src.rag.catapi_retriever import retrieve_catapi_context
+from src.retrieval.structured import retrieve_structured_context
 
 from .schemas import AskResponse, AnswerMode
 
@@ -15,7 +15,7 @@ def generate_answer(
 ) -> AskResponse:
     breed_context = build_breed_context(question)
     retrieval = (
-        retrieve_catapi_context(question, top_k=3)
+        retrieve_structured_context(question, top_k=3)
         if use_rag
         else {
             "strategy": None,
