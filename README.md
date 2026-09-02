@@ -38,13 +38,13 @@ The Streamlit app does not call mock, OpenAI, Gemini or Mistral logic directly. 
 ```text
 User text query
 → FastAPI backend
-→ CatAPI hybrid retriever
+→ CatAPI structured retriever
 → retrieved local breed context
 → LLM provider: Mock / Mistral / Gemini / OpenAI
 → Streamlit answer + retrieval logs
 ```
 
-The current retriever is not pure vector search. It is a controlled hybrid retrieval baseline:
+The current retriever is not pure vector search. It is a controlled structured retrieval baseline:
 
 1. Breed alias detection.
 2. Structured CatAPI retrieval.
@@ -138,6 +138,7 @@ cat-breed-assistant/
 │   ├── build_knowledge_documents.py
 │   ├── build_wikidata_enrichment.py
 │   ├── build_wikipedia_articles.py
+│   ├── export_retrieval_benchmark.py
 │   └── fetch_catapi_breeds.py
 ├── src/
 │   ├── __init__.py
@@ -153,6 +154,10 @@ cat-breed-assistant/
 │   │   ├── wikidata_resolver.py
 │   │   ├── wikipedia_client.py
 │   │   └── wikipedia_parser.py
+│   ├── retrieval/
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── structured.py
 │   └── rag/
 │       ├── __init__.py
 │       └── catapi_retriever.py
@@ -412,6 +417,45 @@ python scripts/build_knowledge_documents.py
 python scripts/build_knowledge_chunks.py
 pytest -q
 ```
+
+## Retrieval Evaluation Workflow
+
+The repository contains a pilot set of automatically generated retrieval evaluation candidates:
+
+```text
+data/evaluation/retrieval/v1/pilot_candidates.jsonl
+```
+
+Treat this file as a source artifact. Human decisions are stored separately:
+
+```text
+data/evaluation/retrieval/v1/human_review_decisions.jsonl
+```
+
+Launch the local review UI:
+
+```bash
+streamlit run scripts/review_retrieval_eval_candidates.py
+```
+
+The review UI shows the question, expected answer, evidence quote, source chunk text, model metadata, validation result and normalized question type. A reviewer can mark a candidate as approved, rejected, needs edit or skipped. Approved edits are saved in the review artifact without changing the original generated candidate file.
+
+Export the frozen benchmark after review:
+
+```bash
+python scripts/export_retrieval_benchmark.py
+```
+
+The export writes:
+
+```text
+data/evaluation/retrieval/benchmark_v1/benchmark.jsonl
+data/evaluation/retrieval/benchmark_v1/manifest.json
+```
+
+Only human-approved records are included. Rejected, skipped, pending and unreviewed candidates are excluded. Legacy question type labels are normalized through explicit deterministic mappings; ambiguous labels require human review before export.
+
+BM25, vector search, hybrid fusion, reranking and retrieval metrics are planned next steps. They are intentionally not implemented in this review/export stage.
 
 ## Data Directory Layout
 

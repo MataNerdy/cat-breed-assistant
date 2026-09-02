@@ -1,6 +1,6 @@
 # Project Summary: Cat Breed Assistant
 
-Status: Working CatAPI-powered LLM assistant MVP
+Status: Working CatAPI/Wikipedia-powered LLM assistant MVP with retrieval evaluation workflow
 
 ## Problem
 
@@ -12,15 +12,15 @@ The project also needs a controlled knowledge source, because free-form LLM answ
 
 Cat Breed Assistant is a small educational application that answers user questions about cat breeds. It separates the user interface, backend API, retrieval layer and answer providers while keeping the architecture understandable.
 
-The current app uses CatAPI breed data as its primary retrieval source. It supports a local mock mode for demos without API keys and optional LLM modes through OpenAI, Gemini and Mistral.
+The current app uses local breed data as its primary retrieval source. It supports a local mock mode for demos without API keys and optional LLM modes through OpenAI, Gemini and Mistral.
 
 ## Architecture
 
 ```text
 Streamlit frontend
 → FastAPI backend
-→ CatAPI hybrid retriever
-→ retrieved CatAPI context
+→ structured retrieval layer
+→ retrieved local breed context
 → Mock / OpenAI / Gemini / Mistral provider
 ```
 
@@ -28,31 +28,43 @@ The frontend sends questions to the backend over HTTP. The backend retrieves rel
 
 ## Data Source
 
-The current controlled data source is TheCatAPI `/v1/breeds`.
+The project starts from TheCatAPI `/v1/breeds` and enriches the offline knowledge corpus with curated Wikidata/Wikipedia records.
 
 Processed files:
 
 - `data/processed/catapi_breed_documents.jsonl`
 - `data/processed/catapi_chunks.jsonl`
+- `data/processed/knowledge_documents.jsonl`
+- `data/processed/knowledge_chunks.jsonl`
 
 Current size:
 
 - 67 breeds
-- 67 documents
-- 67 chunks
+- 194 knowledge documents
+- 987 retrieval chunks
 
-One chunk is one breed profile.
+The runtime app still uses the controlled structured CatAPI retrieval path; the larger knowledge corpus is prepared for the next benchmarked retrieval stage.
 
 ## Retrieval Strategy
 
-The current retrieval layer is a hybrid baseline, not pure vector search:
+The current runtime retrieval layer is a structured baseline, not pure vector search:
 
 1. Russian and English breed alias detection.
 2. Structured CatAPI field scoring.
 3. No-match guard for irrelevant questions.
 4. Grounded provider answer using retrieved context.
 
-This strategy was selected because the CatAPI corpus is short and structured. Embeddings were tested, but structured field retrieval produced more controlled results for the target questions.
+This strategy was selected because the CatAPI corpus is short and structured. Embeddings were tested, but structured field retrieval produced more controlled results for the target questions. The prepared Wikipedia corpus enables the next step: benchmarked BM25/vector/hybrid retrieval.
+
+## Evaluation Workflow
+
+The project includes a human-review workflow for retrieval evaluation candidates:
+
+- Generated candidates are stored as immutable source artifacts.
+- Human review decisions are saved separately.
+- Legacy question type labels are normalized through explicit deterministic mappings.
+- Ambiguous labels require human review.
+- A frozen benchmark export includes only human-approved records.
 
 ## Backend Integration
 
@@ -100,7 +112,10 @@ CatAPI retrieval is always enabled from the Streamlit UI. Diagnostic retrieval m
 - Streamlit user interface for asking cat breed questions.
 - FastAPI backend with `/health` and `/ask` endpoints.
 - CatAPI processed data layer with 67 breed profiles.
-- Hybrid retrieval by aliases and structured CatAPI fields.
+- Curated Wikidata/Wikipedia corpus preparation pipeline.
+- Human review UI for retrieval evaluation candidates.
+- Frozen benchmark export script for approved examples.
+- Structured retrieval by aliases and CatAPI fields.
 - No-match guard for irrelevant questions.
 - Mock mode that works without API keys.
 - Gemini and Mistral modes in the Streamlit UI.
@@ -113,11 +128,11 @@ CatAPI retrieval is always enabled from the Streamlit UI. Diagnostic retrieval m
 
 - CatAPI descriptions are short.
 - `image_url` may be empty even when `reference_image_id` exists.
-- No Wikipedia enrichment yet.
 - No production vector database yet.
 - Embeddings were tested but not selected as the primary retriever.
 - No CV or image classification branch.
 - Multi-breed comparison is still limited.
+- BM25/vector/hybrid retrieval benchmark execution is planned next.
 
 ## What I Learned
 
@@ -126,13 +141,13 @@ CatAPI retrieval is always enabled from the Streamlit UI. Diagnostic retrieval m
 - How to compare retrieval approaches and choose a controlled baseline when dense retrieval is unstable.
 - How to keep API keys out of source code.
 - How to package a small two-service Python app with Docker Compose.
+- How to keep generated evaluation data separate from human review decisions.
 - How to keep an MVP understandable without adding unnecessary infrastructure.
 
 ## Next Steps
 
-- Finish Mistral and Gemini answer evaluation.
 - Add CatAPI image fetching by `reference_image_id`.
-- Add Wikipedia enrichment for richer breed context.
 - Improve aliases for Russian and English breed names.
-- Add optional semantic retriever after model bake-off.
+- Add BM25/vector/hybrid retrieval benchmark implementations.
+- Compare retrievers against the frozen human-reviewed benchmark.
 - Consider ChromaDB only after embedding quality is acceptable.
